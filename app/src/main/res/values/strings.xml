@@ -21,4 +21,6 @@
     <string name="socials">Sing in with Socials</string>
     <string name="enter_name">Enter name</string>
     <string name="sign_up_b">Sign up</string>
+    
+    <string name="cannot_be_empty">Cannot be empty</string>
 </resources>
