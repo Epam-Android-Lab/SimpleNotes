@@ -1,4 +1,4 @@
-package com.example.simplenotes.presentation
+package com.example.simplenotes.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
