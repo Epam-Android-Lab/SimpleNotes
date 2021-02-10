@@ -19,4 +19,6 @@
     <string name="sign_up">Don’t have an account? <b>SIGN UP</b> Now!</string>
     <string name="or">OR</string>
     <string name="socials">Sing in with Socials</string>
+    <string name="enter_name">Enter name</string>
+    <string name="sign_up_b">Sign up</string>
 </resources>
