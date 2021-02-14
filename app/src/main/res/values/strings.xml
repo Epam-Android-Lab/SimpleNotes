@@ -31,4 +31,6 @@
         <item>Сегодня</item>
         <item>Выполнено</item>
     </string-array>
+
+    <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
 </resources>

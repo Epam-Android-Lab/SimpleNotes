@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentLoginBinding
@@ -19,6 +21,8 @@ class LoginFragment : Fragment() {
 
     private var email: String = ""
     private var password: String = ""
+
+    private val authViewModel by viewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,14 +44,25 @@ class LoginFragment : Fragment() {
         }
 
         binding.signin.setOnClickListener {
-            if(email.isNotBlank() && password.isNotBlank()){
-                // start login flow
+            if (email.isNotBlank() && password.isNotBlank()) {
+                authViewModel.signIn(email, password)
             }
-
         }
 
         binding.signup.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+
+        authViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                AuthViewModel.AuthState.Authorized -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                }
+                AuthViewModel.AuthState.Failed -> {
+                    Toast.makeText(requireContext(), R.string.toast_no_such_user, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
         }
     }
     //переход с фрагмента Splash на LoginActivity
