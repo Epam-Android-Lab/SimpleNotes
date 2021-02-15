@@ -22,12 +22,12 @@ data class Task(
     val priority: Int = 3,
 
     //категория. id категории
-    val category: String? = null,
+    val category: String?,
 
     //статус выполнения задачи
-    val status: Boolean = false,
+    val status: Boolean,
 
     //время последнего редактирования (мс)
-    val timeLastEdit: Long = Calendar.getInstance().timeInMillis
+    val timeLastEdit: Long
 
 )
