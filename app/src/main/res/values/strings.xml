@@ -12,10 +12,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
+
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Don’t have an account? <b>SIGN UP</b> Now!</string>
+    <string name="or">OR</string>
+    <string name="socials">Sing in with Socials</string>
+    <string name="enter_name">Enter name</string>
+    <string name="sign_up_b">Sign up</string>
+
+    <string name="cannot_be_empty">Cannot be empty</string>
     <string name="hello_world">Hello Square World!</string>
 
     <string-array name="categories">
@@ -24,4 +31,6 @@
         <item>Сегодня</item>
         <item>Выполнено</item>
     </string-array>
+
+    <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
 </resources>
