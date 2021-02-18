@@ -8,14 +8,13 @@ import com.google.firebase.firestore.QuerySnapshot
 interface IRepository {
 
     interface FirestoreRepository{
-        suspend fun getAllTasksByUser(userId: String): QuerySnapshot
 
-        //Тип для параметра task нужно изменить
-        suspend fun addNewTask(userId: String, task: Boolean = false): Boolean
+        suspend fun getAllTasks(): QuerySnapshot
+        suspend fun getAllCategories(): QuerySnapshot
+        suspend fun addNewTask(task: Task): Boolean
+        suspend fun createCategory(name: String): Boolean
+        suspend fun getTasksByCategoryId(category: String): QuerySnapshot
 
-        suspend fun getTasksByCategoryId(userId: String, category: String): QuerySnapshot
-        suspend fun createCategory(userId: String, name: String): Boolean
-        suspend fun getAllCategoriesByUser(userId: String): QuerySnapshot
     }
 
     interface AuthRepository{

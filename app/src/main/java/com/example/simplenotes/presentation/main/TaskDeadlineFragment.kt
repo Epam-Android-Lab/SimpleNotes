@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import com.example.simplenotes.databinding.FragmentTaskDeadlineBinding
 import java.util.*
@@ -17,6 +18,7 @@ class TaskDeadlineFragment : DialogFragment() {
 
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var timePickerDialog: TimePickerDialog
+    private lateinit var timePicker: TimePicker
 
     var deadlineTime: Long? = null
 
@@ -28,6 +30,8 @@ class TaskDeadlineFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+         timePicker = TimePicker(context)
+
         binding.btnDatePicker.setOnClickListener {
             handleDatePickButton()
         }
@@ -38,9 +42,15 @@ class TaskDeadlineFragment : DialogFragment() {
 
         binding.btnSaveDeadline.setOnClickListener {
             val calendar: Calendar = Calendar.getInstance()
-            calendar.set(datePickerDialog.datePicker.year, datePickerDialog.datePicker.month, datePickerDialog.datePicker.dayOfMonth)
-
+            calendar.set(
+                    datePickerDialog.datePicker.year,
+                    datePickerDialog.datePicker.month,
+                    datePickerDialog.datePicker.dayOfMonth,
+                    timePicker.hour,
+                    timePicker.minute
+            )
             deadlineTime = calendar.timeInMillis
+
             dismiss()
         }
 
@@ -82,6 +92,9 @@ class TaskDeadlineFragment : DialogFragment() {
             calendar.set(Calendar.HOUR, hourOfDay)
             calendar.set(Calendar.MINUTE, min)
             val timeFormatted = android.text.format.DateFormat.format("HH:mm", calendar)
+
+            timePicker.hour = hourOfDay
+            timePicker.minute = min
 
             binding.textViewTime.text = timeFormatted
 

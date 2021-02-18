@@ -4,7 +4,7 @@ import java.util.*
 
 data class Task(
     //id задачи
-    val id: Int,
+    var id: String,
 
     //название задачи
     val title: String,
