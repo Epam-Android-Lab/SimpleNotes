@@ -24,6 +24,7 @@
         android:name="com.example.simplenotes.presentation.main.TaskFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" />
+
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.simplenotes.presentation.main.CategoryFragment"

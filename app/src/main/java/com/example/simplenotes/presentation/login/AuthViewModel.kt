@@ -1,6 +1,5 @@
 package com.example.simplenotes.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import com.example.simplenotes.data.repositories.RemoteRepository
 import com.example.simplenotes.domain.usecases.SignInUserUseCase
 import com.example.simplenotes.domain.usecases.SignUpUserUseCase
 import com.example.simplenotes.presentation.Contract
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.launch
 

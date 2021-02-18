@@ -1,7 +1,6 @@
 package com.example.simplenotes.presentation.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -65,6 +64,4 @@ class LoginFragment : Fragment() {
             }
         }
     }
-    //переход с фрагмента Splash на LoginActivity
-    //findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
 }
