@@ -1,14 +1,69 @@
 package com.example.simplenotes.presentation.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.example.simplenotes.R
+import com.example.simplenotes.databinding.FragmentTaskBinding
+import com.example.simplenotes.domain.entities.Task
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private var _binding: FragmentTaskBinding? = null
+    private val binding get() = _binding!!
+
+    private val taskViewModel by viewModels<TaskViewModel>()
+
+    private lateinit var deadlineDialog: TaskDeadlineFragment
+    private lateinit var reminderDialog: TaskReminderFragment
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentTaskBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        deadlineDialog = TaskDeadlineFragment()
+        reminderDialog = TaskReminderFragment()
+
+        binding.btnAddDeadline.setOnClickListener {
+            deadlineDialog.show(childFragmentManager, "Deadline" )
+        }
+
+        binding.btnAddReminder.setOnClickListener {
+            reminderDialog.show(childFragmentManager, "Reminder" )
+        }
+
+        binding.buttonSaveTask.setOnClickListener {
+
+            val newTask = Task(
+                    id = "",                                                     //исправить на автоинкремент с сохранением последнего значения
+                    title = binding.editTextTaskTitle.text.toString(),
+                    description = binding.editTextTextTaskDesc.text.toString(),
+                    deadline = deadlineDialog.deadlineTime,
+                    notification = reminderDialog.reminderTime,
+                    priority = binding.sliderPriority.value.toInt(),            //добавить значение слайдера
+                    category = binding.spinnerCategories.selectedItem.toString(),
+                    status = false,
+                    timeLastEdit = Calendar.getInstance().timeInMillis
+            )
+
+            Firebase.auth.uid?.let { uid ->
+                taskViewModel.addNewTask(newTask)
+            }
+
+            Toast.makeText(context, "Задача создана", Toast.LENGTH_SHORT).show()
+
+            activity?.supportFragmentManager?.popBackStack()
+
+        }
+    }
 }

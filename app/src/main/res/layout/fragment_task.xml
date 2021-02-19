@@ -35,24 +35,47 @@
         android:id="@+id/btnAddDeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
         android:text="Добавить дедлайн"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc" />
 
     <!-- И тут тоже -->
+
+    <TextView
+        android:id="@+id/textOfDeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddReminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc"
+        tools:ignore="MissingConstraints" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
         android:text="Добавить напоминание"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddDeadline" />
+
+    <TextView
+        android:id="@+id/textOfReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddReminder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddDeadline" />
 
@@ -64,6 +87,7 @@
         android:value="3"
         android:valueFrom="1"
         android:valueTo="5"
+        android:stepSize="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
