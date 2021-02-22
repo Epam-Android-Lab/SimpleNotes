@@ -2,13 +2,15 @@ package com.example.simplenotes.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.presentation.login.AuthViewModel
 import com.google.android.gms.tasks.Task
 
 interface Contract {
 
-    interface IViewModel {
-
+    interface IMainViewModel {
+        val state: LiveData<MutableList<Category>>
+        fun addCategory(category: Category)
     }
 
     interface IAuthViewModel{
