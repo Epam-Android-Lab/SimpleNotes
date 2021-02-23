@@ -6,33 +6,35 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
-class FirestoreRepository: IRepository.FirestoreRepository {
+class FirestoreRepository : IRepository.FirestoreRepository {
 
     private val db = Firebase.firestore
+    private val userId = Firebase.auth.uid
 
     companion object {
-        const val LIST_OF_USERS = "users"
-        const val LIST_OF_NOTES = "notes"
+        const val COLLECTION_USERS = "users"
+        const val COLLECTION_NOTES = "notes"
+        const val COLLECTION_CATEGORIES = "categories"
     }
 
-
-    override suspend fun getAllTasks(): QuerySnapshot {
-        TODO("Not yet implemented")
+    override suspend fun getAllTasks() = userId?.let { userId ->
+        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).get().await()
     }
 
-    override suspend fun getAllCategories(): QuerySnapshot {
-        TODO("Not yet implemented")
+    override suspend fun getAllCategories() = userId?.let { userId ->
+        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_CATEGORIES).get().await()
     }
 
     override suspend fun addNewTask(task: Task): Boolean {
-        val doc = db.collection(LIST_OF_USERS).document()
+        val doc = db.collection(COLLECTION_USERS).document()
         task.id = doc.id
 
-        return Firebase.auth.uid?.let { it1 ->
-            db.collection(LIST_OF_USERS).document(it1).collection(LIST_OF_NOTES).document(task.id)
-                    .set(task)
-                    .isSuccessful
+        return userId?.let { it1 ->
+            db.collection(COLLECTION_USERS).document(it1).collection(COLLECTION_NOTES).document(task.id)
+                .set(task)
+                .isSuccessful
         } ?: false
     }
 
