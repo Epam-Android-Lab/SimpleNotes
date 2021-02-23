@@ -1,6 +1,8 @@
 package com.example.simplenotes.presentation.main
 
 import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
@@ -24,10 +27,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private val taskViewModel by viewModels<TaskViewModel>()
 
-    //private lateinit var alarmService: AlarmService
-
-    private var deadlineTime: Long? = null
-    private var reminderTime: Long? = null
+    private var deadlineTime: Long = 0
+    private var reminderTime: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
@@ -36,7 +37,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //alarmService = context?.let { AlarmService(it) }!!
 
         binding.btnAddDeadline.setOnClickListener {
             setTime(binding.textOfDeadline, DEADLINE_ID)
@@ -63,6 +63,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             Firebase.auth.uid?.let {
                 taskViewModel.addNewTask(newTask)
             }
+
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+            val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.set(AlarmManager.RTC_WAKEUP, deadlineTime, pendingIntent)
 
             Toast.makeText(context, "Задача создана", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_taskFragment_to_mainScreenFragment)
