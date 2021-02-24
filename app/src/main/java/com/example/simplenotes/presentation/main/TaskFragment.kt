@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
@@ -19,6 +18,7 @@ import com.example.simplenotes.domain.entities.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.random.Random
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
 
@@ -27,8 +27,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private val taskViewModel by viewModels<TaskViewModel>()
 
-    private var deadlineTime: Long = 0
-    private var reminderTime: Long = 0
+    private var deadlineTime: Long? = null
+    private var reminderTime: Long? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
@@ -64,10 +64,23 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskViewModel.addNewTask(newTask)
             }
 
-            val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
-            val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.set(AlarmManager.RTC_WAKEUP, deadlineTime, pendingIntent)
+            deadlineTime?.let {
+                setAlarm(
+                        DEADLINE_ID,
+                        it,
+                        "The task's deadline has expired!",
+                        binding.editTextTaskTitle.text.toString()
+                )
+            }
+
+            reminderTime?.let {
+                setAlarm(
+                        REMINDER_ID,
+                        it,
+                        "Reminder",
+                        binding.editTextTaskTitle.text.toString()
+                )
+            }
 
             Toast.makeText(context, "Задача создана", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_taskFragment_to_mainScreenFragment)
@@ -76,6 +89,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private fun setTime(view: TextView, id: String) {
         Calendar.getInstance().apply {
+            this.set(Calendar.SECOND,0)
+            this.set(Calendar.MILLISECOND,0)
             activity?.let {
                 DatePickerDialog (
                         it,
@@ -112,8 +127,20 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
+    private fun setAlarm(id: String, time: Long, title: String, description: String) {
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra("code", id)
+        intent.putExtra(TITLE_NAME, title)
+        intent.putExtra(DESC_NAME, description)
+        val pendingIntent = PendingIntent.getBroadcast(context, Random.nextInt(), intent, 0)
+        val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+    }
+
     companion object {
         private const val DEADLINE_ID = "DEADLINE_ID"
         private const val REMINDER_ID = "REMINDER_ID"
+        private const val TITLE_NAME = "TITLE_NAME"
+        private const val DESC_NAME = "DESC_NAME"
     }
 }

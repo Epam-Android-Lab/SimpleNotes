@@ -14,15 +14,16 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        createNotificationChannel()
+        createNotificationDeadlineChannel()
+        createNotificationReminderChannel()
     }
 
-    private fun createNotificationChannel() {
+    private fun createNotificationDeadlineChannel() {
 
         val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, "Deadline alarm", NotificationManager.IMPORTANCE_HIGH).apply {
+            val channel = NotificationChannel(DEADLINE_CHANNEL, "Deadline alarm", NotificationManager.IMPORTANCE_DEFAULT).apply {
                 description = "Task deadline notification"
                 enableLights(true)
                 lightColor = Color.RED
@@ -32,7 +33,23 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    private fun createNotificationReminderChannel() {
+
+        val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(REMINDER_CHANNEL, "Reminder alarm", NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = "Task reminder notification"
+                enableLights(true)
+                lightColor = Color.GREEN
+                enableVibration(false)
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     companion object {
-        private const val CHANNEL_ID = "CHANNEL_ID"
+        private const val DEADLINE_CHANNEL = "DEADLINE_CHANNEL"
+        private const val REMINDER_CHANNEL = "REMINDER_CHANNEL"
     }
 }
