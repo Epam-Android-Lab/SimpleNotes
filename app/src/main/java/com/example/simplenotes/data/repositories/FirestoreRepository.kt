@@ -1,5 +1,6 @@
 package com.example.simplenotes.data.repositories
 
+import android.util.Log
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.repositories.IRepository
 import com.google.firebase.auth.ktx.auth
@@ -38,8 +39,10 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         } ?: false
     }
 
-    override suspend fun getTasksByCategoryId(category: String): QuerySnapshot {
-        TODO("Not yet implemented")
+    override suspend fun getTasksByCategoryId(category: String): QuerySnapshot? {
+        return userId?.let { userId ->
+            db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).whereEqualTo("category", category).get().await()
+        }
     }
 
     override suspend fun createCategory(name: String): Boolean {

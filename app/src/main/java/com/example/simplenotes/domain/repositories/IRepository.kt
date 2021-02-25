@@ -13,7 +13,7 @@ interface IRepository {
         suspend fun getAllCategories(): QuerySnapshot?
         suspend fun addNewTask(task: Task): Boolean
         suspend fun createCategory(name: String): Boolean
-        suspend fun getTasksByCategoryId(category: String): QuerySnapshot
+        suspend fun getTasksByCategoryId(category: String): QuerySnapshot?
 
     }
 
