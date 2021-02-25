@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.TaskFragment">
+    tools:context=".presentation.main.TaskCreatedFragment">
 
     <EditText
         android:id="@+id/editTextTaskTitle"
@@ -45,7 +45,6 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc" />
 
     <!-- И тут тоже -->
-
     <TextView
         android:id="@+id/textOfDeadline"
         android:layout_width="wrap_content"

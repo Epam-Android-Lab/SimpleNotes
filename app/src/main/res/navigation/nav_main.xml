@@ -36,7 +36,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.simplenotes.presentation.main.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_allTasksFragment2"
+            app:destination="@id/allTasksFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allTasksFragment"
         android:name="com.example.simplenotes.presentation.main.alltasks.AllTasksFragment"
@@ -45,6 +49,19 @@
         <argument
             android:name="category_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_allTasksFragment_to_taskCreatedFragment"
+            app:destination="@id/taskCreatedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskCreatedFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskCreatedFragment"
+        android:label="fragment_task_created"
+        tools:layout="@layout/fragment_task_created" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
 
 </navigation>

@@ -17,8 +17,10 @@ import com.example.simplenotes.databinding.FragmentTaskBinding
 import com.example.simplenotes.domain.entities.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
+import kotlin.time.microseconds
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
 
@@ -32,6 +34,16 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
+
+        /*
+        val data: Bundle? = arguments
+        if (data != null) {
+            binding.editTextTaskTitle.setText(data.getString("title"))
+            binding.editTextTextTaskDesc.setText(data.getString("desctiption"))
+            binding.textOfDeadline.text = data.getLong("deadline").let { android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", it) }
+            binding.textOfReminder.text = data.getLong("reminder").let { android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", it) }
+        }
+         */
         return binding.root
     }
 
@@ -47,7 +59,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
 
         binding.buttonSaveTask.setOnClickListener {
-
             val newTask = Task(
                     id = "",
                     title = binding.editTextTaskTitle.text.toString(),
@@ -60,12 +71,26 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
-            Firebase.auth.uid?.let {
+            val taskId = Firebase.auth.uid?.run {
                 taskViewModel.addNewTask(newTask)
             }
 
+            /*
+            val args = Bundle()
+            args.putString("title", binding.editTextTaskTitle.text.toString())
+            args.putString("desctiption", binding.editTextTextTaskDesc.text.toString())
+            deadlineTime?.let { it1 -> args.putLong("deadline", it1) }
+            reminderTime?.let { it1 -> args.putLong("reminder", it1) }
+            args.putInt("priority", binding.sliderPriority.value.toInt())
+            args.putString("category", binding.spinnerCategories.selectedItem.toString())
+             */
+
+            val args = Bundle()
+            args.putString(TASK_ID, taskId.toString())
+
             deadlineTime?.let {
                 setAlarm(
+                        args,
                         DEADLINE_ID,
                         it,
                         "The task's deadline has expired!",
@@ -75,6 +100,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
             reminderTime?.let {
                 setAlarm(
+                        args,
                         REMINDER_ID,
                         it,
                         "Reminder",
@@ -127,11 +153,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
-    private fun setAlarm(id: String, time: Long, title: String, description: String) {
+    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String) {
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("code", id)
+        intent.putExtra("type", type)
         intent.putExtra(TITLE_NAME, title)
         intent.putExtra(DESC_NAME, description)
+        intent.putExtra(TASK_ID, args)
         val pendingIntent = PendingIntent.getBroadcast(context, Random.nextInt(), intent, 0)
         val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
@@ -142,5 +169,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         private const val REMINDER_ID = "REMINDER_ID"
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
+        private const val TASK_ID = "TASK_ID"
     }
 }
