@@ -35,6 +35,7 @@ class FirestoreRepository : IRepository.FirestoreRepository {
 
     override suspend fun getAllCategories() = userId?.let { userId ->
         db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_CATEGORIES).get().await()
+    }
 
     override suspend fun getAllTasks() = userId?.let { userId ->
         db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).get().await()
@@ -58,7 +59,4 @@ class FirestoreRepository : IRepository.FirestoreRepository {
 
     }
 
-
-
-   
 }
