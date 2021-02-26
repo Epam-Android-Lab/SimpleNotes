@@ -7,27 +7,40 @@ data class Task(
     var id: String,
 
     //название задачи
-    val title: String,
+    var title: String,
 
     //описание задачи
-    val description: String?,
+    var description: String?,
 
     //срок выполнения задачи (мс)
-    val deadline: Long?,
+    var deadline: Long?,
 
     //стандартное напоминание (мс)
-    val notification: Long?,
+    var notification: Long?,
 
     //приоритет (1 - важно, 5 - не важно)
-    val priority: Int = 3,
+    var priority: Int = 3,
 
     //категория. id категории
-    val category: String?,
+    var category: String?,
 
     //статус выполнения задачи
-    val status: Boolean,
+    var status: Boolean,
 
     //время последнего редактирования (мс)
-    val timeLastEdit: Long
+    var timeLastEdit: Long
 
-)
+) {
+    constructor() : this(
+        id = "",
+        title = "",
+        description = "",
+        deadline = 0,
+        notification = 0,
+        priority = 0,
+        category = "",
+        status = false,
+        timeLastEdit = 0
+    )
+
+}
