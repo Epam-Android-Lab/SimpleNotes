@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.AddNewTaskUseCase
-import com.example.simplenotes.presentation.Contract
 import kotlinx.coroutines.launch
 
 class TaskViewModel : ViewModel(), Contract.ITaskViewModel {

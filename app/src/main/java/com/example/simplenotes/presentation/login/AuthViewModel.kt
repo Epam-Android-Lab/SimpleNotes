@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.data.repositories.RemoteRepository
 import com.example.simplenotes.domain.usecases.SignInUserUseCase
 import com.example.simplenotes.domain.usecases.SignUpUserUseCase
-import com.example.simplenotes.presentation.Contract
+import com.example.simplenotes.presentation.main.Contract
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.launch
 

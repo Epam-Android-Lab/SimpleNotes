@@ -8,9 +8,9 @@
 
 
     <ScrollView
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-17dp">
 
@@ -18,23 +18,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <GridLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gridViewCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:orientation="vertical"
-                android:rowCount="2"
-                android:layout_gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="4">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:id="@+id/llFolderToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/llFolderImportant"
+                    app:layout_constraintEnd_toStartOf="@+id/llFolderAll"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -52,9 +53,15 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llFolderAll"
+                    android:id="@+id/llFolderImportant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/llFolderCompleted"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llFolderToday">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -72,9 +79,15 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llFolderImportant"
+                    android:id="@+id/llFolderAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/llFolderCompleted"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llFolderToday"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -93,8 +106,14 @@
 
                 <LinearLayout
                     android:id="@+id/llFolderCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llFolderImportant"
+                    app:layout_constraintTop_toBottomOf="@+id/llFolderAll">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -110,7 +129,7 @@
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
-            </GridLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textViewMyLists"
@@ -165,6 +184,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/recyclerViewMyCategories" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewLatestTasks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -173,7 +193,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLatest"
                 tools:itemCount="5"
-                tools:listitem="@layout/category_latest_item" />
+                tools:listitem="@layout/task_latest_item" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

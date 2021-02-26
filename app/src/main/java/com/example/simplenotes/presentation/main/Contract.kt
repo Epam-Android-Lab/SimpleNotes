@@ -1,16 +1,20 @@
-package com.example.simplenotes.presentation
+package com.example.simplenotes.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.simplenotes.domain.entities.Category
+import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.presentation.login.AuthViewModel
-import com.google.android.gms.tasks.Task
 
 interface Contract {
 
     interface IMainViewModel {
-        val state: LiveData<MutableList<Category>>
+        val categoryState: LiveData<List<Category>>
+        val latestTaskState: LiveData<List<Task>>
         fun addCategory(category: Category)
+        fun getAllCategories()
+        fun getLatestTasks()
+        fun subscribeToFireBase()
     }
 
     interface IAuthViewModel{

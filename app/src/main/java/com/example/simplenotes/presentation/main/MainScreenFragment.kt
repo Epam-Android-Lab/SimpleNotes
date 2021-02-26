@@ -12,14 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
-import com.example.simplenotes.databinding.FragmentLoginBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
 import com.example.simplenotes.domain.entities.Category
-import com.example.simplenotes.presentation.MainViewModel
-import com.example.simplenotes.presentation.login.AuthViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+@ExperimentalStdlibApi
 class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private val binding: FragmentMainScreenBinding by lazy {
@@ -40,6 +38,23 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val myCategoriesAdapter = MyCategoriesAdapter()
+        binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
+
+        val latestTasksAdapter = LatestTasksAdapter()
+        binding.recyclerViewLatestTasks.adapter = latestTasksAdapter
+
+        viewModel.getAllCategories()
+        viewModel.getLatestTasks()
+
+        viewModel.categoryState.observe(viewLifecycleOwner, {
+            myCategoriesAdapter.submitList(it)
+        })
+
+        viewModel.latestTaskState.observe(viewLifecycleOwner, {
+            latestTasksAdapter.submitList(it)
+        })
 
         binding.btnAddMyCategory.setOnClickListener {
             callAlertDialog()

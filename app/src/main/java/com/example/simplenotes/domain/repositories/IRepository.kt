@@ -10,8 +10,8 @@ interface IRepository {
 
     interface FirestoreRepository{
 
-        suspend fun getAllTasks(): QuerySnapshot
-        suspend fun getAllCategories(): QuerySnapshot
+        suspend fun getAllTasks(): QuerySnapshot?
+        suspend fun getAllCategories(): QuerySnapshot?
         suspend fun addNewTask(task: Task): Boolean
         suspend fun createCategory(category: Category): Boolean
         suspend fun getTasksByCategoryId(category: String): QuerySnapshot

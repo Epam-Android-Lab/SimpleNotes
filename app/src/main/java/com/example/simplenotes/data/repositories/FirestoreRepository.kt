@@ -7,33 +7,36 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository : IRepository.FirestoreRepository {
 
     companion object {
-        const val USERS = "users"
-        const val CATEGORIES = "categories"
+        const val COLLECTION_USERS = "users"
+        const val COLLECTION_CATEGORIES = "categories"
+        const val COLLECTION_NOTES = "notes"
     }
 
     private val db = Firebase.firestore
+    private val userId = Firebase.auth.uid
 
     override suspend fun createCategory(category: Category): Boolean {
-        val doc = db.collection(USERS).document()
+        val doc = db.collection(COLLECTION_USERS).document()
         category.id = doc.id
 
-        return Firebase.auth.uid?.let { block ->
-            db.collection(USERS).document(block).collection(CATEGORIES).document(category.id)
+        return userId?.let { block ->
+            db.collection(COLLECTION_USERS).document(block).collection(COLLECTION_CATEGORIES).document(category.id)
                     .set(category)
                     .isSuccessful
         } ?: false
     }
 
-    override suspend fun getAllCategories(): QuerySnapshot {
-        TODO("Not yet implemented")
+    override suspend fun getAllCategories() = userId?.let { userId ->
+        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_CATEGORIES).get().await()
     }
 
-    override suspend fun getAllTasks(): QuerySnapshot {
-        TODO("Not yet implemented")
+    override suspend fun getAllTasks() = userId?.let { userId ->
+        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).get().await()
     }
 
     override suspend fun addNewTask(task: Task): Boolean {
