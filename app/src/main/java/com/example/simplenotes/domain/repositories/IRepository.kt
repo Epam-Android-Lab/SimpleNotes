@@ -16,6 +16,7 @@ interface IRepository {
         suspend fun createCategory(category: Category): Boolean
         suspend fun getTasksByCategoryId(category: String): QuerySnapshot?
 
+
     }
 
     interface AuthRepository{

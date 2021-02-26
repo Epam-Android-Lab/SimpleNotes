@@ -1,12 +1,15 @@
 package com.example.simplenotes.presentation.main
 
+import android.app.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskBinding
 import com.example.simplenotes.domain.entities.Task
@@ -21,49 +24,91 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private val taskViewModel by viewModels<TaskViewModel>()
 
-    private lateinit var deadlineDialog: TaskDeadlineFragment
-    private lateinit var reminderDialog: TaskReminderFragment
+    //private lateinit var alarmService: AlarmService
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var deadlineTime: Long? = null
+    private var reminderTime: Long? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        deadlineDialog = TaskDeadlineFragment()
-        reminderDialog = TaskReminderFragment()
+        //alarmService = context?.let { AlarmService(it) }!!
 
         binding.btnAddDeadline.setOnClickListener {
-            deadlineDialog.show(childFragmentManager, "Deadline" )
+            setTime(binding.textOfDeadline, DEADLINE_ID)
         }
 
         binding.btnAddReminder.setOnClickListener {
-            reminderDialog.show(childFragmentManager, "Reminder" )
+            setTime(binding.textOfReminder, REMINDER_ID)
         }
 
         binding.buttonSaveTask.setOnClickListener {
 
             val newTask = Task(
-                    id = "",                                                     //исправить на автоинкремент с сохранением последнего значения
+                    id = "",
                     title = binding.editTextTaskTitle.text.toString(),
                     description = binding.editTextTextTaskDesc.text.toString(),
-                    deadline = deadlineDialog.deadlineTime,
-                    notification = reminderDialog.reminderTime,
-                    priority = binding.sliderPriority.value.toInt(),            //добавить значение слайдера
+                    deadline = deadlineTime,
+                    notification = reminderTime,
+                    priority = binding.sliderPriority.value.toInt(),
                     category = binding.spinnerCategories.selectedItem.toString(),
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
-            Firebase.auth.uid?.let { uid ->
+            Firebase.auth.uid?.let {
                 taskViewModel.addNewTask(newTask)
             }
 
             Toast.makeText(context, "Задача создана", Toast.LENGTH_SHORT).show()
-
-            activity?.supportFragmentManager?.popBackStack()
-
+            findNavController().navigate(R.id.action_taskFragment_to_mainScreenFragment)
         }
+    }
+
+    private fun setTime(view: TextView, id: String) {
+        Calendar.getInstance().apply {
+            activity?.let {
+                DatePickerDialog (
+                        it,
+                        0,
+                        { _, year, month, dayOfMonth ->
+                            this.set(Calendar.YEAR, year)
+                            this.set(Calendar.MONTH, month)
+                            this.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                            TimePickerDialog(
+                                    it,
+                                    0,
+                                    { _, hour, min ->
+                                        this.set(Calendar.HOUR_OF_DAY, hour)
+                                        this.set(Calendar.MINUTE, min)
+
+                                        val dateFormatted = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", this)
+                                        view.text = dateFormatted
+                                        when (id) {
+                                            DEADLINE_ID -> deadlineTime = this.timeInMillis
+                                            REMINDER_ID -> reminderTime = this.timeInMillis
+                                        }
+                                    },
+                                    this.get(Calendar.HOUR_OF_DAY),
+                                    this.get(Calendar.MINUTE),
+                                    true
+                            ).show()
+                        },
+                        this.get(Calendar.YEAR),
+                        this.get(Calendar.MONTH),
+                        this.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+        }
+    }
+
+    companion object {
+        private const val DEADLINE_ID = "DEADLINE_ID"
+        private const val REMINDER_ID = "REMINDER_ID"
     }
 }
