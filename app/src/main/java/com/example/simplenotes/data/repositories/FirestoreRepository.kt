@@ -51,7 +51,7 @@ class FirestoreRepository : IRepository.FirestoreRepository {
                 .document(userId)
                 .collection(COLLECTION_NOTES)
                 //.whereEqualTo("id",taskId)
-                .document()
+                .document(userId)
                 .get().await().toObject(Task::class.java)
         }
     }
