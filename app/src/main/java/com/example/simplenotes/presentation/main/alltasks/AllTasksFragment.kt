@@ -40,7 +40,7 @@ class AllTasksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TaskAdapter(){ status: Boolean, id: String ->
+        val adapter = TaskAdapter(requireContext()){ status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
         }
 
