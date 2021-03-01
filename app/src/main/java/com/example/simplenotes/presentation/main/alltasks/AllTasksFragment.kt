@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
 
 
@@ -43,6 +45,10 @@ class AllTasksFragment : Fragment() {
         binding.allRecycler.adapter = adapter
         viewModel.listOfTasks.observe(viewLifecycleOwner){
             adapter.submitList(it)
+        }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_allTasksFragment_to_taskFragment)
         }
     }
 
