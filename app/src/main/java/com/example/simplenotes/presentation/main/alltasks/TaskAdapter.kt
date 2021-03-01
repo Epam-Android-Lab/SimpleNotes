@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.RecyclerAllTasksItemBinding
 import com.example.simplenotes.domain.entities.Task
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
-class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
+class TaskAdapter(val updateStatusCallback: (status: Boolean, id: String) -> Unit) : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
 
     class Holder(private val binding: RecyclerAllTasksItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +31,7 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
             const val NUMBER_OF_LINES = 3
         }
 
-        fun bind(task: Task) {
+        fun bind(task: Task, updateStatusCallback: (status: Boolean, id: String) -> Unit) {
             var collapsed = false
             binding.apply {
                 title.text = task.title
@@ -43,13 +46,16 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
                 deadline.text = task.deadline.toString()
                 notification.text = task.notification.toString()
 
+                title.isChecked = task.status
                 title.setOnClickListener {
 
                     //todo: change status
-                    if (title.isChecked) {
-
+                    if (!title.isChecked) {
+                        title.isChecked = true
+                        updateStatusCallback.invoke(true, task.id)
                     } else {
-
+                        title.isChecked = false
+                        updateStatusCallback.invoke(false, task.id)
                     }
                 }
 
@@ -79,6 +85,8 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
     }
 
 
+
+
     object DiffCallback : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem.id == newItem.id
@@ -94,7 +102,9 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position)) { status: Boolean, id: String ->
+                updateStatusCallback.invoke(status, id)
+        }
     }
 
 }

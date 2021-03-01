@@ -14,6 +14,7 @@ interface IRepository {
         suspend fun addNewTask(task: Task): Boolean
         suspend fun createCategory(name: String): Boolean
         suspend fun getTasksByCategoryId(category: String): QuerySnapshot?
+        suspend fun updateStatus(status: Boolean, id: String)
 
     }
 

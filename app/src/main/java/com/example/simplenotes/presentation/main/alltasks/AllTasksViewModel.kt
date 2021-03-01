@@ -9,6 +9,7 @@ import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
+import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import kotlinx.coroutines.launch
 
 @ExperimentalStdlibApi
@@ -42,6 +43,12 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
 //                    }
 //                }
 //            }
+        }
+    }
+
+    fun updateStatus(status: Boolean, id: String){
+        viewModelScope.launch {
+            UpdateTaskStatusUseCase(FirestoreRepository()).execute(status, id)
         }
     }
 }

@@ -40,7 +40,9 @@ class AllTasksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TaskAdapter()
+        val adapter = TaskAdapter(){ status: Boolean, id: String ->
+            viewModel.updateStatus(status, id)
+        }
 
         binding.allRecycler.adapter = adapter
         viewModel.listOfTasks.observe(viewLifecycleOwner){
