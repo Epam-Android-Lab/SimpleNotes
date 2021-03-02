@@ -45,15 +45,31 @@ class FirestoreRepository : IRepository.FirestoreRepository {
     }
 
     override suspend fun getTasksById(taskId: String): Task? {
-
         return userId?.let { userId ->
             db.collection(COLLECTION_USERS)
                 .document(userId)
                 .collection(COLLECTION_NOTES)
-                //.whereEqualTo("id",taskId)
-                .document(userId)
+                .document(taskId)
                 .get().await().toObject(Task::class.java)
         }
+    }
+
+    override suspend fun updateTask(id: String, updatedTask: Task) {
+        val taskRef = userId?.let {
+            db.collection(COLLECTION_USERS)
+                .document(it)
+                .collection(COLLECTION_NOTES)
+                .document(id)
+        }
+
+        taskRef?.update("title", updatedTask.title)
+        taskRef?.update("description", updatedTask.description)
+        taskRef?.update("deadline", updatedTask.deadline)
+        taskRef?.update("notification", updatedTask.notification)
+        taskRef?.update("priority", updatedTask.priority)
+        taskRef?.update("category", updatedTask.category)
+        taskRef?.update("status", updatedTask.status)
+        taskRef?.update("timeLastEdit", updatedTask.timeLastEdit)
     }
 
     override suspend fun createCategory(name: String): Boolean {

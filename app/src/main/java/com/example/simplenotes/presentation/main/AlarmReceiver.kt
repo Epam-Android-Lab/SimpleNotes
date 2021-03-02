@@ -23,7 +23,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setComponentName(MainActivity::class.java)
                 .setGraph(R.navigation.nav_main)
                 .setArguments(intent.getBundleExtra(TASK_ID))
-                .setDestination(R.id.taskCreatedFragment)
+                .setDestination(R.id.taskShowFragment)
                 .createPendingIntent()
 
         var channel = ""
@@ -59,12 +59,3 @@ class AlarmReceiver : BroadcastReceiver() {
         private const val TASK_ID = "TASK_ID"
     }
 }
-
-
-/*
-        val intent1 = Intent(context, MainActivity::class.java)
-        intent1.apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0)
-         */

@@ -50,18 +50,34 @@
             android:name="category_id"
             app:argType="string" />
         <action
-            android:id="@+id/action_allTasksFragment_to_taskCreatedFragment"
-            app:destination="@id/taskCreatedFragment" />
+            android:id="@+id/action_allTasksFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
     </fragment>
     <fragment
-        android:id="@+id/taskCreatedFragment"
-        android:name="com.example.simplenotes.presentation.main.TaskCreatedFragment"
-        android:label="fragment_task_created"
-        tools:layout="@layout/fragment_task_created" >
+        android:id="@+id/taskEditFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskEditFragment"
+        android:label="fragment_task_edit"
+        tools:layout="@layout/fragment_task_edit" >
         <argument
             android:name="id"
             app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue="default" />
+        <action
+            android:id="@+id/action_taskEditFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskShowFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskShowFragment"
+        android:label="fragment_task_show"
+        tools:layout="@layout/fragment_task_show" >
+        <action
+            android:id="@+id/action_taskShowFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="default" />
     </fragment>
 
 </navigation>
