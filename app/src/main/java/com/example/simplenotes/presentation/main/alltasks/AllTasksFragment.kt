@@ -1,7 +1,6 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
-import com.example.simplenotes.databinding.BottomSheetBinding
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -61,12 +59,6 @@ class AllTasksFragment : Fragment() {
         }
 
 
-        val listAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            options
-        )
-        binding.bottomSort.listOptions.adapter = listAdapter
 
         val bottomBehavior = BottomSheetBehavior.from(binding.bottomSort.bottomSheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
@@ -75,11 +67,14 @@ class AllTasksFragment : Fragment() {
         viewModel.getOptions(requireContext()).also {
             viewModel.listOfOptions.observe(viewLifecycleOwner) {
 
-                viewModel.setActiveSortOption(0)
+                val listAdapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_list_item_1,
+                    it
+                )
+                binding.bottomSort.listOptions.adapter = listAdapter
 
-                options.clear()
-                options.addAll(it)
-                listAdapter.notifyDataSetChanged()
+                viewModel.setActiveSortOption(0)
 
                 binding.bottomSort.listOptions.setOnItemClickListener { _, _, position, _ ->
                     viewModel.setActiveSortOption(position)
@@ -96,8 +91,9 @@ class AllTasksFragment : Fragment() {
             }
         }
 
-        viewModel.activeSortIndex.observe(viewLifecycleOwner) {
-            binding.sort.text = viewModel.listOfOptions.value?.get(it)
+        viewModel.activeSort.observe(viewLifecycleOwner) {
+            binding.sort.text = it
+            binding.bottomSort.listOptions.deferNotifyDataSetChanged()
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
-import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import kotlinx.coroutines.launch
@@ -24,9 +22,9 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
     val listOfOptions: LiveData<List<String>>
         get() = _listOfOptions
 
-    private val _activeSortIndex = MutableLiveData<Int>()
-    val activeSortIndex: LiveData<Int>
-        get() = _activeSortIndex
+    private val _activeSort = MutableLiveData<String>()
+    val activeSort: LiveData<String>
+        get() = _activeSort
 
     init {
         getData(categoryId)
@@ -67,6 +65,51 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
     }
 
     fun setActiveSortOption(index: Int) {
-        _activeSortIndex.postValue(index)
+        _activeSort.postValue(_listOfOptions.value?.get(index))
+
+        when (index) {
+            0 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.timeLastEdit
+                    }.asReversed())
+                }
+            }
+            1 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.timeLastEdit
+                    })
+                }
+            }
+            2 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.deadline
+                    }.asReversed())
+                }
+            }
+            3 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.deadline
+                    })
+                }
+            }
+            4 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.priority
+                    }.asReversed())
+                }
+            }
+            5 -> {
+                _listOfTasks.value?.let {
+                    _listOfTasks.postValue(it.sortedBy { task ->
+                        task.priority
+                    })
+                }
+            }
+        }
     }
 }
