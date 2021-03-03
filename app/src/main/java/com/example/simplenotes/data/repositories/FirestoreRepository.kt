@@ -1,7 +1,6 @@
 package com.example.simplenotes.data.repositories
 
 import com.example.simplenotes.domain.entities.Category
-import android.util.Log
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.repositories.IRepository
 import com.google.firebase.auth.ktx.auth
@@ -46,7 +45,7 @@ class FirestoreRepository : IRepository.FirestoreRepository {
 
         userId?.let { it1 ->
             db.collection(COLLECTION_USERS).document(it1).collection(COLLECTION_NOTES).document(task.id)
-                .set(task)
+                    .set(task)
         }
         return task.id
     }
@@ -55,23 +54,24 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         return userId?.let { userId ->
             db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).whereEqualTo("category", category).get().await()
         }
+    }
 
     override suspend fun getTasksById(taskId: String): Task? {
         return userId?.let { userId ->
             db.collection(COLLECTION_USERS)
-                .document(userId)
-                .collection(COLLECTION_NOTES)
-                .document(taskId)
-                .get().await().toObject(Task::class.java)
+                    .document(userId)
+                    .collection(COLLECTION_NOTES)
+                    .document(taskId)
+                    .get().await().toObject(Task::class.java)
         }
     }
 
     override suspend fun updateTask(id: String, updatedTask: Task) {
         val taskRef = userId?.let {
             db.collection(COLLECTION_USERS)
-                .document(it)
-                .collection(COLLECTION_NOTES)
-                .document(id)
+                    .document(it)
+                    .collection(COLLECTION_NOTES)
+                    .document(id)
         }
 
         taskRef?.update("title", updatedTask.title)
@@ -83,5 +83,4 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         taskRef?.update("status", updatedTask.status)
         taskRef?.update("timeLastEdit", updatedTask.timeLastEdit)
     }
-
 }

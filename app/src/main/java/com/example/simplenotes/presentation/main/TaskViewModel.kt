@@ -9,7 +9,6 @@ import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.AddNewTaskUseCase
 import com.example.simplenotes.domain.usecases.GetTaskByIdUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskUseCase
-import com.example.simplenotes.presentation.Contract
 import kotlinx.coroutines.launch
 
 class TaskViewModel : ViewModel(), Contract.ITaskViewModel {

@@ -2,9 +2,7 @@ package com.example.simplenotes.presentation.main
 
 import androidx.lifecycle.LiveData
 import com.example.simplenotes.domain.entities.Task
-import androidx.lifecycle.MutableLiveData
 import com.example.simplenotes.domain.entities.Category
-import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.presentation.login.AuthViewModel
 
 interface Contract {
