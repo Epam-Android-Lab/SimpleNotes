@@ -1,9 +1,8 @@
 package com.example.simplenotes.presentation.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.presentation.login.AuthViewModel
 
 interface Contract {
@@ -25,9 +24,10 @@ interface Contract {
     }
 
     interface ITaskViewModel{
-        val task: LiveData<com.example.simplenotes.domain.entities.Task>
-        fun addNewTask(newTask: com.example.simplenotes.domain.entities.Task)
+        val task: LiveData<Task>
+        fun addNewTask(newTask: Task) : String
+        fun getTask(id: String)
+        fun updateTask(id: String, updatedTask: Task)
 
     }
-
 }
