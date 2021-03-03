@@ -1,10 +1,12 @@
 package com.example.simplenotes.presentation.main.alltasks
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
@@ -17,6 +19,14 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
         get() = _listOfTasks
+
+    private val _listOfOptions = MutableLiveData<List<String>>()
+    val listOfOptions: LiveData<List<String>>
+        get() = _listOfOptions
+
+    private val _activeSortIndex = MutableLiveData<Int>()
+    val activeSortIndex: LiveData<Int>
+        get() = _activeSortIndex
 
     init {
         getData(categoryId)
@@ -46,9 +56,17 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
         }
     }
 
-    fun updateStatus(status: Boolean, id: String){
+    fun updateStatus(status: Boolean, id: String) {
         viewModelScope.launch {
             UpdateTaskStatusUseCase(FirestoreRepository()).execute(status, id)
         }
+    }
+
+    fun getOptions(context: Context) {
+        _listOfOptions.postValue(context.resources.getStringArray(R.array.sorting_options).toList())
+    }
+
+    fun setActiveSortOption(index: Int) {
+        _activeSortIndex.postValue(index)
     }
 }
