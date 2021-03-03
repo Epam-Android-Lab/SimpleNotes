@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_task" >
         <action
             android:id="@+id/action_taskFragment_to_mainScreenFragment"
-            app:destination="@id/mainScreenFragment" />
+            app:destination="@+id/mainScreenFragment"/>
     </fragment>
 
     <fragment

@@ -1,5 +1,7 @@
 package com.example.simplenotes.data.repositories
 
+import com.example.simplenotes.domain.entities.Category
+import android.util.Log
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.repositories.IRepository
 import com.google.firebase.auth.ktx.auth
@@ -10,21 +12,32 @@ import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository : IRepository.FirestoreRepository {
 
+    companion object {
+        const val COLLECTION_USERS = "users"
+        const val COLLECTION_CATEGORIES = "categories"
+        const val COLLECTION_NOTES = "notes"
+    }
+
     private val db = Firebase.firestore
     private val userId = Firebase.auth.uid
 
-    companion object {
-        const val COLLECTION_USERS = "users"
-        const val COLLECTION_NOTES = "notes"
-        const val COLLECTION_CATEGORIES = "categories"
-    }
+    override suspend fun createCategory(category: Category): Boolean {
+        val doc = db.collection(COLLECTION_USERS).document()
+        category.id = doc.id
 
-    override suspend fun getAllTasks() = userId?.let { userId ->
-        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).get().await()
+        return userId?.let { block ->
+            db.collection(COLLECTION_USERS).document(block).collection(COLLECTION_CATEGORIES).document(category.id)
+                    .set(category)
+                    .isSuccessful
+        } ?: false
     }
 
     override suspend fun getAllCategories() = userId?.let { userId ->
         db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_CATEGORIES).get().await()
+    }
+
+    override suspend fun getAllTasks() = userId?.let { userId ->
+        db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).get().await()
     }
 
     override suspend fun addTask(task: Task): String {
@@ -42,7 +55,6 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         return userId?.let { userId ->
             db.collection(COLLECTION_USERS).document(userId).collection(COLLECTION_NOTES).whereEqualTo("category", category).get().await()
         }
-    }
 
     override suspend fun getTasksById(taskId: String): Task? {
         return userId?.let { userId ->
@@ -72,7 +84,4 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         taskRef?.update("timeLastEdit", updatedTask.timeLastEdit)
     }
 
-    override suspend fun createCategory(name: String): Boolean {
-        TODO("Not yet implemented")
-    }
 }
