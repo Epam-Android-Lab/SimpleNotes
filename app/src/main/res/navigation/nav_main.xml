@@ -26,13 +26,21 @@
         android:id="@+id/taskFragment"
         android:name="com.example.simplenotes.presentation.main.TaskFragment"
         android:label="fragment_task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_mainScreenFragment"
+            app:destination="@+id/mainScreenFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.simplenotes.presentation.main.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_allTasksFragment2"
+            app:destination="@id/allTasksFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allTasksFragment"
         android:name="com.example.simplenotes.presentation.main.alltasks.AllTasksFragment"
@@ -44,6 +52,36 @@
         <action
             android:id="@+id/action_allTasksFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
+
+            android:id="@+id/action_allTasksFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskEditFragment"
+        android:label="fragment_task_edit"
+        tools:layout="@layout/fragment_task_edit" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="default" />
+        <action
+            android:id="@+id/action_taskEditFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskShowFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskShowFragment"
+        android:label="fragment_task_show"
+        tools:layout="@layout/fragment_task_show" >
+        <action
+            android:id="@+id/action_taskShowFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="default" />
+
     </fragment>
 
 </navigation>

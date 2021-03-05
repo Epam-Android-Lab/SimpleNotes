@@ -1,11 +1,15 @@
 package com.example.simplenotes.presentation.main
 
-import android.app.*
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -13,16 +17,15 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
-import com.example.simplenotes.databinding.FragmentTaskBinding
+import com.example.simplenotes.databinding.FragmentTaskEditBinding
 import com.example.simplenotes.domain.entities.Task
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.math.absoluteValue
 import kotlin.random.Random
 
-class TaskFragment : Fragment(R.layout.fragment_task) {
+class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
-    private var _binding: FragmentTaskBinding? = null
+    private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
     private val taskViewModel by viewModels<TaskViewModel>()
@@ -31,13 +34,31 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private var reminderTime: Long? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentTaskBinding.inflate(inflater, container, false)
-
+        _binding = FragmentTaskEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
+
+        taskViewModel.getTask(taskId)
+
+        taskViewModel.task.observe(viewLifecycleOwner) { it ->
+            binding.editTextTaskTitle.setText(it.title)
+            binding.editTextTextTaskDesc.setText(it.description)
+            binding.textOfDeadline.text = it.deadline?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
+            binding.textOfReminder.text = it.notification?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
+            binding.sliderPriority.value = it.priority.absoluteValue.toFloat()
+            resources.getStringArray(R.array.categories).forEachIndexed { index, s ->
+                if (s == it.category) {
+                    binding.spinnerCategories.setSelection(index)
+                }
+            }
+            deadlineTime = it.deadline
+            reminderTime = it.notification
+        }
 
         binding.btnAddDeadline.setOnClickListener {
             setTime(binding.textOfDeadline, DEADLINE_ID)
@@ -48,24 +69,24 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
 
         binding.buttonSaveTask.setOnClickListener {
-            val newTask = Task(
-                    id = "",
+            val updatedTask = Task(
+                    id = taskId,
                     title = binding.editTextTaskTitle.text.toString(),
                     description = binding.editTextTextTaskDesc.text.toString(),
                     deadline = deadlineTime,
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
                     category = binding.spinnerCategories.selectedItem.toString(),
+                    //добавить обработку статуса
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
-            val taskId = Firebase.auth.uid?.run {
-                taskViewModel.addNewTask(newTask)
-            }
 
-            val args = TaskShowFragmentArgs(
-                id = taskId.toString()).toBundle()
+            val args = TaskEditFragmentArgs(
+                    id = taskId).toBundle()
+
+            taskViewModel.updateTask(taskId, updatedTask)
 
             deadlineTime?.let {
                 setAlarm(
@@ -87,8 +108,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 )
             }
 
-            Toast.makeText(context, "Задача создана", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_taskFragment_to_mainScreenFragment)
+            Toast.makeText(context, "Задача изменена", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_taskEditFragment_to_mainScreenFragment)
         }
     }
 
@@ -112,7 +133,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                                         this.set(Calendar.HOUR_OF_DAY, hour)
                                         this.set(Calendar.MINUTE, min)
 
-                                        val dateFormatted = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", this)
+                                        val dateFormatted = DateFormat.format("dd-MM-yyyy HH:mm", this)
                                         view.text = dateFormatted
                                         when (id) {
                                             DEADLINE_ID -> deadlineTime = this.timeInMillis
