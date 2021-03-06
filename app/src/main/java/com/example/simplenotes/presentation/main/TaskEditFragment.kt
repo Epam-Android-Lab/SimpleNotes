@@ -21,7 +21,6 @@ import com.example.simplenotes.databinding.FragmentTaskEditBinding
 import com.example.simplenotes.domain.entities.Task
 import java.util.*
 import kotlin.math.absoluteValue
-import kotlin.random.Random
 
 class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
@@ -42,6 +41,8 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
+        val notif_deadline_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifDeadlineId
+        val notif_reminder_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifReminderId
 
         taskViewModel.getTask(taskId)
 
@@ -51,9 +52,13 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
             binding.textOfDeadline.text = it.deadline?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.textOfReminder.text = it.notification?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.sliderPriority.value = it.priority.absoluteValue.toFloat()
+
             resources.getStringArray(R.array.categories).forEachIndexed { index, s ->
                 if (s == it.category) {
                     binding.spinnerCategories.setSelection(index)
+                }
+                if (it.status) {
+                    binding.spinnerCategories.setSelection(3)
                 }
             }
             deadlineTime = it.deadline
@@ -77,14 +82,16 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
                     category = binding.spinnerCategories.selectedItem.toString(),
-                    //добавить обработку статуса
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
 
             val args = TaskEditFragmentArgs(
-                    id = taskId).toBundle()
+                    id = taskId,
+                    notifDeadlineId = notif_deadline_id,
+                    notifReminderId = notif_reminder_id
+            ).toBundle()
 
             taskViewModel.updateTask(taskId, updatedTask)
 
@@ -94,7 +101,8 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         DEADLINE_ID,
                         it,
                         "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notif_deadline_id
                 )
             }
 
@@ -104,7 +112,8 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         REMINDER_ID,
                         it,
                         "Reminder",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notif_reminder_id
                 )
             }
 
@@ -153,13 +162,14 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         }
     }
 
-    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String) {
+    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String, notificationCode: Int) {
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("type", type)
+        intent.putExtra(TYPE_NOTIFY, type)
         intent.putExtra(TITLE_NAME, title)
         intent.putExtra(DESC_NAME, description)
         intent.putExtra(TASK_ID, args)
-        val pendingIntent = PendingIntent.getBroadcast(context, Random.nextInt(), intent, 0)
+        intent.putExtra(NOTIFICATION_ID, notificationCode)
+        val pendingIntent = PendingIntent.getBroadcast(context, notificationCode, intent, 0)
         val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
@@ -170,5 +180,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
         private const val TASK_ID = "TASK_ID"
+        private const val TYPE_NOTIFY = "TYPE_NOTIFY"
+        private const val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 }

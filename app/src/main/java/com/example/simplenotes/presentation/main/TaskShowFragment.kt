@@ -26,6 +26,8 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
+        val notif_deadline_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifDeadlineId
+        val notif_reminder_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifReminderId
 
         taskViewModel.getTask(taskId)
 
@@ -36,20 +38,26 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
             binding.textOfReminder.text = it.notification?.let { android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.textOfPriority.text = it.priority.toString()
             binding.textOfCategory.text = it.category
+            binding.checkStatus.isChecked = it.status
+            if(it.category == "Выполнено") binding.checkStatus.isChecked = true
         }
 
         binding.checkStatus.setOnClickListener {
-
             if (!binding.checkStatus.isChecked) {
                 binding.checkStatus.isChecked = true
+                taskViewModel.updateStatus(true, taskId)
             } else {
                 binding.checkStatus.isChecked = false
-                //update status
+                taskViewModel.updateStatus(false, taskId)
             }
         }
 
         binding.buttonEditTask.setOnClickListener {
-            val args = TaskEditFragmentArgs(id = taskId).toBundle()
+            val args = TaskEditFragmentArgs(
+                    id = taskId,
+                    notifDeadlineId = notif_deadline_id,
+                    notifReminderId = notif_reminder_id
+            ).toBundle()
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)
         }
     }

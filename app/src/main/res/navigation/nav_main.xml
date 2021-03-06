@@ -52,8 +52,11 @@
         <action
             android:id="@+id/action_allTasksFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
-
+        <action
             android:id="@+id/action_allTasksFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
+
+        android:id="@+id/action_allTasksFragment_to_taskShowFragment"
             app:destination="@id/taskShowFragment" />
     </fragment>
     <fragment
@@ -68,6 +71,12 @@
         <action
             android:id="@+id/action_taskEditFragment_to_taskShowFragment"
             app:destination="@id/taskShowFragment" />
+        <argument
+            android:name="notif_deadline_id"
+            app:argType="integer" />
+        <argument
+            android:name="notif_reminder_id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/taskShowFragment"
@@ -81,6 +90,12 @@
             android:name="id"
             app:argType="string"
             android:defaultValue="default" />
+        <argument
+            android:name="notif_deadline_id"
+            app:argType="integer" />
+        <argument
+            android:name="notif_reminder_id"
+            app:argType="integer" />
 
     </fragment>
 
