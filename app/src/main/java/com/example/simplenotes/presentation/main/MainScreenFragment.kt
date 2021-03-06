@@ -13,9 +13,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
+
+import com.example.simplenotes.presentation.login.AuthViewModel
+import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
+
 import com.example.simplenotes.domain.entities.Category
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 @ExperimentalStdlibApi
 class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
@@ -63,6 +68,9 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         //использование кнопки для тестов
         binding.fabAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_mainScreenFragment_to_taskFragment)
+        }
+        binding.test.setOnClickListener {
+            findNavController().navigate(R.id.action_mainScreenFragment_to_allTasksFragment, AllTasksFragmentArgs(categoryId = "Все").toBundle())
         }
     }
 

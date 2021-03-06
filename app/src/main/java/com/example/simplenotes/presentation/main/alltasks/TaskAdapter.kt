@@ -1,8 +1,10 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.animation.LayoutTransition
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,9 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.RecyclerAllTasksItemBinding
 import com.example.simplenotes.domain.entities.Task
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
+class TaskAdapter(
+    val context: Context,
+    val updateStatusCallback: (status: Boolean, id: String) -> Unit
+) : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
 
     class Holder(private val binding: RecyclerAllTasksItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,58 +34,43 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
             )
         )
 
-        companion object {
-            const val NUMBER_OF_LINES = 3
-        }
-
-        fun bind(task: Task) {
-            var collapsed = false
+        fun bind(
+            context: Context,
+            task: Task,
+            updateStatusCallback: (status: Boolean, id: String) -> Unit
+        ) {
             binding.apply {
                 title.text = task.title
-                description.text = task.description
-                category.text = task.category
+
                 priority.text = task.priority.toString()
 
-                /*
-                todo: 1. add time converter
-                        2. check for null
-                */
-                deadline.text = task.deadline.toString()
-                notification.text = task.notification.toString()
+                task.deadline?.let {
+                    deadline.text = convertLongToTime(it)
+                    if (currentTimeToLong() > it && !task.status) {
+                        indicator.visibility = View.VISIBLE
+                        deadline.setTextColor(context.resources.getColor(R.color.red))
+                    }
+                }
 
+                title.isChecked = task.status
                 title.setOnClickListener {
 
-                    //todo: change status
-                    if (title.isChecked) {
-
+                    if (!title.isChecked) {
+                        title.isChecked = true
+                        updateStatusCallback.invoke(true, task.id)
                     } else {
-
+                        title.isChecked = false
+                        updateStatusCallback.invoke(false, task.id)
                     }
                 }
-
-                edit.setOnClickListener {
-                    editTask(task)
-                }
-
-                //todo: Check length of text
-                description.setOnClickListener {
-                    if (!collapsed) {
-                        description.maxLines = Int.MAX_VALUE
-                        collapsed = true
-                        collapse.setImageResource(R.drawable.ic_expand_less_black_18dp)
-                    } else {
-                        description.maxLines = NUMBER_OF_LINES
-                        collapsed = false
-                        collapse.setImageResource(R.drawable.ic_expand_more_black_18dp)
-                    }
-                }
-
             }
         }
 
-        private fun editTask(task: Task) {
-            TODO()
-        }
+        private fun convertLongToTime(time: Long) =
+            SimpleDateFormat("yyyy.MM.dd HH:mm").format(Date(time))
+
+        private fun currentTimeToLong() = System.currentTimeMillis()
+
     }
 
 
@@ -94,7 +89,9 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(context, getItem(position)) { status: Boolean, id: String ->
+            updateStatusCallback.invoke(status, id)
+        }
     }
 
 }

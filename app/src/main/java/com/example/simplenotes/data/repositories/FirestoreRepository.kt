@@ -66,6 +66,11 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         }
     }
 
+    override suspend fun updateStatus(status: Boolean, id: String) {
+        userId?.let { Firebase.firestore.collection(COLLECTION_USERS).document(it).collection(
+            COLLECTION_NOTES).document(id).update("status", status) }
+    }
+
     override suspend fun updateTask(id: String, updatedTask: Task) {
         val taskRef = userId?.let {
             db.collection(COLLECTION_USERS)
