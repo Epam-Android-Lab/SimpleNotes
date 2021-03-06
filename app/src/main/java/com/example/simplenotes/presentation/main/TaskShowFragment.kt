@@ -26,8 +26,7 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
-        val notif_deadline_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifDeadlineId
-        val notif_reminder_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifReminderId
+        val notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifId
 
         taskViewModel.getTask(taskId)
 
@@ -55,8 +54,7 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
         binding.buttonEditTask.setOnClickListener {
             val args = TaskEditFragmentArgs(
                     id = taskId,
-                    notifDeadlineId = notif_deadline_id,
-                    notifReminderId = notif_reminder_id
+                    notifId = notif_id,
             ).toBundle()
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)
         }

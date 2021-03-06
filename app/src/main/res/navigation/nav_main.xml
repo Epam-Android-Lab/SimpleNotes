@@ -72,10 +72,7 @@
             android:id="@+id/action_taskEditFragment_to_taskShowFragment"
             app:destination="@id/taskShowFragment" />
         <argument
-            android:name="notif_deadline_id"
-            app:argType="integer" />
-        <argument
-            android:name="notif_reminder_id"
+            android:name="notif_id"
             app:argType="integer" />
     </fragment>
     <fragment
@@ -91,10 +88,7 @@
             app:argType="string"
             android:defaultValue="default" />
         <argument
-            android:name="notif_deadline_id"
-            app:argType="integer" />
-        <argument
-            android:name="notif_reminder_id"
+            android:name="notif_id"
             app:argType="integer" />
 
     </fragment>

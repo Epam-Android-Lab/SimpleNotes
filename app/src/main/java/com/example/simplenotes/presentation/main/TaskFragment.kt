@@ -64,13 +64,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskViewModel.addNewTask(newTask)
             }
 
-            val notificationCodeDeadline = Random.nextInt()
-            val notificationCodeReminder = Random.nextInt()
+            val notificationCode = taskId.hashCode()
 
             val args = TaskShowFragmentArgs(
                     id = taskId.toString(),
-                    notifDeadlineId = notificationCodeDeadline,
-                    notifReminderId = notificationCodeReminder
+                    notifId = notificationCode
             ).toBundle()
 
             deadlineTime?.let {
@@ -80,7 +78,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         it,
                         "The task's deadline has expired!",
                         binding.editTextTaskTitle.text.toString(),
-                        notificationCodeDeadline
+                        notificationCode
                 )
             }
 
@@ -91,7 +89,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         it,
                         "Reminder",
                         binding.editTextTaskTitle.text.toString(),
-                        notificationCodeReminder
+                        notificationCode
                 )
             }
 

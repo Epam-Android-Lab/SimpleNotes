@@ -41,8 +41,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
-        val notif_deadline_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifDeadlineId
-        val notif_reminder_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifReminderId
+        val notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifId
 
         taskViewModel.getTask(taskId)
 
@@ -89,8 +88,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
             val args = TaskEditFragmentArgs(
                     id = taskId,
-                    notifDeadlineId = notif_deadline_id,
-                    notifReminderId = notif_reminder_id
+                    notifId = notif_id,
             ).toBundle()
 
             taskViewModel.updateTask(taskId, updatedTask)
@@ -102,7 +100,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         it,
                         "The task's deadline has expired!",
                         binding.editTextTaskTitle.text.toString(),
-                        notif_deadline_id
+                        notif_id
                 )
             }
 
@@ -113,7 +111,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         it,
                         "Reminder",
                         binding.editTextTaskTitle.text.toString(),
-                        notif_reminder_id
+                        notif_id
                 )
             }
 
@@ -169,7 +167,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         intent.putExtra(DESC_NAME, description)
         intent.putExtra(TASK_ID, args)
         intent.putExtra(NOTIFICATION_ID, notificationCode)
-        val pendingIntent = PendingIntent.getBroadcast(context, notificationCode, intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(context, notificationCode, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
