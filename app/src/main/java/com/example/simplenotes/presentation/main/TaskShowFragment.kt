@@ -38,6 +38,16 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
             binding.textOfCategory.text = it.category
         }
 
+        binding.checkStatus.setOnClickListener {
+
+            if (!binding.checkStatus.isChecked) {
+                binding.checkStatus.isChecked = true
+            } else {
+                binding.checkStatus.isChecked = false
+                //update status
+            }
+        }
+
         binding.buttonEditTask.setOnClickListener {
             val args = TaskEditFragmentArgs(id = taskId).toBundle()
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)

@@ -63,8 +63,8 @@
             app:argType="string"
             android:defaultValue="default" />
         <action
-            android:id="@+id/action_taskEditFragment_to_mainScreenFragment"
-            app:destination="@id/mainScreenFragment" />
+            android:id="@+id/action_taskEditFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskShowFragment"

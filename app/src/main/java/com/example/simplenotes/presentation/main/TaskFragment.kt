@@ -67,13 +67,17 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             val args = TaskShowFragmentArgs(
                 id = taskId.toString()).toBundle()
 
+            val notificationCodeDeadline = Random.nextInt()
+            val notificationCodeReminder = Random.nextInt()
+
             deadlineTime?.let {
                 setAlarm(
                         args,
                         DEADLINE_ID,
                         it,
                         "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notificationCodeDeadline
                 )
             }
 
@@ -83,7 +87,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         REMINDER_ID,
                         it,
                         "Reminder",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notificationCodeReminder
                 )
             }
 
@@ -132,12 +137,13 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
-    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String) {
+    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String, notificationCode: Int) {
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra("type", type)
         intent.putExtra(TITLE_NAME, title)
         intent.putExtra(DESC_NAME, description)
         intent.putExtra(TASK_ID, args)
+        intent.putExtra(NOTIFICATION_ID, notificationCode)
         val pendingIntent = PendingIntent.getBroadcast(context, Random.nextInt(), intent, 0)
         val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
@@ -149,5 +155,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
         private const val TASK_ID = "TASK_ID"
+        private const val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 }

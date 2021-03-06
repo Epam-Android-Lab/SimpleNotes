@@ -109,7 +109,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
             }
 
             Toast.makeText(context, "Задача изменена", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_taskEditFragment_to_mainScreenFragment)
+            findNavController().navigate(R.id.action_taskEditFragment_to_taskShowFragment, args)
         }
     }
 

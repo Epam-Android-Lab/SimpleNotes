@@ -48,7 +48,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setColor(Color.GREEN)
 
         val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(Random.nextInt(), notification.build())
+        manager.notify(intent.getIntExtra(NOTIFICATION_ID, Random.nextInt()), notification.build())
     }
 
     companion object {
@@ -57,5 +57,6 @@ class AlarmReceiver : BroadcastReceiver() {
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
         private const val TASK_ID = "TASK_ID"
+        private const val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 }
