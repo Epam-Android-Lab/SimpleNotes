@@ -43,10 +43,11 @@ class FilterFragment : Fragment() {
 
         viewModel.allCategories.observe(viewLifecycleOwner) { allCategories ->
             allCategories.forEach {
-                val chip = layoutInflater.inflate(R.layout.checked_chip, binding.categories, false) as Chip
+                val chip =
+                    layoutInflater.inflate(R.layout.checked_chip, binding.categories, false) as Chip
                 chip.text = it.name
-                chip.setOnCheckedChangeListener { buttonView, isChecked ->
-                    Log.d("KEK", "chip with text ${buttonView.text} check status is $isChecked")
+                chip.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.updateCheckedList(it, isChecked)
                 }
                 binding.categories.addView(chip)
             }
