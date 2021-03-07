@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
+import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -94,6 +95,11 @@ class AllTasksFragment : Fragment() {
         viewModel.activeSort.observe(viewLifecycleOwner) {
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
+        }
+
+        binding.filter.setOnClickListener {
+            val args = FilterFragmentArgs(filterOptions = null).toBundle()
+            findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
         }
     }
 
