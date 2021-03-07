@@ -50,12 +50,30 @@ class FilterFragment : Fragment() {
             }
         }
 
-        viewModel.priority.observe(viewLifecycleOwner){
+        viewModel.priority.observe(viewLifecycleOwner) {
             binding.sliderPriority.value = it.toFloat()
         }
 
         binding.sliderPriority.addOnChangeListener { _, value, _ ->
             viewModel.updatePriority(value = value.toInt())
+        }
+
+        viewModel.isDone.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.done.isChecked = true
+                binding.planned.isChecked = false
+            } else {
+                binding.done.isChecked = false
+                binding.planned.isChecked = true
+            }
+        }
+
+        binding.done.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) viewModel.updateIsDone(true)
+        }
+
+        binding.planned.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) viewModel.updateIsDone(false)
         }
 
 

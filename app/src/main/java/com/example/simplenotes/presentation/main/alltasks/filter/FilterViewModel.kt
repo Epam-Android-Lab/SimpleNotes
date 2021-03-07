@@ -22,8 +22,13 @@ class FilterViewModel : ViewModel() {
     val priority: LiveData<Int>
         get() = _priority
 
+    private val _isDone = MutableLiveData<Boolean>()
+    val isDone: LiveData<Boolean>
+        get() = _isDone
+
     companion object {
         const val DEFAULT_PRIORITY = 3
+        const val DEFAULT_IS_DONE = false
     }
 
 
@@ -43,11 +48,16 @@ class FilterViewModel : ViewModel() {
         }
 
         updatePriority(DEFAULT_PRIORITY)
+        updateIsDone(DEFAULT_IS_DONE)
 
     }
 
     fun updatePriority(value: Int){
         _priority.postValue(value)
+    }
+
+    fun updateIsDone(isDone: Boolean){
+        _isDone.postValue(isDone)
     }
 
     fun updateCheckedList(category: Category, isChecked: Boolean) {
