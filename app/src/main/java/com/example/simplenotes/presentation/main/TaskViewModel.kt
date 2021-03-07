@@ -8,6 +8,7 @@ import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.AddNewTaskUseCase
 import com.example.simplenotes.domain.usecases.GetTaskByIdUseCase
+import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskUseCase
 import kotlinx.coroutines.launch
 
@@ -36,6 +37,12 @@ class TaskViewModel : ViewModel(), Contract.ITaskViewModel {
     override fun updateTask(id: String, updatedTask: Task) {
         viewModelScope.launch {
             UpdateTaskUseCase(FirestoreRepository()).execute(id, updatedTask)
+        }
+    }
+
+    override fun updateStatus(status: Boolean, id: String) {
+        viewModelScope.launch {
+            UpdateTaskStatusUseCase(FirestoreRepository()).execute(status, id)
         }
     }
 }

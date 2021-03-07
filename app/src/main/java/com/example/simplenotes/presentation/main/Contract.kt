@@ -28,6 +28,7 @@ interface Contract {
         fun addNewTask(newTask: Task) : String
         fun getTask(id: String)
         fun updateTask(id: String, updatedTask: Task)
+        fun updateStatus(status: Boolean, id: String)
 
     }
 }

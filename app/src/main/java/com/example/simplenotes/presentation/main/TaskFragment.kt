@@ -64,8 +64,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskViewModel.addNewTask(newTask)
             }
 
+            val notificationCode = taskId.hashCode()
+
             val args = TaskShowFragmentArgs(
-                id = taskId.toString()).toBundle()
+                    id = taskId.toString(),
+                    notifId = notificationCode
+            ).toBundle()
 
             deadlineTime?.let {
                 setAlarm(
@@ -73,7 +77,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         DEADLINE_ID,
                         it,
                         "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notificationCode
                 )
             }
 
@@ -83,7 +88,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         REMINDER_ID,
                         it,
                         "Reminder",
-                        binding.editTextTaskTitle.text.toString()
+                        binding.editTextTaskTitle.text.toString(),
+                        notificationCode
                 )
             }
 
@@ -132,13 +138,14 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
-    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String) {
+    private fun setAlarm(args: Bundle, type: String, time: Long, title: String, description: String, notificationCode: Int) {
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("type", type)
+        intent.putExtra(TYPE_NOTIFY, type)
         intent.putExtra(TITLE_NAME, title)
         intent.putExtra(DESC_NAME, description)
         intent.putExtra(TASK_ID, args)
-        val pendingIntent = PendingIntent.getBroadcast(context, Random.nextInt(), intent, 0)
+        intent.putExtra(NOTIFICATION_ID, notificationCode)
+        val pendingIntent = PendingIntent.getBroadcast(context, notificationCode, intent, 0)
         val alarmManager : AlarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
@@ -149,5 +156,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
         private const val TASK_ID = "TASK_ID"
+        private const val TYPE_NOTIFY = "TYPE_NOTIFY"
+        private const val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 }

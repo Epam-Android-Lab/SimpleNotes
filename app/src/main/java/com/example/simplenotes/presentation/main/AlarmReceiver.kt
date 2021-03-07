@@ -27,8 +27,8 @@ class AlarmReceiver : BroadcastReceiver() {
                 .createPendingIntent()
 
         var channel = ""
-
-        when (intent.getStringExtra("type")) {
+        var notif_id = intent.getIntExtra(NOTIFICATION_ID, Random.nextInt())
+        when (intent.getStringExtra(TYPE_NOTIFY)) {
             "DEADLINE_ID" -> {
                 channel = DEADLINE_CHANNEL
             }
@@ -48,7 +48,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setColor(Color.GREEN)
 
         val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(Random.nextInt(), notification.build())
+        manager.notify(notif_id, notification.build())
     }
 
     companion object {
@@ -57,5 +57,7 @@ class AlarmReceiver : BroadcastReceiver() {
         private const val TITLE_NAME = "TITLE_NAME"
         private const val DESC_NAME = "DESC_NAME"
         private const val TASK_ID = "TASK_ID"
+        private const val NOTIFICATION_ID = "NOTIFICATION_ID"
+        private const val TYPE_NOTIFY = "TYPE_NOTIFY"
     }
 }
