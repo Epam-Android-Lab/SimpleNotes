@@ -2,6 +2,7 @@ package com.example.simplenotes.presentation.main.alltasks
 
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,10 +12,11 @@ import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
+import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import kotlinx.coroutines.launch
 
 @ExperimentalStdlibApi
-class AllTasksViewModel(private val categoryId: String) : ViewModel() {
+class AllTasksViewModel : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
         get() = _listOfTasks
@@ -27,12 +29,9 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
     val activeSort: LiveData<String>
         get() = _activeSort
 
-    init {
-        getData(categoryId)
-    }
 
     @ExperimentalStdlibApi
-    private fun getData(categoryId: String) {
+    fun getData(categoryId: String, filterOptions: FilterOptions? = null) {
         viewModelScope.launch {
 
             GetTasksByCategoryUseCase(FirestoreRepository()).execute(category = categoryId)
@@ -44,6 +43,9 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
                     }
                 }
 
+            if (filterOptions != null) {
+                applyFilters(filterOptions)
+            }
 
 //            GetAllTasksByUserUseCase(FirestoreRepository()).execute()?.let { snapshot ->
 //                _listOfTasks.value = buildList {
@@ -112,5 +114,40 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun applyFilters(filterOptions: FilterOptions) {
+
+        _listOfTasks.value?.let { list ->
+            val filterResult = list.filter {
+                it.status == filterOptions.status
+            }
+            _listOfTasks.postValue(filterResult)
+        }
+
+        if (filterOptions.categories != null) {
+            _listOfTasks.value?.let { list ->
+
+                _listOfTasks.postValue( list.filter {
+                    filterOptions.categories.run {
+                        var result = false
+
+                        forEach { category ->
+                            result = category.name == it.category
+                        }
+
+                        result
+                    }
+                })
+
+            }
+        }
+
+        _listOfTasks.value?.let { list ->
+            _listOfTasks.postValue(list.filter {
+                it.priority == filterOptions.priority
+            })
+        }
+
     }
 }

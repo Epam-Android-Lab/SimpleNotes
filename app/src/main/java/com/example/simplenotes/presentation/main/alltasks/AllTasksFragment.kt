@@ -25,9 +25,7 @@ class AllTasksFragment : Fragment() {
     }
 
     @ExperimentalStdlibApi
-    private val viewModel by viewModels<AllTasksViewModel> {
-        AllTasksViewModelFactory(categoryId)
-    }
+    private val viewModel by viewModels<AllTasksViewModel>()
 
     private val categoryId: String by lazy {
         AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
@@ -35,8 +33,13 @@ class AllTasksFragment : Fragment() {
 
     private val options = mutableListOf<String>()
 
-    private val filterOptions: FilterOptions? by lazy {
-        AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+    private var filterOptions: FilterOptions? = null
+
+    @ExperimentalStdlibApi
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+        viewModel.getData(categoryId, filterOptions)
     }
 
 
@@ -45,8 +48,6 @@ class AllTasksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        if(filterOptions != null) Log.d("KEK", "received filters can filter")
         return binding.root
     }
 
@@ -66,7 +67,6 @@ class AllTasksFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_allTasksFragment_to_taskFragment)
         }
-
 
 
         val bottomBehavior = BottomSheetBehavior.from(binding.bottomSort.bottomSheet).apply {
@@ -106,15 +106,11 @@ class AllTasksFragment : Fragment() {
         }
 
         binding.filter.setOnClickListener {
-            val args = FilterFragmentArgs(filterOptions = filterOptions, categoryId = categoryId).toBundle()
+            val args = FilterFragmentArgs(
+                filterOptions = filterOptions,
+                categoryId = categoryId
+            ).toBundle()
             findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
         }
-    }
-
-    class AllTasksViewModelFactory(private val categoryId: String) :
-        ViewModelProvider.NewInstanceFactory() {
-        @ExperimentalStdlibApi
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AllTasksViewModel(categoryId) as T
     }
 }

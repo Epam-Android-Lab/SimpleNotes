@@ -61,6 +61,27 @@ class FilterViewModel : ViewModel() {
 
     }
 
+    fun receives(filterOptions: FilterOptions){
+        viewModelScope.launch {
+            GetAllCategoriesByUser(FirestoreRepository()).execute()?.let { querySnapshot ->
+                val result = mutableListOf<Category>()
+
+                querySnapshot.forEach {
+                    result.add(it.toObject(Category::class.java))
+                }
+
+                _allCategories.postValue(result.toList())
+            }
+        }
+
+        filterOptions.priority?.let { updatePriority(it) }
+        filterOptions.status?.let { updateIsDone(it) }
+
+        filterOptions.categories?.forEach {
+            updateCheckedList(it, true)
+        }
+    }
+
     fun updatePriority(value: Int) {
         _priority.postValue(value)
     }
