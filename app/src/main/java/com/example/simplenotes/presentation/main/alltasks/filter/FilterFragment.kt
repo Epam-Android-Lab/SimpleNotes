@@ -1,17 +1,14 @@
 package com.example.simplenotes.presentation.main.alltasks.filter
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentFilterBinding
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
 
 
 class FilterFragment : Fragment() {
@@ -52,6 +49,16 @@ class FilterFragment : Fragment() {
                 binding.categories.addView(chip)
             }
         }
+
+        viewModel.priority.observe(viewLifecycleOwner){
+            binding.sliderPriority.value = it.toFloat()
+        }
+
+        binding.sliderPriority.addOnChangeListener { _, value, _ ->
+            viewModel.updatePriority(value = value.toInt())
+        }
+
+
     }
 
     private fun initViewWithDefaultFilter() {

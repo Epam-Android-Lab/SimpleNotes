@@ -56,4 +56,5 @@
     <string name="filter">Фильтры</string>
     <string name="sroting_method">Метод сортировки</string>
     <string name="filter_by_categories">Filter by categories</string>
+    <string name="priority">Priority</string>
 </resources>

@@ -1,16 +1,12 @@
 package com.example.simplenotes.presentation.main.alltasks.filter
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.data.repositories.FirestoreRepository
-import com.example.simplenotes.data.repositories.RemoteRepository
 import com.example.simplenotes.domain.entities.Category
-import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.GetAllCategoriesByUser
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.launch
 
 class FilterViewModel : ViewModel() {
@@ -21,6 +17,16 @@ class FilterViewModel : ViewModel() {
     private val _checkedCategories = MutableLiveData<MutableList<Category>>()
     val checkedCategories: LiveData<MutableList<Category>>
         get() = _checkedCategories
+
+    private val _priority = MutableLiveData<Int>()
+    val priority: LiveData<Int>
+        get() = _priority
+
+    companion object {
+        const val DEFAULT_PRIORITY = 3
+    }
+
+
 
     fun defaults() {
         viewModelScope.launch {
@@ -35,6 +41,13 @@ class FilterViewModel : ViewModel() {
                 _checkedCategories.postValue(result)
             }
         }
+
+        updatePriority(DEFAULT_PRIORITY)
+
+    }
+
+    fun updatePriority(value: Int){
+        _priority.postValue(value)
     }
 
     fun updateCheckedList(category: Category, isChecked: Boolean) {
