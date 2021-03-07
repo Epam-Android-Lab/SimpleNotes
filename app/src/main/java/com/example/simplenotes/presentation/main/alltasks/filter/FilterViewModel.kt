@@ -26,11 +26,20 @@ class FilterViewModel : ViewModel() {
     val isDone: LiveData<Boolean>
         get() = _isDone
 
+
+    private val _filterOptions = MutableLiveData<ConfirmState>(ConfirmState.NotPrepared)
+    val filterOptions: LiveData<ConfirmState>
+        get() = _filterOptions
+
     companion object {
         const val DEFAULT_PRIORITY = 3
         const val DEFAULT_IS_DONE = false
     }
 
+    sealed class ConfirmState {
+        object NotPrepared : ConfirmState()
+        data class Prepared(val filterOptions: FilterOptions) : ConfirmState()
+    }
 
 
     fun defaults() {
@@ -52,16 +61,30 @@ class FilterViewModel : ViewModel() {
 
     }
 
-    fun updatePriority(value: Int){
+    fun updatePriority(value: Int) {
         _priority.postValue(value)
     }
 
-    fun updateIsDone(isDone: Boolean){
+    fun updateIsDone(isDone: Boolean) {
         _isDone.postValue(isDone)
     }
 
     fun updateCheckedList(category: Category, isChecked: Boolean) {
-        if (isChecked) _checkedCategories.value?.add(category) else _checkedCategories.value?.remove(category)
+        if (isChecked) _checkedCategories.value?.add(category) else _checkedCategories.value?.remove(
+            category
+        )
+    }
+
+    fun confirm() {
+        _filterOptions.postValue(
+            ConfirmState.Prepared(
+                FilterOptions(
+                    categories = checkedCategories.value,
+                    priority = priority.value,
+                    status = isDone.value
+                )
+            )
+        )
     }
 
 }

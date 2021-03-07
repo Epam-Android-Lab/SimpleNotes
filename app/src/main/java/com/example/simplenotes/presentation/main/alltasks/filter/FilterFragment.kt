@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentFilterBinding
+import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.google.android.material.chip.Chip
 
 
@@ -17,11 +19,19 @@ class FilterFragment : Fragment() {
         FragmentFilterBinding.inflate(layoutInflater)
     }
 
-    private val filterOptions: FilterOptions? by lazy {
-        FilterFragmentArgs.fromBundle(requireArguments()).filterOptions
+    private  var filterOptions: FilterOptions? = null
+
+    private val categoryId: String by lazy {
+        FilterFragmentArgs.fromBundle(requireArguments()).categoryId
     }
 
     private val viewModel by viewModels<FilterViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        filterOptions =  FilterFragmentArgs.fromBundle(requireArguments()).filterOptions
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +86,22 @@ class FilterFragment : Fragment() {
             if (isChecked) viewModel.updateIsDone(false)
         }
 
+        binding.confirm.setOnClickListener {
+            viewModel.confirm()
+        }
+
+        viewModel.filterOptions.observe(viewLifecycleOwner){
+            when(it){
+                is FilterViewModel.ConfirmState.Prepared -> {
+                    filterOptions = it.filterOptions
+
+                    val args = AllTasksFragmentArgs(filterOptions = filterOptions, categoryId = categoryId).toBundle()
+                    findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
+
+                }
+                else -> {}
+            }
+        }
 
     }
 

@@ -112,6 +112,9 @@
             android:name="filterOptions"
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
             app:nullable="true" />
+        <argument
+            android:name="category_id"
+            app:argType="string" />
     </fragment>
 
 </navigation>

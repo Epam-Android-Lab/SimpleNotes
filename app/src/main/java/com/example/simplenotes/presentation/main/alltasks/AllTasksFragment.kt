@@ -1,6 +1,7 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
+import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -33,12 +35,18 @@ class AllTasksFragment : Fragment() {
 
     private val options = mutableListOf<String>()
 
+    private val filterOptions: FilterOptions? by lazy {
+        AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        if(filterOptions != null) Log.d("KEK", "received filters can filter")
         return binding.root
     }
 
@@ -98,7 +106,7 @@ class AllTasksFragment : Fragment() {
         }
 
         binding.filter.setOnClickListener {
-            val args = FilterFragmentArgs(filterOptions = null).toBundle()
+            val args = FilterFragmentArgs(filterOptions = filterOptions, categoryId = categoryId).toBundle()
             findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
         }
     }
