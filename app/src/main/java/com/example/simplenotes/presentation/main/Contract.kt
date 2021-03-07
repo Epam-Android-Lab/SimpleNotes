@@ -1,5 +1,6 @@
 package com.example.simplenotes.presentation.main
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.entities.Category
@@ -14,6 +15,14 @@ interface Contract {
         fun getAllCategories()
         fun getLatestTasks()
         fun subscribeToFireBase()
+    }
+
+    interface IAllTasksViewModel {
+        fun getData(categoryId: String)
+        fun updateStatus(status: Boolean, id: String)
+        fun getOptions(context: Context)
+        fun setActiveSortOption(index: Int)
+
     }
 
     interface IAuthViewModel{

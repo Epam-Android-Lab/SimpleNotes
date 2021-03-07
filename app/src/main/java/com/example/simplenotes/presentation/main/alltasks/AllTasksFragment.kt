@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllTasksFragment : Fragment() {
 
@@ -21,14 +18,7 @@ class AllTasksFragment : Fragment() {
         FragmentAllTasksBinding.inflate(layoutInflater)
     }
 
-    @ExperimentalStdlibApi
-    private val viewModel by viewModels<AllTasksViewModel> {
-        AllTasksViewModelFactory(categoryId)
-    }
-
-    private val categoryId: String by lazy {
-        AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
-    }
+    private val viewModel: AllTasksViewModel by viewModel()
 
     private val options = mutableListOf<String>()
 
@@ -41,9 +31,12 @@ class AllTasksFragment : Fragment() {
         return binding.root
     }
 
-    @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val categoryId = AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
+
+        viewModel.getData(categoryId)
 
         val adapter = TaskAdapter(requireContext()) { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
@@ -57,8 +50,6 @@ class AllTasksFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_allTasksFragment_to_taskFragment)
         }
-
-
 
         val bottomBehavior = BottomSheetBehavior.from(binding.bottomSort.bottomSheet).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
@@ -95,12 +86,5 @@ class AllTasksFragment : Fragment() {
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
         }
-    }
-
-    class AllTasksViewModelFactory(private val categoryId: String) :
-        ViewModelProvider.NewInstanceFactory() {
-        @ExperimentalStdlibApi
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AllTasksViewModel(categoryId) as T
     }
 }

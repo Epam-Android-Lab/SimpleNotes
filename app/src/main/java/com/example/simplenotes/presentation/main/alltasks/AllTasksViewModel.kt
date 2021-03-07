@@ -1,20 +1,20 @@
 package com.example.simplenotes.presentation.main.alltasks
 
-
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.R
-import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import kotlinx.coroutines.launch
 
-@ExperimentalStdlibApi
-class AllTasksViewModel(private val categoryId: String) : ViewModel() {
+class AllTasksViewModel(
+    private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
+    private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
+    ) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
         get() = _listOfTasks
@@ -27,21 +27,16 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
     val activeSort: LiveData<String>
         get() = _activeSort
 
-    init {
-        getData(categoryId)
-    }
-
-    @ExperimentalStdlibApi
-    private fun getData(categoryId: String) {
+    fun getData(categoryId: String) {
         viewModelScope.launch {
 
-            GetTasksByCategoryUseCase(FirestoreRepository()).execute(category = categoryId)
+            getTasksByCategoryUseCase.execute(category = categoryId)
                 .let { snapshot ->
-                    _listOfTasks.value = buildList {
-                        snapshot?.forEach {
-                            add(it.toObject(Task::class.java))
-                        }
+                    val list: MutableList<Task> = mutableListOf()
+                    snapshot?.forEach {
+                        list.add(it.toObject(Task::class.java))
                     }
+                    _listOfTasks.value = list
                 }
 
 
@@ -57,7 +52,7 @@ class AllTasksViewModel(private val categoryId: String) : ViewModel() {
 
     fun updateStatus(status: Boolean, id: String) {
         viewModelScope.launch {
-            UpdateTaskStatusUseCase(FirestoreRepository()).execute(status, id)
+            updateTaskStatusUseCase.execute(status, id)
         }
     }
 

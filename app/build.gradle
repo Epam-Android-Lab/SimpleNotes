@@ -74,10 +74,12 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     //koin
-    //def koin_version = "2.2.2"
-    //implementation "org.koin:koin-androidx-scope:$koin_version"
-    //implementation "org.koin:koin-androidx-viremodel:$koin_version"
-    //implementation "org.koin:koin-androidx-fragment:$koin_version"
-    //implementation "org.koin:koin-androidx-ext:$koin_version"
+    def koin_version = "2.2.2"
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"
 
 }
