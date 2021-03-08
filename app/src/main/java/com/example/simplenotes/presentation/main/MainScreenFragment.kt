@@ -69,16 +69,9 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         latestTasksAdapter = LatestTasksAdapter()
         binding.recyclerViewLatestTasks.adapter = latestTasksAdapter
 
-        viewModel.getAllCategories()
-        viewModel.getLatestTasks()
 
-        viewModel.categoryState.observe(viewLifecycleOwner, {
-            myCategoriesAdapter.submitList(it)
-        })
-
-        viewModel.latestTaskState.observe(viewLifecycleOwner, {
-            latestTasksAdapter.submitList(it)
-        })
+        updateCategories()
+        updateLatestTasks()
 
         binding.btnAddMyCategory.setOnClickListener {
             callAlertDialog()
@@ -101,19 +94,18 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         val dialog = AlertDialog.Builder(activity).apply {
             setTitle("Добавить категорию")
             setView(et)
-            setPositiveButton("Добавить", DialogInterface.OnClickListener { dialog, _ ->
+            setPositiveButton("Добавить") { dialog, _ ->
                 val categoryName = et.editableText.toString()
                 val category = Category(
-                        id = "", // нужно будет добавить автоинкремент
-                        name = categoryName
+                    id = "", // нужно будет добавить автоинкремент
+                    name = categoryName
                 )
                 Firebase.auth.uid?.let {
                     viewModel.addCategory(category)
                 }
-                myCategoriesAdapter.notifyDataSetChanged()
-                binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
+                updateCategories()
                 dialog.dismiss()
-            })
+            }
             setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()
             }
@@ -173,4 +165,17 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
     }
 
+    private fun updateCategories() {
+        viewModel.getAllCategories()
+        viewModel.categoryState.observe(viewLifecycleOwner, {
+            myCategoriesAdapter.submitList(it)
+        })
+    }
+
+    private fun updateLatestTasks() {
+        viewModel.getLatestTasks()
+        viewModel.latestTaskState.observe(viewLifecycleOwner, {
+            latestTasksAdapter.submitList(it)
+        })
+    }
 }
