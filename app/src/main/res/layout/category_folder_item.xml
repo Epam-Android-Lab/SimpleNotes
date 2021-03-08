@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/color_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginStart="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/color_background">
 
         <ImageView
             android:id="@+id/imageViewFolder"
@@ -27,14 +28,14 @@
             android:id="@+id/categoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Название категории"
+            android:layout_margin="4dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_margin="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewFolder"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFolder"
+            tools:text="Название категории" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

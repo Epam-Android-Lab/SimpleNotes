@@ -17,7 +17,7 @@
             tools:text="Название задачи"
             android:textSize="18sp"
             android:layout_margin="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

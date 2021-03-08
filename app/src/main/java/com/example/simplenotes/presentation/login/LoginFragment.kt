@@ -11,8 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentLoginBinding
+import com.example.simplenotes.presentation.main.SaveTheme
 
 class LoginFragment : Fragment() {
+
+
 
     private val binding: FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)

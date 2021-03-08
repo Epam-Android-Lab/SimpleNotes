@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.MainScreenFragment">
+    android:background="@color/color_background"
+    tools:context=".presentation.main.MainScreenFragment"
+    tools:menu="@menu/main_screen_menu">
 
 
     <ScrollView
@@ -16,12 +18,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/color_background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gridViewCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -31,6 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/color_background"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/llFolderImportant"
                     app:layout_constraintEnd_toStartOf="@+id/llFolderAll"
@@ -46,9 +51,10 @@
                         android:id="@+id/tvToday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/color_background"
                         android:gravity="center"
-                        android:text="Сегодня"
-                        android:textColor="@color/black"
+                        android:text="@string/folder_today_text"
+                        android:textColor="@color/text_color"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -57,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/color_background"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/llFolderCompleted"
@@ -72,9 +79,10 @@
                         android:id="@+id/tvAll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/color_background"
                         android:gravity="center"
-                        android:text="Важное"
-                        android:textColor="@color/black"
+                        android:text="@string/folder_important_text"
+                        android:textColor="@color/text_color"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -83,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/color_background"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/llFolderCompleted"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,9 +108,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Все"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:text="@string/folder_all_text"
+                        android:textColor="@color/text_color"
+                        android:textSize="18sp"
+                        android:background="@color/color_background"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,7 +123,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llFolderImportant"
-                    app:layout_constraintTop_toBottomOf="@+id/llFolderAll">
+                    app:layout_constraintTop_toBottomOf="@+id/llFolderAll"
+                    android:background="@color/color_background">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -125,9 +136,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Выполнено"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:text="@string/folder_completed_text"
+                        android:textColor="@color/text_color"
+                        android:textSize="18sp"
+                        android:background="@color/color_background"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,14 +148,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Мои Списки"
-                android:textColor="@color/black"
+                android:text="@string/my_categories_header_text"
+                android:textColor="@color/text_color"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gridViewCategories" />
+                app:layout_constraintTop_toBottomOf="@+id/gridViewCategories"
+                android:background="@color/color_background"/>
 
             <ImageView
                 android:id="@+id/btnAddMyCategory"
@@ -163,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:background="@color/color_background"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -175,9 +189,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Последние"
-                android:textColor="@color/black"
+                android:text="@string/list_latest_tasks_text"
+                android:textColor="@color/text_color"
                 android:textSize="20sp"
+                android:background="@color/color_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,5 +225,16 @@
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Чисто для теста -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSwitchTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_swap_horiz_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

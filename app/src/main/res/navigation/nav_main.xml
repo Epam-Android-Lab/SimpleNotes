@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_allTasksFragment"
             app:destination="@id/allTasksFragment" />
+        <action
+            android:id="@+id/reload_mainScreenFragment"
+            app:destination="@+id/mainScreenFragment"/>
     </fragment>
 
     <fragment

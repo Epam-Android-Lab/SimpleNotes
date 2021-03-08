@@ -14,19 +14,22 @@
         <activity
             android:name=".presentation.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
+            android:theme="@style/Theme.SimpleNotes.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
+            android:theme="@style/Theme.SimpleNotes.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.main.MainActivity" />
+        <activity android:name=".presentation.main.MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
