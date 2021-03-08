@@ -19,7 +19,7 @@
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
+            android:theme="@style/Theme.SimpleNotes.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
