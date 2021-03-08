@@ -1,6 +1,7 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
+import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
+import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -22,15 +25,22 @@ class AllTasksFragment : Fragment() {
     }
 
     @ExperimentalStdlibApi
-    private val viewModel by viewModels<AllTasksViewModel> {
-        AllTasksViewModelFactory(categoryId)
-    }
+    private val viewModel by viewModels<AllTasksViewModel>()
 
     private val categoryId: String by lazy {
         AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
     }
 
     private val options = mutableListOf<String>()
+
+    private var filterOptions: FilterOptions? = null
+
+    @ExperimentalStdlibApi
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+        viewModel.getData(categoryId, filterOptions)
+    }
 
 
     override fun onCreateView(
@@ -57,7 +67,6 @@ class AllTasksFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_allTasksFragment_to_taskFragment)
         }
-
 
 
         val bottomBehavior = BottomSheetBehavior.from(binding.bottomSort.bottomSheet).apply {
@@ -95,12 +104,13 @@ class AllTasksFragment : Fragment() {
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
         }
-    }
 
-    class AllTasksViewModelFactory(private val categoryId: String) :
-        ViewModelProvider.NewInstanceFactory() {
-        @ExperimentalStdlibApi
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AllTasksViewModel(categoryId) as T
+        binding.filter.setOnClickListener {
+            val args = FilterFragmentArgs(
+                filterOptions = filterOptions,
+                categoryId = categoryId
+            ).toBundle()
+            findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
+        }
     }
 }
