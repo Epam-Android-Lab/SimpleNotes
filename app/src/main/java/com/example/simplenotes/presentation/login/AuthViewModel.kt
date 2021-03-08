@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.simplenotes.data.repositories.RemoteRepository
 import com.example.simplenotes.domain.usecases.SignInUserUseCase
 import com.example.simplenotes.domain.usecases.SignUpUserUseCase
 import com.example.simplenotes.presentation.main.Contract
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.launch
 
-class AuthViewModel() : ViewModel(), Contract.IAuthViewModel {
+class AuthViewModel(
+    private val signInUserUseCase: SignInUserUseCase,
+    private val signUpUserUseCase: SignUpUserUseCase,
+) : ViewModel(), Contract.IAuthViewModel {
 
     private val _state = MutableLiveData<AuthState>()
     override val state: LiveData<AuthState>
@@ -20,7 +22,7 @@ class AuthViewModel() : ViewModel(), Contract.IAuthViewModel {
     override fun signIn(email: String, password: String) {
         viewModelScope.launch {
             try {
-                SignInUserUseCase(RemoteRepository()).execute(email, password).user?.let {
+                signInUserUseCase.execute(email, password).user?.let {
                     _state.postValue(AuthState.Authorized)
                 } ?: run {
                     _state.postValue(AuthState.Failed)
@@ -34,7 +36,7 @@ class AuthViewModel() : ViewModel(), Contract.IAuthViewModel {
     override fun signUp(email: String, password: String) {
         viewModelScope.launch {
             try {
-                SignUpUserUseCase(RemoteRepository()).execute(email, password).user?.let {
+                signUpUserUseCase.execute(email, password).user?.let {
                     _state.postValue(AuthState.Authorized)
                 } ?: run {
                     _state.postValue(AuthState.Failed)

@@ -10,22 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskBinding
 import com.example.simplenotes.domain.entities.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.random.Random
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private var _binding: FragmentTaskBinding? = null
     private val binding get() = _binding!!
 
-    private val taskViewModel by viewModels<TaskViewModel>()
+    private val taskViewModel: TaskViewModel by viewModel()
 
     private var deadlineTime: Long? = null
     private var reminderTime: Long? = null
@@ -64,11 +63,13 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskViewModel.addNewTask(newTask)
             }
 
-            val notificationCode = taskId.hashCode()
+            val deadline_notif_id = taskId.hashCode()
+            val reminder_notif_id = taskId.hashCode() + 1
 
             val args = TaskShowFragmentArgs(
-                    id = taskId.toString(),
-                    notifId = notificationCode
+                id = taskId.toString(),
+                deadlineNotifId = deadline_notif_id,
+                reminderNotifId = reminder_notif_id
             ).toBundle()
 
             deadlineTime?.let {
@@ -78,7 +79,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         it,
                         "The task's deadline has expired!",
                         binding.editTextTaskTitle.text.toString(),
-                        notificationCode
+                        deadline_notif_id
                 )
             }
 
@@ -89,7 +90,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         it,
                         "Reminder",
                         binding.editTextTaskTitle.text.toString(),
-                        notificationCode
+                        reminder_notif_id
                 )
             }
 

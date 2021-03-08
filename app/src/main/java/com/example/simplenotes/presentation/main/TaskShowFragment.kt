@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskShowBinding
@@ -15,7 +15,7 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
     private var _binding: FragmentTaskShowBinding? = null
     private val binding get() = _binding!!
 
-    private val taskViewModel by viewModels<TaskViewModel>()
+    private val taskViewModel: TaskViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTaskShowBinding.inflate(inflater, container, false)
@@ -26,7 +26,8 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
-        val notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifId
+        val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
+        val reminder_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).reminderNotifId
 
         taskViewModel.getTask(taskId)
 
@@ -53,8 +54,9 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
 
         binding.buttonEditTask.setOnClickListener {
             val args = TaskEditFragmentArgs(
-                    id = taskId,
-                    notifId = notif_id,
+                id = taskId,
+                deadlineNotifId = deadline_notif_id,
+                reminderNotifId = reminder_notif_id
             ).toBundle()
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)
         }
