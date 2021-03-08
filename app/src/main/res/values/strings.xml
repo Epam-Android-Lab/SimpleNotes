@@ -55,4 +55,10 @@
     <string name="sample_option">По дате редактирования ▲</string>
     <string name="filter">Фильтры</string>
     <string name="sroting_method">Метод сортировки</string>
+    <string name="filter_by_categories">Filter by categories</string>
+    <string name="priority">Priority</string>
+    <string name="status">Status</string>
+    <string name="done">Done</string>
+    <string name="planned">Planned</string>
+    <string name="confirm">Confirm</string>
 </resources>
