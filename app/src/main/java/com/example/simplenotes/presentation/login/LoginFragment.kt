@@ -11,6 +11,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentLoginBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -22,6 +24,14 @@ class LoginFragment : Fragment() {
     private var password: String = ""
 
     private val authViewModel : AuthViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if(Firebase.auth.currentUser != null){
+            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -11,38 +11,50 @@
     app:cardElevation="10dp">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.main.TaskEditFragment">
 
-    <EditText
-        android:id="@+id/editTextTaskTitle"
-        android:layout_width="330dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTaskTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="Title"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Заголовок"
+        app:boxBackgroundColor="@color/white"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTextTextTaskDesc"
-        android:layout_width="330dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="12dp"
-        android:gravity="top|left"
-        android:hint="Description"
-        android:inputType="textMultiLine"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTaskDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Описание задачи"
+        app:boxBackgroundColor="@color/white"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTaskTitle" />
+        app:layout_constraintTop_toBottomOf="@id/outlinedTaskTitle">
 
-    <!-- Тут должен выползать календарик по нажатию -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddDeadline"
         android:layout_width="wrap_content"
@@ -53,7 +65,7 @@
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc" />
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTaskDesc" />
 
     <!-- И тут тоже -->
     <TextView
@@ -64,7 +76,7 @@
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/btnAddReminder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTaskDesc"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton

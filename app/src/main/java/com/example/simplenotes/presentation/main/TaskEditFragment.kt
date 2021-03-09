@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Scroller
 import android.widget.TextView
 import android.widget.Toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +41,12 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val outlinedTaskDesc = binding.outlinedTaskDesc.editText
+        outlinedTaskDesc?.maxLines = 4
+        outlinedTaskDesc?.setScroller(Scroller(context))
+        outlinedTaskDesc?.isVerticalScrollBarEnabled = true
+        //outlinedTaskDesc?.movementMethod = ScrollingMovementMethod()
+
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
         val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
         val reminder_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).reminderNotifId
@@ -47,8 +54,8 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         taskViewModel.getTask(taskId)
 
         taskViewModel.task.observe(viewLifecycleOwner) { it ->
-            binding.editTextTaskTitle.setText(it.title)
-            binding.editTextTextTaskDesc.setText(it.description)
+            binding.outlinedTaskTitle.editText?.setText(it.title)
+            binding.outlinedTaskDesc.editText?.setText(it.description)
             binding.textOfDeadline.text = it.deadline?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.textOfReminder.text = it.notification?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.sliderPriority.value = it.priority.absoluteValue.toFloat()
@@ -74,10 +81,16 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         }
 
         binding.buttonSaveTask.setOnClickListener {
+
+            if(binding.outlinedTaskTitle.editText?.text.toString() == "") {
+                Toast.makeText(context, "Заполните поле с заголовком задачи", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val updatedTask = Task(
                     id = taskId,
-                    title = binding.editTextTaskTitle.text.toString(),
-                    description = binding.editTextTextTaskDesc.text.toString(),
+                    title = binding.outlinedTaskTitle.editText?.text.toString(),
+                    description = binding.outlinedTaskDesc.editText?.text.toString(),
                     deadline = deadlineTime,
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
@@ -85,7 +98,6 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
-
 
             val args = TaskEditFragmentArgs(
                 id = taskId,
@@ -97,23 +109,23 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
             deadlineTime?.let {
                 setAlarm(
-                        args,
-                        DEADLINE_ID,
-                        it,
-                        "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString(),
-                        deadline_notif_id
+                    args,
+                    DEADLINE_ID,
+                    it,
+                    "The task's deadline has expired!",
+                    binding.outlinedTaskTitle.editText?.text.toString(),
+                    deadline_notif_id
                 )
             }
 
             reminderTime?.let {
                 setAlarm(
-                        args,
-                        REMINDER_ID,
-                        it,
-                        "Reminder",
-                        binding.editTextTaskTitle.text.toString(),
-                        reminder_notif_id
+                    args,
+                    REMINDER_ID,
+                    it,
+                    "Reminder",
+                    binding.outlinedTaskTitle.editText?.text.toString(),
+                    reminder_notif_id
                 )
             }
 

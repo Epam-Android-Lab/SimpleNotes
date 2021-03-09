@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Scroller
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private val taskViewModel: TaskViewModel by viewModel()
 
+    private var title: String = ""
     private var deadlineTime: Long? = null
     private var reminderTime: Long? = null
 
@@ -38,6 +40,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val outlinedTaskDesc = binding.outlinedTaskDesc.editText
+        outlinedTaskDesc?.maxLines = 4
+        outlinedTaskDesc?.setScroller(Scroller(context))
+        outlinedTaskDesc?.isVerticalScrollBarEnabled = true
+
         binding.btnAddDeadline.setOnClickListener {
             setTime(binding.textOfDeadline, DEADLINE_ID)
         }
@@ -47,10 +54,16 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
 
         binding.buttonSaveTask.setOnClickListener {
+
+            if(binding.outlinedTaskTitle.editText?.text.toString() == "") {
+                Toast.makeText(context, "Заполните поле с заголовком задачи", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val newTask = Task(
                     id = "",
-                    title = binding.editTextTaskTitle.text.toString(),
-                    description = binding.editTextTextTaskDesc.text.toString(),
+                    title = binding.outlinedTaskTitle.editText?.text.toString(),
+                    description = binding.outlinedTaskDesc.editText?.text.toString(),
                     deadline = deadlineTime,
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
@@ -78,7 +91,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         DEADLINE_ID,
                         it,
                         "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString(),
+                        binding.outlinedTaskTitle.editText?.text.toString(),
                         deadline_notif_id
                 )
             }
@@ -89,7 +102,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                         REMINDER_ID,
                         it,
                         "Reminder",
-                        binding.editTextTaskTitle.text.toString(),
+                        binding.outlinedTaskTitle.editText?.text.toString(),
                         reminder_notif_id
                 )
             }
