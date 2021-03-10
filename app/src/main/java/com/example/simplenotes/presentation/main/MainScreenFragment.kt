@@ -44,13 +44,11 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private val viewModel by viewModels<MainViewModel>()
 
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
         return binding.root
     }
 
@@ -115,34 +113,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private fun chooseThemeDialog() {
 
-//        val builder = AlertDialog.Builder(activity)
-//        builder.setTitle("Выберите тему")
-//        val styles = arrayOf("Light", "Dark", "System default")
-//        val checkedItem = 0
-//
-//
-//        builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
-//            when (which) {
-//                0 -> {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//                    themeSwitched = true
-//                    dialog.dismiss()
-//                }
-//                1 -> {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//                    themeSwitched = true
-//                    dialog.dismiss()
-//                }
-//                2 -> {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-//                    themeSwitched = true
-//                    dialog.dismiss()
-//                }
-//            }
-//        }
-//        val dialog = builder.create()
-//        dialog.show()
-
         when(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -168,7 +138,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
     private fun updateCategories() {
         viewModel.getAllCategories()
         viewModel.categoryState.observe(viewLifecycleOwner, {
-            myCategoriesAdapter.submitList(it)
+            myCategoriesAdapter.submitList(it.sortedBy { category -> category.name })
         })
     }
 

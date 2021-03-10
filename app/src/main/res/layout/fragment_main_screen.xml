@@ -158,11 +158,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/gridViewCategories"
                 android:background="@color/color_background"/>
 
-            <ImageView
+            <TextView
                 android:id="@+id/btnAddMyCategory"
-                android:layout_width="32dp"
-                android:layout_height="27dp"
-                android:src="@drawable/ic_baseline_add_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_add_personal_categories_button"
+                android:textColor="@color/text_color"
+                android:textSize="32sp"
+                android:gravity="center_horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerViewMyCategories"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.178"

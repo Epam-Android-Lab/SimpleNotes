@@ -53,5 +53,6 @@
     <string name="button_notification_text">Напоминание</string>
     <string name="button_deadline_text">Дедлайн</string>
     <string name="button_save_task_text">Сохранить задачу</string>
+    <string name="button_add_personal_categories_button">+</string>
 
 </resources>
