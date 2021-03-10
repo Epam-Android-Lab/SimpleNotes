@@ -2,23 +2,25 @@ package com.example.simplenotes.presentation.main
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import androidx.fragment.app.Fragment
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
 import com.example.simplenotes.databinding.SwitchThemeBinding
+import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.example.simplenotes.domain.entities.Category
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 @ExperimentalStdlibApi
 class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
@@ -42,12 +44,12 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         SwitchThemeBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         return binding.root
     }
@@ -83,8 +85,13 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         binding.btnSwitchTheme.setOnClickListener {
             chooseThemeDialog()
         }
-    }
 
+        binding.llFolderAll.setOnClickListener {
+            findNavController().navigate(R.id.action_mainScreenFragment_to_allTasksFragment,
+                AllTasksFragmentArgs(categoryId = "Все").toBundle())
+        }
+
+    }
 
 
     private fun callAlertDialog() {
@@ -113,13 +120,13 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private fun chooseThemeDialog() {
 
-        when(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 theme.setDarkModeState(false)
             }
 
-            Configuration.UI_MODE_NIGHT_NO ->{
+            Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 theme.setDarkModeState(true)
             }

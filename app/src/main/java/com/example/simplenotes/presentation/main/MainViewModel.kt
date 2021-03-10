@@ -15,12 +15,11 @@ class MainViewModel (
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val getAllCategoriesByUser: GetAllCategoriesByUser,
     private val getAllTasksByUserUseCase: GetAllTasksByUserUseCase,
-        ) : ViewModel(), Contract.IMainViewModel {
+) : ViewModel(), Contract.IMainViewModel {
 
     private val _categoryState = MutableLiveData<List<Category>>()
     override val categoryState: LiveData<List<Category>>
         get() = _categoryState
-
     private val _latestTaskState = MutableLiveData<List<Task>>()
     override val latestTaskState: LiveData<List<Task>>
         get() = _latestTaskState
