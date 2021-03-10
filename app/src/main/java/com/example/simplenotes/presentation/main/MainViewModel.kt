@@ -7,14 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
-import com.example.simplenotes.domain.usecases.CreateCategoryUseCase
-import com.example.simplenotes.domain.usecases.GetAllCategoriesByUser
-import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
+import com.example.simplenotes.domain.usecases.*
 import kotlinx.coroutines.launch
 
 
-@ExperimentalStdlibApi
-class MainViewModel : ViewModel(), Contract.IMainViewModel {
+class MainViewModel (
+    private val createCategoryUseCase: CreateCategoryUseCase,
+    private val getAllCategoriesByUser: GetAllCategoriesByUser,
+    private val getAllTasksByUserUseCase: GetAllTasksByUserUseCase,
+        ) : ViewModel(), Contract.IMainViewModel {
 
     private val _categoryState = MutableLiveData<List<Category>>()
     override val categoryState: LiveData<List<Category>>
@@ -26,18 +27,18 @@ class MainViewModel : ViewModel(), Contract.IMainViewModel {
 
     override fun addCategory(category: Category) {
         viewModelScope.launch {
-            CreateCategoryUseCase(FirestoreRepository()).execute(category)
+            createCategoryUseCase.execute(category)
         }
     }
     override fun getAllCategories() {
         viewModelScope.launch {
-            GetAllCategoriesByUser(FirestoreRepository()).execute()
+            getAllCategoriesByUser.execute()
                 .let { categorySnapshot ->
-                    _categoryState.value = buildList {
-                        categorySnapshot?.forEach {
-                            add(it.toObject(Category::class.java))
-                        }
+                    val list: MutableList<Category> = mutableListOf()
+                    categorySnapshot?.forEach {
+                        list.add(it.toObject(Category::class.java))
                     }
+                    _categoryState.value = list
                 }
 
         }
@@ -45,13 +46,13 @@ class MainViewModel : ViewModel(), Contract.IMainViewModel {
 
     override fun getLatestTasks() {
         viewModelScope.launch {
-            GetAllTasksByUserUseCase(FirestoreRepository()).execute()
+            getAllTasksByUserUseCase.execute()
                 .let { latestTaskSnapshot ->
-                    _latestTaskState.value = buildList {
-                        latestTaskSnapshot?.forEach {
-                            add(it.toObject(Task::class.java))
-                        }
+                    val list: MutableList<Task> = mutableListOf()
+                    latestTaskSnapshot?.forEach {
+                        list.add(it.toObject(Task::class.java))
                     }
+                    _latestTaskState.value = list
                 }
 
         }

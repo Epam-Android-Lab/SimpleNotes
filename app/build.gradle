@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -30,13 +31,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildFeatures {
         viewBinding true
     }
     buildscript {
-        ext.kotlin_version = '1.4.0'
+        ext.kotlin_version = '1.4.21'
     }
 }
 
@@ -72,4 +73,14 @@ dependencies {
 
     // recycler
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    //koin
+    def koin_version = "2.2.2"
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"
+
 }

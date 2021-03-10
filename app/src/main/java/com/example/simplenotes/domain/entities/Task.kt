@@ -2,7 +2,7 @@ package com.example.simplenotes.domain.entities
 
 import java.util.*
 
-data class Task(
+data class Task (
     //id задачи
     var id: String,
 
@@ -18,7 +18,7 @@ data class Task(
     //стандартное напоминание (мс)
     var notification: Long?,
 
-    //приоритет (1 - важно, 5 - не важно)
+    //приоритет (1 - не важно, 5 - важно)
     var priority: Int = 3,
 
     //категория. id категории

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentLoginBinding
@@ -24,7 +24,7 @@ class LoginFragment : Fragment() {
     private var email: String = ""
     private var password: String = ""
 
-    private val authViewModel by viewModels<AuthViewModel>()
+    private val authViewModel : AuthViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

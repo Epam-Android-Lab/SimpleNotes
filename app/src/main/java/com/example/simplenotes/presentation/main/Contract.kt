@@ -1,9 +1,9 @@
 package com.example.simplenotes.presentation.main
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.presentation.login.AuthViewModel
 
 interface Contract {
@@ -17,6 +17,14 @@ interface Contract {
         fun subscribeToFireBase()
     }
 
+    interface IAllTasksViewModel {
+        fun getData(categoryId: String)
+        fun updateStatus(status: Boolean, id: String)
+        fun getOptions(context: Context)
+        fun setActiveSortOption(index: Int)
+
+    }
+
     interface IAuthViewModel{
         val state: LiveData<AuthViewModel.AuthState>
         fun signIn(email: String, password: String)
@@ -25,9 +33,11 @@ interface Contract {
     }
 
     interface ITaskViewModel{
-        val task: LiveData<com.example.simplenotes.domain.entities.Task>
-        fun addNewTask(newTask: com.example.simplenotes.domain.entities.Task)
+        val task: LiveData<Task>
+        fun addNewTask(newTask: Task) : String
+        fun getTask(id: String)
+        fun updateTask(id: String, updatedTask: Task)
+        fun updateStatus(status: Boolean, id: String)
 
     }
-
 }

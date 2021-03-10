@@ -39,12 +39,88 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.simplenotes.presentation.main.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_allTasksFragment2"
+            app:destination="@id/allTasksFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allTasksFragment"
         android:name="com.example.simplenotes.presentation.main.alltasks.AllTasksFragment"
         android:label="fragment_all_tasks"
         tools:layout="@layout/fragment_all_tasks" >
+        <argument
+            android:name="category_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_allTasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+        <action
+            android:id="@+id/action_allTasksFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
+        <action
+            android:id="@+id/action_allTasksFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+        <argument
+            android:name="filterOptions"
+            app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        android:id="@+id/action_allTasksFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskEditFragment"
+        android:label="fragment_task_edit"
+        tools:layout="@layout/fragment_task_edit" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="default" />
+        <action
+            android:id="@+id/action_taskEditFragment_to_taskShowFragment"
+            app:destination="@id/taskShowFragment" />
+        <argument
+            android:name="deadline_notif_id"
+            app:argType="integer" />
+        <argument
+            android:name="reminder_notif_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskShowFragment"
+        android:name="com.example.simplenotes.presentation.main.TaskShowFragment"
+        android:label="fragment_task_show"
+        tools:layout="@layout/fragment_task_show" >
+        <action
+            android:id="@+id/action_taskShowFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="deadline_notif_id"
+            app:argType="integer" />
+        <argument
+            android:name="reminder_notif_id"
+            app:argType="integer" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.simplenotes.presentation.main.alltasks.filter.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" >
+        <action
+            android:id="@+id/action_filterFragment_to_allTasksFragment"
+            app:destination="@id/allTasksFragment" />
+        <argument
+            android:name="filterOptions"
+            app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
+            app:nullable="true" />
         <argument
             android:name="category_id"
             app:argType="string" />

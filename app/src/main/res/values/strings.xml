@@ -55,4 +55,23 @@
     <string name="button_save_task_text">Сохранить задачу</string>
     <string name="button_add_personal_categories_button">+</string>
 
+    <string name="add_new_task">Add new task</string>
+
+    <string-array name="sorting_options">
+        <item>По дате редактирования ▲</item>
+        <item>До дате редактирования ▼</item>
+        <item>Дедлайн ▲</item>
+        <item>Дедлайн ▼</item>
+        <item>Приоритет ▲</item>
+        <item>Приоритет ▼</item>
+    </string-array>
+    <string name="sample_option">По дате редактирования ▲</string>
+    <string name="filter">Фильтры</string>
+    <string name="sroting_method">Метод сортировки</string>
+    <string name="filter_by_categories">Filter by categories</string>
+    <string name="priority">Priority</string>
+    <string name="status">Status</string>
+    <string name="done">Done</string>
+    <string name="planned">Planned</string>
+    <string name="confirm">Confirm</string>
 </resources>
