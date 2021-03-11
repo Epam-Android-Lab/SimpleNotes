@@ -76,7 +76,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         binding.buttonSaveTask.setOnClickListener {
 
             if(binding.outlinedTaskTitle.editText?.text.toString() == "") {
-                Toast.makeText(context, "Заполните поле с заголовком задачи", Toast.LENGTH_SHORT).show()
+                binding.outlinedTaskTitle.editText?.error = "Поле с заголовком должно быть заполнено"
+                //Toast.makeText(context, "Заполните поле с заголовком задачи", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
