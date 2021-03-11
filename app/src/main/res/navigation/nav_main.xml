@@ -78,7 +78,9 @@
             android:defaultValue="default" />
         <action
             android:id="@+id/action_taskEditFragment_to_taskShowFragment"
-            app:destination="@id/taskShowFragment" />
+            app:destination="@id/taskShowFragment"
+            app:popUpTo="@id/mainScreenFragment"
+            app:popUpToInclusive="false"/>
         <argument
             android:name="deadline_notif_id"
             app:argType="integer" />

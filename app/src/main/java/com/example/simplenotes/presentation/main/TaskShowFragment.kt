@@ -12,6 +12,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskShowBinding
+import kotlinx.android.synthetic.main.fragment_task_show.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
 
@@ -40,15 +43,22 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
 
         taskViewModel.getTask(taskId)
 
-        taskViewModel.task.observe(viewLifecycleOwner) { it ->
-            binding.textTaskTitle.text = it.title
-            binding.textTaskDesc.text = it.description
-            binding.textOfDeadline.text = it.deadline?.let { android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", it) }
-            binding.textOfReminder.text = it.notification?.let { android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", it) }
-            binding.textOfPriority.text = it.priority.toString()
-            binding.textOfCategory.text = it.category
-            binding.checkStatus.isChecked = it.status
-            if(it.category == "Выполнено") binding.checkStatus.isChecked = true
+        taskViewModel.task.observe(viewLifecycleOwner) { task ->
+            binding.textTaskTitle.text = task.title
+            binding.textTaskDesc.text = task.description
+            task.deadline?.let {
+                textOfDeadline.text = convertLongToTime(it)
+                if (currentTimeToLong() > it && !task.status) {
+                    indicator.visibility = View.VISIBLE
+                    context?.resources?.let { resources -> textOfDeadline.setTextColor(resources.getColor(R.color.red)) }
+                }
+            }
+
+            binding.textOfReminder.text = task.notification?.let { convertLongToTime(it) }
+            binding.textOfPriority.text = task.priority.toString()
+            binding.textOfCategory.text = task.category
+            binding.checkStatus.isChecked = task.status
+            //if(task.category == "Выполнено") binding.checkStatus.isChecked = true
         }
 
         binding.checkStatus.setOnClickListener {
@@ -70,4 +80,9 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)
         }
     }
+
+    private fun convertLongToTime(time: Long) =
+        SimpleDateFormat("dd.MM.yyyy HH:mm").format(Date(time))
+
+    private fun currentTimeToLong() = System.currentTimeMillis()
 }

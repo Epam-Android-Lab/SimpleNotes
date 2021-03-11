@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Scroller
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
@@ -41,6 +43,22 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val outlinedTaskDesc = binding.outlinedTaskDesc.editText
+        outlinedTaskDesc?.maxLines = 4
+        outlinedTaskDesc?.setScroller(Scroller(context))
+        outlinedTaskDesc?.isVerticalScrollBarEnabled = true
+
+        taskViewModel.getCategories().also {
+            taskViewModel.listOfCategory.observe(viewLifecycleOwner) {
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_category_item,
+                    it
+                )
+                binding.actCategoties.setAdapter(adapter)
+            }
+        }
+
         val toolbar = binding.topAppBar
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         val navHostFragment = NavHostFragment.findNavController(this)
@@ -56,14 +74,21 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
 
         binding.buttonSaveTask.setOnClickListener {
+
+            if(binding.outlinedTaskTitle.editText?.text.toString() == "") {
+                binding.outlinedTaskTitle.editText?.error = "Поле с заголовком должно быть заполнено"
+                //Toast.makeText(context, "Заполните поле с заголовком задачи", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val newTask = Task(
                 id = "",
-                title = binding.editTextTaskTitle.text.toString(),
-                description = binding.editTextTextTaskDesc.text.toString(),
+                title = binding.outlinedTaskTitle.editText?.text.toString(),
+                description = binding.outlinedTaskDesc.editText?.text.toString(),
                 deadline = deadlineTime,
                 notification = reminderTime,
                 priority = binding.sliderPriority.value.toInt(),
-                category = binding.spinnerCategories.selectedItem.toString(),
+                category = binding.actCategoties.text.toString(),
                 status = false,
                 timeLastEdit = Calendar.getInstance().timeInMillis
             )
@@ -87,7 +112,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     DEADLINE_ID,
                     it,
                     "The task's deadline has expired!",
-                    binding.editTextTaskTitle.text.toString(),
+                    binding.outlinedTaskTitle.editText?.text.toString(),
                     deadline_notif_id
                 )
             }
@@ -98,7 +123,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     REMINDER_ID,
                     it,
                     "Reminder",
-                    binding.editTextTaskTitle.text.toString(),
+                    binding.outlinedTaskTitle.editText?.text.toString(),
                     reminder_notif_id
                 )
             }
@@ -131,8 +156,14 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                                 val dateFormatted = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", this)
                                 view.text = dateFormatted
                                 when (id) {
-                                    DEADLINE_ID -> deadlineTime = this.timeInMillis
-                                    REMINDER_ID -> reminderTime = this.timeInMillis
+                                    DEADLINE_ID -> {
+                                                deadlineTime = this.timeInMillis
+                                                binding.textOfDeadline.visibility = View.VISIBLE
+                                            }
+                                    REMINDER_ID -> {
+                                                reminderTime = this.timeInMillis
+                                                binding.textOfReminder.visibility = View.VISIBLE
+                                            }
                                 }
                             },
                             this.get(Calendar.HOUR_OF_DAY),

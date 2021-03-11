@@ -40,6 +40,7 @@ interface Contract {
         fun getTask(id: String)
         fun updateTask(id: String, updatedTask: Task)
         fun updateStatus(status: Boolean, id: String)
+        fun getCategories()
 
     }
 }
