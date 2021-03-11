@@ -38,13 +38,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/library"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Библиотека"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gridViewCategories"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/library">
 
                 <LinearLayout
                     android:id="@+id/llFolderToday"
@@ -58,9 +72,9 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_folder" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_folder_blue" />
 
                     <TextView
                         android:id="@+id/tvToday"
@@ -84,9 +98,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/llFolderToday">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_folder" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_folder_blue" />
 
                     <TextView
                         android:id="@+id/tvAll"
@@ -110,9 +124,9 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_folder" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_folder_blue" />
 
                     <TextView
                         android:id="@+id/tvImportant"
@@ -136,9 +150,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/llFolderAll">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_folder" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_folder_blue" />
 
                     <TextView
                         android:id="@+id/tvCompleted"
@@ -197,7 +211,8 @@
                 android:layout_marginTop="20dp"
                 android:text="Последние"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
