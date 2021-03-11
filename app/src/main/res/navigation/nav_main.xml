@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_allTasksFragment"
             app:destination="@id/allTasksFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_loginActivity3"
+            app:destination="@id/loginActivity3" />
     </fragment>
 
     <fragment
@@ -122,5 +125,10 @@
             android:name="category_id"
             app:argType="string" />
     </fragment>
+    <activity
+        android:id="@+id/loginActivity3"
+        android:name="com.example.simplenotes.presentation.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 
 </navigation>

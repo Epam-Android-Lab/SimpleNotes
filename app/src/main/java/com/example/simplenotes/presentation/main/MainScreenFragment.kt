@@ -3,10 +3,8 @@ package com.example.simplenotes.presentation.main
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -17,6 +15,7 @@ import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.example.simplenotes.domain.entities.Category
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,6 +53,21 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+
+        toolbar.inflateMenu(R.menu.main_fragment_menu)
+        toolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.switch_mode -> {
+                    //todo: change app theme here
+                }
+                R.id.logout -> {
+                    FirebaseAuth.getInstance().signOut()
+                    findNavController().navigate(R.id.action_mainScreenFragment_to_loginActivity3)
+                }
+            }
+
+            return@setOnMenuItemClickListener false
+        }
 
         val myCategoriesAdapter = MyCategoriesAdapter()
         binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
