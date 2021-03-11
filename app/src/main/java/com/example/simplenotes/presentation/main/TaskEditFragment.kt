@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskEditBinding
@@ -27,7 +27,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
     private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
-    private val taskViewModel by viewModels<TaskViewModel>()
+    private val taskViewModel: TaskViewModel by viewModel()
 
     private var deadlineTime: Long? = null
     private var reminderTime: Long? = null
@@ -41,7 +41,8 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         super.onViewCreated(view, savedInstanceState)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
-        val notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).notifId
+        val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
+        val reminder_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).reminderNotifId
 
         taskViewModel.getTask(taskId)
 
@@ -87,8 +88,9 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
 
             val args = TaskEditFragmentArgs(
-                    id = taskId,
-                    notifId = notif_id,
+                id = taskId,
+                deadlineNotifId = deadline_notif_id,
+                reminderNotifId = reminder_notif_id
             ).toBundle()
 
             taskViewModel.updateTask(taskId, updatedTask)
@@ -100,7 +102,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         it,
                         "The task's deadline has expired!",
                         binding.editTextTaskTitle.text.toString(),
-                        notif_id
+                        deadline_notif_id
                 )
             }
 
@@ -111,7 +113,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                         it,
                         "Reminder",
                         binding.editTextTaskTitle.text.toString(),
-                        notif_id
+                        reminder_notif_id
                 )
             }
 

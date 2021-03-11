@@ -8,21 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
-
-import com.example.simplenotes.presentation.login.AuthViewModel
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
-
 import com.example.simplenotes.domain.entities.Category
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-@ExperimentalStdlibApi
 class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private val binding: FragmentMainScreenBinding by lazy {
@@ -33,12 +28,12 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         AddCategoryDialogBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel : MainViewModel by viewModel()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +60,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             callAlertDialog()
         }
 
-        //использование кнопки для тестов
         binding.fabAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_mainScreenFragment_to_taskFragment)
         }
@@ -82,8 +76,8 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             setPositiveButton("Добавить", DialogInterface.OnClickListener { dialog, _ ->
                 val categoryName = et.editableText.toString()
                 val category = Category(
-                        id = "", // нужно будет добавить автоинкремент
-                        name = categoryName
+                    id = "", // нужно будет добавить автоинкремент
+                    name = categoryName
                 )
                 Firebase.auth.uid?.let {
                     viewModel.addCategory(category)

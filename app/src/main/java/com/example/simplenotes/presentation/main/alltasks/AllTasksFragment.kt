@@ -1,7 +1,6 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,7 @@ import com.example.simplenotes.presentation.main.TaskShowFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllTasksFragment : Fragment() {
 

@@ -1,8 +1,6 @@
 package com.example.simplenotes.presentation.main.alltasks
 
-
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +13,10 @@ import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import kotlinx.coroutines.launch
 
-@ExperimentalStdlibApi
-class AllTasksViewModel : ViewModel() {
+class AllTasksViewModel(
+    private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
+    private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
+    ) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
         get() = _listOfTasks
@@ -34,13 +34,13 @@ class AllTasksViewModel : ViewModel() {
     fun getData(categoryId: String, filterOptions: FilterOptions? = null) {
         viewModelScope.launch {
 
-            GetTasksByCategoryUseCase(FirestoreRepository()).execute(category = categoryId)
+            getTasksByCategoryUseCase.execute(category = categoryId)
                 .let { snapshot ->
-                    _listOfTasks.value = buildList {
-                        snapshot?.forEach {
-                            add(it.toObject(Task::class.java))
-                        }
+                    val list: MutableList<Task> = mutableListOf()
+                    snapshot?.forEach {
+                        list.add(it.toObject(Task::class.java))
                     }
+                    _listOfTasks.value = list
                 }
 
             if (filterOptions != null) {
@@ -59,7 +59,7 @@ class AllTasksViewModel : ViewModel() {
 
     fun updateStatus(status: Boolean, id: String) {
         viewModelScope.launch {
-            UpdateTaskStatusUseCase(FirestoreRepository()).execute(status, id)
+            updateTaskStatusUseCase.execute(status, id)
         }
     }
 

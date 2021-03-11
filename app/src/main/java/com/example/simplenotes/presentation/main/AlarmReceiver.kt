@@ -27,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .createPendingIntent()
 
         var channel = ""
-        var notif_id = intent.getIntExtra(NOTIFICATION_ID, Random.nextInt())
+        val notif_id = intent.getIntExtra(NOTIFICATION_ID, Random.nextInt())
         when (intent.getStringExtra(TYPE_NOTIFY)) {
             "DEADLINE_ID" -> {
                 channel = DEADLINE_CHANNEL
