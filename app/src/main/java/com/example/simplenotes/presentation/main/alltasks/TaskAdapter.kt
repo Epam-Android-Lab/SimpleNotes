@@ -23,7 +23,8 @@ import java.util.*
 
 class TaskAdapter(
     val context: Context,
-    val updateStatusCallback: (status: Boolean, id: String) -> Unit
+    val updateStatusCallback: (status: Boolean, id: String) -> Unit,
+    val itemClicked:(id: String) -> Unit
 ) : ListAdapter<Task, TaskAdapter.Holder>(DiffCallback) {
 
     class Holder(private val binding: RecyclerAllTasksItemBinding) :
@@ -39,7 +40,8 @@ class TaskAdapter(
         fun bind(
             context: Context,
             task: Task,
-            updateStatusCallback: (status: Boolean, id: String) -> Unit
+            updateStatusCallback: (status: Boolean, id: String) -> Unit,
+            itemClicked:(id: String) -> Unit
         ) {
             binding.apply {
                 title.text = task.title
@@ -81,6 +83,10 @@ class TaskAdapter(
                         updateStatusCallback.invoke(false, task.id)
                         mayBeNeedToShowOverdue(task, context)
                     }
+                }
+
+                wholeCard.setOnClickListener {
+                    itemClicked.invoke(task.id)
                 }
             }
         }
@@ -132,9 +138,11 @@ class TaskAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(context, getItem(position)) { status: Boolean, id: String ->
+        holder.bind(context, getItem(position), { status: Boolean, id: String ->
             updateStatusCallback.invoke(status, id)
-        }
+        }, {
+            itemClicked.invoke(it)
+        })
     }
 
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
+import com.example.simplenotes.presentation.main.TaskShowFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -55,9 +56,12 @@ class AllTasksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TaskAdapter(requireContext()) { status: Boolean, id: String ->
+        val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
-        }
+        }, {
+            val args = TaskShowFragmentArgs(id = it, notifId = 0).toBundle()
+            findNavController().navigate(R.id.action_allTasksFragment_to_taskShowFragment, args)
+        })
 
         binding.allRecycler.adapter = adapter
         viewModel.listOfTasks.observe(viewLifecycleOwner) {
