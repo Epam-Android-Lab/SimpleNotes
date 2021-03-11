@@ -17,27 +17,49 @@
 
     <TextView
         android:id="@+id/textTaskTitle"
-        android:layout_width="330dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
         android:layout_marginTop="30dp"
         android:hint="Название задачи"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#C3C1C1"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskTitle" />
+
     <TextView
         android:id="@+id/textTaskDesc"
-        android:layout_width="330dp"
-        android:layout_height="130dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="16dp"
         android:gravity="top|left"
         android:hint="Описание задачи"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#C3C1C1"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc" />
 
     <TextView
         android:id="@+id/categoryTitle"
@@ -46,8 +68,8 @@
         android:layout_marginTop="20dp"
         android:text="Категория:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textTaskDesc"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc" />
+        app:layout_constraintStart_toStartOf="@+id/divider2"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <TextView
         android:id="@+id/textOfCategory"
@@ -56,8 +78,8 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textTaskDesc"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc" />
+        app:layout_constraintEnd_toEndOf="@+id/divider2"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <TextView
         android:id="@+id/deadlineTitle"

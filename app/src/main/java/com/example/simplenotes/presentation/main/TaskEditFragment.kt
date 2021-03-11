@@ -163,8 +163,14 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                                         val dateFormatted = DateFormat.format("dd-MM-yyyy HH:mm", this)
                                         view.text = dateFormatted
                                         when (id) {
-                                            DEADLINE_ID -> deadlineTime = this.timeInMillis
-                                            REMINDER_ID -> reminderTime = this.timeInMillis
+                                            DEADLINE_ID -> {
+                                                deadlineTime = this.timeInMillis
+                                                binding.textOfDeadline.visibility = View.VISIBLE
+                                            }
+                                            REMINDER_ID -> {
+                                                reminderTime = this.timeInMillis
+                                                binding.textOfReminder.visibility = View.VISIBLE
+                                            }
                                         }
                                     },
                                     this.get(Calendar.HOUR_OF_DAY),

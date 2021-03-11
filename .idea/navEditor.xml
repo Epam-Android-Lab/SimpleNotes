@@ -13,12 +13,17 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="491" />
-                            <option name="y" value="233" />
+                            <option name="x" value="500" />
+                            <option name="y" value="393" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_allTasksFragment_to_filterFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_allTasksFragment_to_taskFragment">
                               <value>
                                 <LayoutPositions />
@@ -40,12 +45,33 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="256" />
-                            <option name="y" value="282" />
+                            <option name="y" value="350" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_categoryFragment_to_allTasksFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="filterFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="744" />
+                            <option name="y" value="724" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_filterFragment_to_allTasksFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -91,8 +117,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1004" />
-                            <option name="y" value="428" />
+                            <option name="x" value="1117" />
+                            <option name="y" value="367" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -133,8 +159,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="748" />
-                            <option name="y" value="426" />
+                            <option name="x" value="840" />
+                            <option name="y" value="368" />
                           </Point>
                         </option>
                         <option name="myPositions">
