@@ -25,7 +25,7 @@ class AllTasksFragment : Fragment() {
     }
 
     @ExperimentalStdlibApi
-    private val viewModel by viewModels<AllTasksViewModel>()
+    private val viewModel:AllTasksViewModel by viewModel()
 
     private val categoryId: String by lazy {
         AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
@@ -58,7 +58,7 @@ class AllTasksFragment : Fragment() {
         val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
         }, {
-            val args = TaskShowFragmentArgs(id = it, notifId = 0).toBundle()
+            val args = TaskShowFragmentArgs(id = it, deadlineNotifId = it.hashCode(), reminderNotifId = (it.hashCode() +1)).toBundle()
             findNavController().navigate(R.id.action_allTasksFragment_to_taskShowFragment, args)
         })
 
