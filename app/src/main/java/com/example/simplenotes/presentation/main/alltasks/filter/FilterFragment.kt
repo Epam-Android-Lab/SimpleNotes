@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentFilterBinding
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
@@ -44,6 +47,13 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = binding.topAppBar
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        setHasOptionsMenu(true)
+
         filterOptions?.let {
             initViewWithReceivedFilter(it)
         } ?: initViewWithDefaultFilter()

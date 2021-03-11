@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
@@ -38,6 +41,19 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = binding.topAppBar
+
+//        val appBarConfiguration = AppBarConfiguration(setOf(
+//            R.id.action_mainScreenFragment_to_allTasksFragment,
+//            R.id.action_mainScreenFragment_to_categoryFragment,
+//            R.id.action_mainScreenFragment_to_taskFragment)
+//        )
+
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
 
         val myCategoriesAdapter = MyCategoriesAdapter()
         binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
