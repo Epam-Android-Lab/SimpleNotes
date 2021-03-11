@@ -125,23 +125,23 @@ class AllTasksViewModel : ViewModel() {
             _listOfTasks.postValue(filterResult)
         }
 
-        if (filterOptions.categories != null) {
-            _listOfTasks.value?.let { list ->
-
-                _listOfTasks.postValue( list.filter {
-                    filterOptions.categories.run {
-                        var result = false
-
-                        forEach { category ->
-                            result = category.name == it.category
-                        }
-
-                        result
-                    }
-                })
-
-            }
-        }
+//        if (filterOptions.categories != null) {
+//            _listOfTasks.value?.let { list ->
+//
+//                _listOfTasks.postValue( list.filter {
+//                    filterOptions.categories.run {
+//                        var result = false
+//
+//                        forEach { category ->
+//                            result = category.name == it.category
+//                        }
+//
+//                        result
+//                    }
+//                })
+//
+//            }
+//        }
 
         _listOfTasks.value?.let { list ->
             _listOfTasks.postValue(list.filter {
