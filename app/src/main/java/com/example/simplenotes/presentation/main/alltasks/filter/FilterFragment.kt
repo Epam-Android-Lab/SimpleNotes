@@ -104,6 +104,11 @@ class FilterFragment : Fragment() {
             }
         }
 
+        binding.remove.setOnClickListener {
+            val args = AllTasksFragmentArgs(filterOptions = null, categoryId = categoryId).toBundle()
+            findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
+        }
+
     }
 
     private fun initViewWithDefaultFilter() {
