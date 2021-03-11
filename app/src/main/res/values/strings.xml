@@ -62,4 +62,7 @@
     <string name="planned">Planned</string>
     <string name="confirm">Confirm</string>
     <string name="remove">Remove</string>
+    <string name="filters">Filters</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="logout">Logout</string>
 </resources>
