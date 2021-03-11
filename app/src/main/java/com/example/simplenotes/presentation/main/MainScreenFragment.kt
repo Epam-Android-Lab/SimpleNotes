@@ -65,6 +65,36 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
 
         myCategoriesAdapter = MyCategoriesAdapter(this)
+        val toolbar = binding.topAppBar
+
+//        val appBarConfiguration = AppBarConfiguration(setOf(
+//            R.id.action_mainScreenFragment_to_allTasksFragment,
+//            R.id.action_mainScreenFragment_to_categoryFragment,
+//            R.id.action_mainScreenFragment_to_taskFragment)
+//        )
+
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+
+        setHasOptionsMenu(true)
+        toolbar.inflateMenu(R.menu.main_fragment_menu)
+        toolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.switch_mode -> {
+                    //todo: change app theme here
+                }
+                R.id.logout -> {
+                    FirebaseAuth.getInstance().signOut()
+                    findNavController().navigate(R.id.action_mainScreenFragment_to_loginActivity3)
+                }
+            }
+
+            return@setOnMenuItemClickListener false
+        }
+
+        val myCategoriesAdapter = MyCategoriesAdapter()
         binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
 
         latestTasksAdapter = LatestTasksAdapter()

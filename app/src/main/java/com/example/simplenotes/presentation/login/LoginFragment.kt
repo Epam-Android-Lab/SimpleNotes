@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentLoginBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -22,6 +23,10 @@ class LoginFragment : Fragment() {
     private var password: String = ""
 
     private val authViewModel: AuthViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

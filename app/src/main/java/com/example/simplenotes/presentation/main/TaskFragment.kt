@@ -10,7 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskBinding
 import com.example.simplenotes.domain.entities.Task
@@ -37,6 +40,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = binding.topAppBar
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        setHasOptionsMenu(true)
 
         binding.btnAddDeadline.setOnClickListener {
             setTime(binding.textOfDeadline, DEADLINE_ID)

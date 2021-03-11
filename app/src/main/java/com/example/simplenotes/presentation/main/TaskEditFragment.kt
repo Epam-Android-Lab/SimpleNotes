@@ -14,8 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskEditBinding
 import com.example.simplenotes.domain.entities.Task
@@ -39,6 +42,12 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = binding.topAppBar
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        setHasOptionsMenu(true)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
         val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
