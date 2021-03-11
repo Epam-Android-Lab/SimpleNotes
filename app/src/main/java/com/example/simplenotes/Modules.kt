@@ -18,7 +18,7 @@ val dataModule = module {
     single { RemoteRepository() } bind IRepository.AuthRepository::class
 }
 
-val domainModule  = module {
+val domainModule = module {
     factory { AddNewTaskUseCase(get()) }
     factory { CreateCategoryUseCase(get()) }
     factory { GetAllCategoriesByUser(get()) }
@@ -29,17 +29,27 @@ val domainModule  = module {
     factory { SignUpUserUseCase(get()) }
     factory { UpdateTaskStatusUseCase(get()) }
     factory { UpdateTaskUseCase(get()) }
+    factory { DeleteCategoryUseCase(get()) }
+    factory { ClearCategoryUseCase(get()) }
 }
 
 val viewModelModule = module {
     viewModel { TaskViewModel(get(), get(), get(), get(), get()) } bind Contract.ITaskViewModel::class
     viewModel { AuthViewModel(get(), get()) } bind Contract.IAuthViewModel::class
-    viewModel { MainViewModel(get(), get(), get()) } bind Contract.IMainViewModel::class
+    viewModel {
+        MainViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    } bind Contract.IMainViewModel::class
     viewModel { AllTasksViewModel(get(), get()) } bind Contract.IAllTasksViewModel::class
 }
 
 val modules = listOf(
-        dataModule,
-        domainModule,
-        viewModelModule
+    dataModule,
+    domainModule,
+    viewModelModule
 )

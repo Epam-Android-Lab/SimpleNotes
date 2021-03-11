@@ -13,8 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.databinding.FragmentTaskEditBinding
@@ -48,6 +53,12 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
         outlinedTaskDesc?.setScroller(Scroller(context))
         outlinedTaskDesc?.isVerticalScrollBarEnabled = true
         //outlinedTaskDesc?.movementMethod = ScrollingMovementMethod()
+
+        val toolbar = binding.topAppBar
+        val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        setHasOptionsMenu(true)
 
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
         val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
@@ -94,15 +105,15 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
             }
 
             val updatedTask = Task(
-                    id = taskId,
-                    title = binding.outlinedTaskTitle.editText?.text.toString(),
-                    description = binding.outlinedTaskDesc.editText?.text.toString(),
-                    deadline = deadlineTime,
-                    notification = reminderTime,
-                    priority = binding.sliderPriority.value.toInt(),
-                    category = binding.actCategoties.text.toString(),
-                    status = false,
-                    timeLastEdit = Calendar.getInstance().timeInMillis
+                id = taskId,
+                title = binding.outlinedTaskTitle.editText?.text.toString(),
+                description = binding.outlinedTaskDesc.editText?.text.toString(),
+                deadline = deadlineTime,
+                notification = reminderTime,
+                priority = binding.sliderPriority.value.toInt(),
+                category = binding.actCategoties.text.toString(),
+                status = false,
+                timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
             val args = TaskEditFragmentArgs(
@@ -146,41 +157,41 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
             this.set(Calendar.MILLISECOND,0)
             activity?.let {
                 DatePickerDialog (
-                        it,
-                        0,
-                        { _, year, month, dayOfMonth ->
-                            this.set(Calendar.YEAR, year)
-                            this.set(Calendar.MONTH, month)
-                            this.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    it,
+                    0,
+                    { _, year, month, dayOfMonth ->
+                        this.set(Calendar.YEAR, year)
+                        this.set(Calendar.MONTH, month)
+                        this.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                            TimePickerDialog(
-                                    it,
-                                    0,
-                                    { _, hour, min ->
-                                        this.set(Calendar.HOUR_OF_DAY, hour)
-                                        this.set(Calendar.MINUTE, min)
+                        TimePickerDialog(
+                            it,
+                            0,
+                            { _, hour, min ->
+                                this.set(Calendar.HOUR_OF_DAY, hour)
+                                this.set(Calendar.MINUTE, min)
 
-                                        val dateFormatted = DateFormat.format("dd-MM-yyyy HH:mm", this)
-                                        view.text = dateFormatted
-                                        when (id) {
-                                            DEADLINE_ID -> {
+                                val dateFormatted = DateFormat.format("dd-MM-yyyy HH:mm", this)
+                                view.text = dateFormatted
+                                when (id) {
+                                    DEADLINE_ID -> {
                                                 deadlineTime = this.timeInMillis
                                                 binding.textOfDeadline.visibility = View.VISIBLE
                                             }
-                                            REMINDER_ID -> {
+                                    REMINDER_ID -> {
                                                 reminderTime = this.timeInMillis
                                                 binding.textOfReminder.visibility = View.VISIBLE
                                             }
-                                        }
-                                    },
-                                    this.get(Calendar.HOUR_OF_DAY),
-                                    this.get(Calendar.MINUTE),
-                                    true
-                            ).show()
-                        },
-                        this.get(Calendar.YEAR),
-                        this.get(Calendar.MONTH),
-                        this.get(Calendar.DAY_OF_MONTH)
+                                }
+                            },
+                            this.get(Calendar.HOUR_OF_DAY),
+                            this.get(Calendar.MINUTE),
+                            true
+                        ).show()
+                    },
+                    this.get(Calendar.YEAR),
+                    this.get(Calendar.MONTH),
+                    this.get(Calendar.DAY_OF_MONTH)
                 ).show()
             }
         }

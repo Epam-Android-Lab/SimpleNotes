@@ -30,6 +30,8 @@
         <item>Все</item>
         <item>Сегодня</item>
         <item>Выполнено</item>
+        <!-- Чисто для теста -->
+        <item>Интернет</item>
     </string-array>
 
     <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
@@ -41,6 +43,19 @@
     <string name="sample_note_title">Sample note title</string>
 
     <string name="lorem">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</string>
+    <string name="switch_theme_menu_item">Switch Theme</string>
+    <string name="folder_today_text">Сегодня</string>
+    <string name="folder_important_text">Важное</string>
+    <string name="folder_all_text">Все</string>
+    <string name="folder_completed_text">Выполнено</string>
+    <string name="my_categories_header_text">Мои Списки</string>
+    <string name="list_latest_tasks_text">Последние</string>
+    <string name="add_task_desc_text">Add task</string>
+    <string name="task_title_text">Title</string>
+    <string name="button_notification_text">Напоминание</string>
+    <string name="button_deadline_text">Дедлайн</string>
+    <string name="button_save_task_text">Сохранить задачу</string>
+    <string name="button_add_personal_categories_button">+</string>
 
     <string name="add_new_task">Add new task</string>
 
@@ -61,4 +76,16 @@
     <string name="done">Done</string>
     <string name="planned">Planned</string>
     <string name="confirm">Confirm</string>
+    <string name="remove">Remove</string>
+    <string name="filters">Filters</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="logout">Logout</string>
+
+    <string name="home">Главная</string>
+    <string name="crate_new_task">Создать задачу</string>
+    <string name="all_tasks">Задачи</string>
+    <string name="edit_task">Редактирование</string>
+    <string name="details">Подробнее</string>
+    <string name="filters_setup">Настройка фильтров</string>
+    <string name="button_set_deadline_text">Дедлайн</string>
 </resources>

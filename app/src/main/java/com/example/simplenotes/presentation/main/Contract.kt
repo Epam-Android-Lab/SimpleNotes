@@ -11,10 +11,12 @@ interface Contract {
     interface IMainViewModel {
         val categoryState: LiveData<List<Category>>
         val latestTaskState: LiveData<List<Task>>
+        val tasksByCategoryState: LiveData<List<Task>>
         fun addCategory(category: Category)
         fun getAllCategories()
         fun getLatestTasks()
-        fun subscribeToFireBase()
+        fun deleteCategory(categoryName: String)
+        fun getTasksByCategory(categoryName: String)
     }
 
     interface IAllTasksViewModel {

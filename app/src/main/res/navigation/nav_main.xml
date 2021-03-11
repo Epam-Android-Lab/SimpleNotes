@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/mainScreenFragment"
         android:name="com.example.simplenotes.presentation.main.MainScreenFragment"
-        android:label="fragment_main_screen"
+        android:label="@string/home"
         tools:layout="@layout/fragment_main_screen" >
         <action
             android:id="@+id/action_mainScreenFragment_to_taskFragment"
@@ -20,12 +20,15 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_allTasksFragment"
             app:destination="@id/allTasksFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_loginActivity3"
+            app:destination="@id/loginActivity3" />
     </fragment>
 
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.simplenotes.presentation.main.TaskFragment"
-        android:label="fragment_task"
+        android:label="@string/crate_new_task"
         tools:layout="@layout/fragment_task" >
         <action
             android:id="@+id/action_taskFragment_to_mainScreenFragment"
@@ -44,7 +47,7 @@
     <fragment
         android:id="@+id/allTasksFragment"
         android:name="com.example.simplenotes.presentation.main.alltasks.AllTasksFragment"
-        android:label="fragment_all_tasks"
+        android:label="@string/all_tasks"
         tools:layout="@layout/fragment_all_tasks" >
         <argument
             android:name="category_id"
@@ -63,14 +66,11 @@
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
             app:nullable="true"
             android:defaultValue="@null" />
-
-        android:id="@+id/action_allTasksFragment_to_taskShowFragment"
-            app:destination="@id/taskShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskEditFragment"
         android:name="com.example.simplenotes.presentation.main.TaskEditFragment"
-        android:label="fragment_task_edit"
+        android:label="@string/edit_task"
         tools:layout="@layout/fragment_task_edit" >
         <argument
             android:name="id"
@@ -91,7 +91,7 @@
     <fragment
         android:id="@+id/taskShowFragment"
         android:name="com.example.simplenotes.presentation.main.TaskShowFragment"
-        android:label="fragment_task_show"
+        android:label="@string/details"
         tools:layout="@layout/fragment_task_show" >
         <action
             android:id="@+id/action_taskShowFragment_to_taskEditFragment"
@@ -111,7 +111,7 @@
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.example.simplenotes.presentation.main.alltasks.filter.FilterFragment"
-        android:label="fragment_filter"
+        android:label="@string/filters_setup"
         tools:layout="@layout/fragment_filter" >
         <action
             android:id="@+id/action_filterFragment_to_allTasksFragment"
@@ -124,5 +124,10 @@
             android:name="category_id"
             app:argType="string" />
     </fragment>
+    <activity
+        android:id="@+id/loginActivity3"
+        android:name="com.example.simplenotes.presentation.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 
 </navigation>

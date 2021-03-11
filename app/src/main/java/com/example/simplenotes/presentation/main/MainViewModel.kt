@@ -4,31 +4,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.*
 import kotlinx.coroutines.launch
 
 
-class MainViewModel (
+class MainViewModel(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val getAllCategoriesByUser: GetAllCategoriesByUser,
-    private val getAllTasksByUserUseCase: GetAllTasksByUserUseCase,
-        ) : ViewModel(), Contract.IMainViewModel {
+    private val getAllTasksUseCase: GetTasksByCategoryUseCase,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase,
+    private val clearCategoryUseCase: ClearCategoryUseCase
+) : ViewModel(), Contract.IMainViewModel {
 
     private val _categoryState = MutableLiveData<List<Category>>()
     override val categoryState: LiveData<List<Category>>
         get() = _categoryState
+
     private val _latestTaskState = MutableLiveData<List<Task>>()
     override val latestTaskState: LiveData<List<Task>>
         get() = _latestTaskState
+
+    private val _tasksByCategoryState = MutableLiveData<List<Task>>()
+    override val tasksByCategoryState: LiveData<List<Task>>
+        get() = _tasksByCategoryState
 
     override fun addCategory(category: Category) {
         viewModelScope.launch {
             createCategoryUseCase.execute(category)
         }
     }
+
     override fun getAllCategories() {
         viewModelScope.launch {
             getAllCategoriesByUser.execute()
@@ -39,13 +46,12 @@ class MainViewModel (
                     }
                     _categoryState.value = list
                 }
-
         }
     }
 
     override fun getLatestTasks() {
         viewModelScope.launch {
-            getAllTasksByUserUseCase.execute()
+            getAllTasksUseCase.execute("Все")
                 .let { latestTaskSnapshot ->
                     val list: MutableList<Task> = mutableListOf()
                     latestTaskSnapshot?.forEach {
@@ -53,12 +59,28 @@ class MainViewModel (
                     }
                     _latestTaskState.value = list
                 }
-
         }
     }
 
-    // при добавлении не отображаются новые категории
-    override fun subscribeToFireBase() {
-        TODO("Not yet implemented")
+    // удаляем категорию
+    override fun deleteCategory(categoryName: String) {
+        viewModelScope.launch {
+            deleteCategoryUseCase.execute(categoryName)
+            clearCategoryUseCase.execute(categoryName)
+        }
+    }
+
+
+    override fun getTasksByCategory(categoryName: String) {
+        viewModelScope.launch {
+            getAllTasksUseCase.execute(categoryName)
+                .let { latestTaskSnapshot ->
+                    val list: MutableList<Task> = mutableListOf()
+                    latestTaskSnapshot?.forEach {
+                        list.add(it.toObject(Task::class.java))
+                    }
+                    _latestTaskState.value = list
+                }
+        }
     }
 }

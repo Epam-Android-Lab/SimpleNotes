@@ -4,6 +4,7 @@ import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.repositories.IRepository
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -88,4 +89,26 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         taskRef?.update("status", updatedTask.status)
         taskRef?.update("timeLastEdit", updatedTask.timeLastEdit)
     }
+
+    override suspend fun deleteCategory(categoryName: String) {
+        val updates = hashMapOf<String, Any>(
+            categoryName to FieldValue.delete()
+        )
+        val docRef = userId?.let {
+            db.collection(COLLECTION_CATEGORIES)
+                .document(it)
+        }
+        docRef?.update(updates)
+    }
+
+    override suspend fun clearCategory(categoryName: String) {
+        userId?.let {
+            db.collection(COLLECTION_CATEGORIES)
+                .document(it)
+                .collection(COLLECTION_NOTES)
+                .document(it)
+                .delete()
+        }
+    }
+
 }

@@ -5,30 +5,36 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".SimpleNotes"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".SimpleNotes"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNotes">
         <activity
             android:name=".presentation.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SimpleNotes.NoActionBar" />
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SimpleNotes.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.main.MainActivity" />
-        <receiver android:name=".presentation.main.AlarmReceiver"/>
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SimpleNotes.NoActionBar" />
+
+        <receiver android:name=".presentation.main.AlarmReceiver" />
     </application>
+
 
 </manifest>
