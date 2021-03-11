@@ -2,6 +2,7 @@ package com.example.simplenotes.presentation.main.alltasks
 
 import android.animation.LayoutTransition
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,17 @@ class TaskAdapter(
                 title.text = task.title
 
                 priority.text = task.priority.toString()
+
+                cardPriority.backgroundTintList = ColorStateList.valueOf(
+                    when (task.priority) {
+                        1 -> R.color.priority_1
+                        2 -> R.color.priority_2
+                        3 -> R.color.priority_3
+                        4 -> R.color.priority_4
+                        5 -> R.color.priority_5
+                        else -> R.color.priority_3
+                    }
+                )
 
                 task.deadline?.let {
                     deadline.text = convertLongToTime(it)

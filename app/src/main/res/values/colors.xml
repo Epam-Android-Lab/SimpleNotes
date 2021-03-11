@@ -11,4 +11,12 @@
     <color name="dark_background">#02111B</color>
     <color name="button_blue">#21A0A0</color>
     <color name="red">#F44336</color>
+    
+    
+    <color name="priority_1">#A5D8EF</color>
+    <color name="priority_2">#54BFEF</color>
+    <color name="priority_3">#4CAF50</color>
+    <color name="priority_4">#FF9800</color>
+    <color name="priority_5">#F44336</color>
+
 </resources>
