@@ -54,6 +54,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
 
+        setHasOptionsMenu(true)
         toolbar.inflateMenu(R.menu.main_fragment_menu)
         toolbar.setOnMenuItemClickListener {
             when(it.itemId){
@@ -120,5 +121,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
         dialog.show()
     }
+
 
 }

@@ -63,6 +63,17 @@ class AllTasksFragment : Fragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
         setHasOptionsMenu(true)
+        toolbar.inflateMenu(R.menu.all_tasks_fragment_menu)
+        toolbar.setOnMenuItemClickListener {
+            if(it.itemId == R.id.see_filters){
+                val args = FilterFragmentArgs(
+                    filterOptions = filterOptions,
+                    categoryId = categoryId
+                ).toBundle()
+                findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
+            }
+            return@setOnMenuItemClickListener false
+        }
 
         val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
@@ -115,14 +126,6 @@ class AllTasksFragment : Fragment() {
         viewModel.activeSort.observe(viewLifecycleOwner) {
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
-        }
-
-        binding.filter.setOnClickListener {
-            val args = FilterFragmentArgs(
-                filterOptions = filterOptions,
-                categoryId = categoryId
-            ).toBundle()
-            findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
         }
     }
 }
