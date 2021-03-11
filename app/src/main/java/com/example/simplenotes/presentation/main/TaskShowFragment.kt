@@ -49,7 +49,7 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
             binding.textOfPriority.text = task.priority.toString()
             binding.textOfCategory.text = task.category
             binding.checkStatus.isChecked = task.status
-            if(task.category == "Выполнено") binding.checkStatus.isChecked = true
+            //if(task.category == "Выполнено") binding.checkStatus.isChecked = true
         }
 
         binding.checkStatus.setOnClickListener {

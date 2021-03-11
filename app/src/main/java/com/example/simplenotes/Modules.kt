@@ -32,7 +32,7 @@ val domainModule  = module {
 }
 
 val viewModelModule = module {
-    viewModel { TaskViewModel(get(), get(), get(), get()) } bind Contract.ITaskViewModel::class
+    viewModel { TaskViewModel(get(), get(), get(), get(), get()) } bind Contract.ITaskViewModel::class
     viewModel { AuthViewModel(get(), get()) } bind Contract.IAuthViewModel::class
     viewModel { MainViewModel(get(), get(), get()) } bind Contract.IMainViewModel::class
     viewModel { AllTasksViewModel(get(), get()) } bind Contract.IAllTasksViewModel::class

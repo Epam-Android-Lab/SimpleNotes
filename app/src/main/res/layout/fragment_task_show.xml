@@ -40,14 +40,34 @@
         app:layout_constraintTop_toBottomOf="@+id/textTaskTitle" />
 
     <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Категория:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textTaskDesc"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc" />
+
+    <TextView
+        android:id="@+id/textOfCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textTaskDesc"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc" />
+
+    <TextView
         android:id="@+id/deadlineTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Срок выполнения:"
+        android:text="Дедлайн:"
         android:textSize="18sp"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@+id/textTaskDesc"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc"
+        app:layout_constraintStart_toStartOf="@+id/categoryTitle"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTitle"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -57,8 +77,8 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textTaskDesc"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc"
+        app:layout_constraintEnd_toEndOf="@+id/textOfCategory"
+        app:layout_constraintTop_toBottomOf="@+id/textOfCategory"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -101,26 +121,6 @@
         app:layout_constraintEnd_toEndOf="@+id/textOfReminder"
         app:layout_constraintTop_toBottomOf="@+id/textOfReminder" />
 
-    <TextView
-        android:id="@+id/categoryTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Категория:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/priorityTitle"
-        app:layout_constraintTop_toBottomOf="@+id/priorityTitle" />
-
-    <TextView
-        android:id="@+id/textOfCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textOfPriority"
-        app:layout_constraintTop_toBottomOf="@+id/textOfPriority" />
-
     <CheckedTextView
         android:id="@+id/checkStatus"
         android:layout_width="0dp"
@@ -131,9 +131,9 @@
         android:checked="false"
         android:gravity="center"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        app:layout_constraintEnd_toEndOf="@+id/textOfCategory"
-        app:layout_constraintStart_toStartOf="@+id/categoryTitle"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/textOfPriority"
+        app:layout_constraintStart_toStartOf="@+id/priorityTitle"
+        app:layout_constraintTop_toBottomOf="@+id/priorityTitle" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonEditTask"

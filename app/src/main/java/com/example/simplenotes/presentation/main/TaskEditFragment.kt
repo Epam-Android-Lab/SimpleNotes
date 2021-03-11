@@ -12,14 +12,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Scroller
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.simplenotes.R
+import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.databinding.FragmentTaskEditBinding
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.usecases.GetAllCategoriesByUser
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.fragment_task_edit.*
 import java.util.*
 import kotlin.math.absoluteValue
 
@@ -59,17 +61,21 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
             binding.textOfDeadline.text = it.deadline?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.textOfReminder.text = it.notification?.let { DateFormat.format("dd-MM-yyyy HH:mm", it) }
             binding.sliderPriority.value = it.priority.absoluteValue.toFloat()
+            binding.actCategoties.setText(it.category.toString(),false)
 
-            resources.getStringArray(R.array.categories).forEachIndexed { index, s ->
-                if (s == it.category) {
-                    binding.spinnerCategories.setSelection(index)
-                }
-                if (it.status) {
-                    binding.spinnerCategories.setSelection(3)
-                }
-            }
             deadlineTime = it.deadline
             reminderTime = it.notification
+        }
+
+        taskViewModel.getCategories().also {
+            taskViewModel.listOfCategory.observe(viewLifecycleOwner) {
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_category_item,
+                    it
+                )
+                binding.actCategoties.setAdapter(adapter)
+            }
         }
 
         binding.btnAddDeadline.setOnClickListener {
@@ -94,7 +100,7 @@ class TaskEditFragment : Fragment(R.layout.fragment_task_edit) {
                     deadline = deadlineTime,
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
-                    category = binding.spinnerCategories.selectedItem.toString(),
+                    category = binding.actCategoties.text.toString(),
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )

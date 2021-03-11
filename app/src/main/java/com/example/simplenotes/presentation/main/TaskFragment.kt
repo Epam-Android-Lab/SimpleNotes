@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Scroller
 import android.widget.TextView
 import android.widget.Toast
@@ -27,7 +28,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private val taskViewModel: TaskViewModel by viewModel()
 
-    private var title: String = ""
     private var deadlineTime: Long? = null
     private var reminderTime: Long? = null
 
@@ -44,6 +44,17 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         outlinedTaskDesc?.maxLines = 4
         outlinedTaskDesc?.setScroller(Scroller(context))
         outlinedTaskDesc?.isVerticalScrollBarEnabled = true
+
+        taskViewModel.getCategories().also {
+            taskViewModel.listOfCategory.observe(viewLifecycleOwner) {
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_category_item,
+                    it
+                )
+                binding.actCategoties.setAdapter(adapter)
+            }
+        }
 
         binding.btnAddDeadline.setOnClickListener {
             setTime(binding.textOfDeadline, DEADLINE_ID)
@@ -67,7 +78,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     deadline = deadlineTime,
                     notification = reminderTime,
                     priority = binding.sliderPriority.value.toInt(),
-                    category = binding.spinnerCategories.selectedItem.toString(),
+                    category = binding.actCategoties.text.toString(),
                     status = false,
                     timeLastEdit = Calendar.getInstance().timeInMillis
             )
