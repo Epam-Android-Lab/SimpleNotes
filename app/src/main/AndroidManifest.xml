@@ -20,14 +20,14 @@
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.SimpleNotes.NoActionBar">
+            android:theme="@style/Theme.SimpleNotes.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.main.MainActivity" />
+        <activity android:name=".presentation.main.MainActivity" android:theme="@style/Theme.SimpleNotes.NoActionBar"/>
         <receiver android:name=".presentation.main.AlarmReceiver"/>
     </application>
 

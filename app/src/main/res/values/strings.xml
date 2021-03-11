@@ -61,4 +61,15 @@
     <string name="done">Done</string>
     <string name="planned">Planned</string>
     <string name="confirm">Confirm</string>
+    <string name="remove">Remove</string>
+    <string name="filters">Filters</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="logout">Logout</string>
+
+    <string name="home">Главная</string>
+    <string name="crate_new_task">Создать задачу</string>
+    <string name="all_tasks">Задачи</string>
+    <string name="edit_task">Редактирование</string>
+    <string name="details">Подробнее</string>
+    <string name="filters_setup">Настройка фильтров</string>
 </resources>

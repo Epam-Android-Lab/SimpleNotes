@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_splashFragment_to_loginActivity"
             app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_splashFragment_to_mainActivity2"
+            app:destination="@id/mainActivity2" />
     </fragment>
 
     <activity
@@ -21,5 +24,10 @@
         android:name="com.example.simplenotes.presentation.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/mainActivity2"
+        android:name="com.example.simplenotes.presentation.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 
 </navigation>
