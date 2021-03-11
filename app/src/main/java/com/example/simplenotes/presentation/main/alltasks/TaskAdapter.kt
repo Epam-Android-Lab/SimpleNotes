@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -47,36 +48,66 @@ class TaskAdapter(
 
                 cardPriority.backgroundTintList = ColorStateList.valueOf(
                     when (task.priority) {
-                        1 -> R.color.priority_1
-                        2 -> R.color.priority_2
-                        3 -> R.color.priority_3
-                        4 -> R.color.priority_4
-                        5 -> R.color.priority_5
-                        else -> R.color.priority_3
+                        1 -> context.resources.getColor(R.color.priority_1)
+                        2 -> context.resources.getColor(R.color.priority_2)
+                        3 -> context.resources.getColor(R.color.priority_3)
+                        4 -> context.resources.getColor(R.color.priority_4)
+                        5 -> context.resources.getColor(R.color.priority_5)
+                        else -> context.resources.getColor(R.color.priority_3)
                     }
                 )
 
                 task.deadline?.let {
                     deadline.text = convertLongToTime(it)
-                    if (currentTimeToLong() > it && !task.status) {
-                        indicator.visibility = View.VISIBLE
-                        deadline.setTextColor(context.resources.getColor(R.color.red))
-                    }
                 }
 
                 title.isChecked = task.status
+
+                if(title.isChecked){
+                    setThatTaskCompleted(context)
+                } else {
+                    mayBeNeedToShowOverdue(task, context)
+                }
+
                 title.setOnClickListener {
 
                     if (!title.isChecked) {
                         title.isChecked = true
                         updateStatusCallback.invoke(true, task.id)
+                        setThatTaskCompleted(context)
+
                     } else {
                         title.isChecked = false
                         updateStatusCallback.invoke(false, task.id)
+                        mayBeNeedToShowOverdue(task, context)
                     }
                 }
             }
         }
+
+        private fun RecyclerAllTasksItemBinding.mayBeNeedToShowOverdue(
+            task: Task,
+            context: Context
+        ) {
+            if (task.deadline != null && currentTimeToLong() > task.deadline!!) {
+                indicator.visibility = View.VISIBLE
+                indicator.setBackgroundColor(context.resources.getColor(R.color.red))
+                deadline.setTextColor(context.resources.getColor(R.color.red))
+            } else {
+                indicator.visibility = View.INVISIBLE
+
+                deadline.setTextColor(TextView(context).textColors.defaultColor)
+            }
+        }
+
+        private fun RecyclerAllTasksItemBinding.setThatTaskCompleted(
+            context: Context
+        ) {
+            indicator.visibility = View.VISIBLE
+            indicator.setBackgroundColor(context.resources.getColor(R.color.green))
+            deadline.setTextColor(context.resources.getColor(R.color.green))
+        }
+
 
         private fun convertLongToTime(time: Long) =
             SimpleDateFormat("yyyy.MM.dd HH:mm").format(Date(time))
