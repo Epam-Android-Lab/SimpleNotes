@@ -57,15 +57,15 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         binding.buttonSaveTask.setOnClickListener {
             val newTask = Task(
-                    id = "",
-                    title = binding.editTextTaskTitle.text.toString(),
-                    description = binding.editTextTextTaskDesc.text.toString(),
-                    deadline = deadlineTime,
-                    notification = reminderTime,
-                    priority = binding.sliderPriority.value.toInt(),
-                    category = binding.spinnerCategories.selectedItem.toString(),
-                    status = false,
-                    timeLastEdit = Calendar.getInstance().timeInMillis
+                id = "",
+                title = binding.editTextTaskTitle.text.toString(),
+                description = binding.editTextTextTaskDesc.text.toString(),
+                deadline = deadlineTime,
+                notification = reminderTime,
+                priority = binding.sliderPriority.value.toInt(),
+                category = binding.spinnerCategories.selectedItem.toString(),
+                status = false,
+                timeLastEdit = Calendar.getInstance().timeInMillis
             )
 
             val taskId = Firebase.auth.uid?.run {
@@ -83,23 +83,23 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
             deadlineTime?.let {
                 setAlarm(
-                        args,
-                        DEADLINE_ID,
-                        it,
-                        "The task's deadline has expired!",
-                        binding.editTextTaskTitle.text.toString(),
-                        deadline_notif_id
+                    args,
+                    DEADLINE_ID,
+                    it,
+                    "The task's deadline has expired!",
+                    binding.editTextTaskTitle.text.toString(),
+                    deadline_notif_id
                 )
             }
 
             reminderTime?.let {
                 setAlarm(
-                        args,
-                        REMINDER_ID,
-                        it,
-                        "Reminder",
-                        binding.editTextTaskTitle.text.toString(),
-                        reminder_notif_id
+                    args,
+                    REMINDER_ID,
+                    it,
+                    "Reminder",
+                    binding.editTextTaskTitle.text.toString(),
+                    reminder_notif_id
                 )
             }
 
@@ -114,35 +114,35 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             this.set(Calendar.MILLISECOND,0)
             activity?.let {
                 DatePickerDialog (
-                        it,
-                        0,
-                        { _, year, month, dayOfMonth ->
-                            this.set(Calendar.YEAR, year)
-                            this.set(Calendar.MONTH, month)
-                            this.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    it,
+                    0,
+                    { _, year, month, dayOfMonth ->
+                        this.set(Calendar.YEAR, year)
+                        this.set(Calendar.MONTH, month)
+                        this.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                            TimePickerDialog(
-                                    it,
-                                    0,
-                                    { _, hour, min ->
-                                        this.set(Calendar.HOUR_OF_DAY, hour)
-                                        this.set(Calendar.MINUTE, min)
+                        TimePickerDialog(
+                            it,
+                            0,
+                            { _, hour, min ->
+                                this.set(Calendar.HOUR_OF_DAY, hour)
+                                this.set(Calendar.MINUTE, min)
 
-                                        val dateFormatted = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", this)
-                                        view.text = dateFormatted
-                                        when (id) {
-                                            DEADLINE_ID -> deadlineTime = this.timeInMillis
-                                            REMINDER_ID -> reminderTime = this.timeInMillis
-                                        }
-                                    },
-                                    this.get(Calendar.HOUR_OF_DAY),
-                                    this.get(Calendar.MINUTE),
-                                    true
-                            ).show()
-                        },
-                        this.get(Calendar.YEAR),
-                        this.get(Calendar.MONTH),
-                        this.get(Calendar.DAY_OF_MONTH)
+                                val dateFormatted = android.text.format.DateFormat.format("dd-MM-yyyy HH:mm", this)
+                                view.text = dateFormatted
+                                when (id) {
+                                    DEADLINE_ID -> deadlineTime = this.timeInMillis
+                                    REMINDER_ID -> reminderTime = this.timeInMillis
+                                }
+                            },
+                            this.get(Calendar.HOUR_OF_DAY),
+                            this.get(Calendar.MINUTE),
+                            true
+                        ).show()
+                    },
+                    this.get(Calendar.YEAR),
+                    this.get(Calendar.MONTH),
+                    this.get(Calendar.DAY_OF_MONTH)
                 ).show()
             }
         }

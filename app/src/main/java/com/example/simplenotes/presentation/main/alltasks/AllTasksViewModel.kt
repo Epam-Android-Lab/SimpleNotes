@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class AllTasksViewModel(
     private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
-    ) : ViewModel() {
+) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
         get() = _listOfTasks

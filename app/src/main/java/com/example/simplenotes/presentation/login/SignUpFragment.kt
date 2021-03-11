@@ -20,7 +20,7 @@ class SignUpFragment : Fragment() {
     private var email: String = ""
     private var password: String = ""
 
-    private val authViewModel : AuthViewModel by viewModel()
+    private val authViewModel: AuthViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

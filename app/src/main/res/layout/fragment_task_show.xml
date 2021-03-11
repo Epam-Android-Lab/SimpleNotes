@@ -37,9 +37,10 @@
                 android:layout_marginTop="30dp"
                 android:hint="Title"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textTaskDesc"
@@ -50,9 +51,10 @@
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textTaskTitle" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskTitle" />
 
             <TextView
                 android:id="@+id/deadlineTitle"
@@ -72,9 +74,10 @@
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/textTaskDesc"
-                app:layout_constraintTop_toBottomOf="@+id/textTaskDesc"
-                tools:ignore="MissingConstraints" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textTaskDesc"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDesc"
+        tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/reminderTitle"
@@ -83,8 +86,9 @@
                 android:layout_marginTop="20dp"
                 android:text="Reminder:"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@+id/deadlineTitle"
-                app:layout_constraintTop_toBottomOf="@+id/deadlineTitle" />
+                android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/deadlineTitle"
+        app:layout_constraintTop_toBottomOf="@+id/deadlineTitle" />
 
             <TextView
                 android:id="@+id/textOfReminder"
@@ -93,8 +97,9 @@
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/textOfDeadline"
-                app:layout_constraintTop_toBottomOf="@+id/textOfDeadline" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textOfDeadline"
+        app:layout_constraintTop_toBottomOf="@+id/textOfDeadline" />
 
             <TextView
                 android:id="@+id/priorityTitle"
@@ -103,8 +108,9 @@
                 android:layout_marginTop="20dp"
                 android:text="Priority:"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@+id/reminderTitle"
-                app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
+                android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/reminderTitle"
+        app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
 
             <TextView
                 android:id="@+id/textOfPriority"
@@ -113,8 +119,9 @@
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/textOfReminder"
-                app:layout_constraintTop_toBottomOf="@+id/textOfReminder" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textOfReminder"
+        app:layout_constraintTop_toBottomOf="@+id/textOfReminder" />
 
             <TextView
                 android:id="@+id/categoryTitle"
@@ -123,8 +130,9 @@
                 android:layout_marginTop="20dp"
                 android:text="Category:"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@+id/priorityTitle"
-                app:layout_constraintTop_toBottomOf="@+id/priorityTitle" />
+                android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/priorityTitle"
+        app:layout_constraintTop_toBottomOf="@+id/priorityTitle" />
 
             <TextView
                 android:id="@+id/textOfCategory"
@@ -133,8 +141,9 @@
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/textOfPriority"
-                app:layout_constraintTop_toBottomOf="@+id/textOfPriority" />
+                android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textOfPriority"
+        app:layout_constraintTop_toBottomOf="@+id/textOfPriority" />
 
             <CheckedTextView
                 android:id="@+id/checkStatus"
@@ -144,7 +153,8 @@
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
                 android:gravity="center"
-                android:text="Status:"
+                android:textColor="@color/text_color"
+        android:text="Status:"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@+id/textOfCategory"
                 app:layout_constraintStart_toStartOf="@+id/categoryTitle"
@@ -157,12 +167,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
                 android:text="Редактировать задачу"
-                app:cornerRadius="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkStatus" />
+                android:backgroundTint="@color/teal_200"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkStatus" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

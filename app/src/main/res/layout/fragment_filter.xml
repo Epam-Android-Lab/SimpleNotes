@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_by_categories"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/categories"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/priority"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/sliderPriority"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/priority" />
+                app:layout_constraintTop_toBottomOf="@id/priority"
+            app:thumbColor="@color/teal_200"
+            app:trackColor="@color/teal_700"
+            app:trackColorActive="@color/teal_700"
+            app:trackColorInactive="@color/teal_200" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -121,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/status"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/radioGroup"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -142,13 +146,15 @@
                     android:id="@+id/done"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/done" />
+                    android:text="@string/done"
+                android:textColor="@color/text_color" />
 
                 <RadioButton
                     android:id="@+id/planned"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/planned" />
+                    android:text="@string/planned"
+                android:textColor="@color/text_color" />
 
             </RadioGroup>
 
