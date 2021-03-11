@@ -27,10 +27,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if(Firebase.auth.currentUser != null){
-            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
-        }
     }
 
     override fun onCreateView(
