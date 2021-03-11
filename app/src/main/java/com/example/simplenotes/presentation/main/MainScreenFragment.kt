@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
@@ -18,6 +21,7 @@ import com.example.simplenotes.databinding.FragmentMainScreenBinding
 import com.example.simplenotes.databinding.SwitchThemeBinding
 import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,15 +62,14 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // грузим тему при входе
         if (theme.loadDarkModeState()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        myCategoriesAdapter = MyCategoriesAdapter(this)
         val toolbar = binding.topAppBar
-
 //        val appBarConfiguration = AppBarConfiguration(setOf(
 //            R.id.action_mainScreenFragment_to_allTasksFragment,
 //            R.id.action_mainScreenFragment_to_categoryFragment,
@@ -94,7 +97,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             return@setOnMenuItemClickListener false
         }
 
-        val myCategoriesAdapter = MyCategoriesAdapter()
+        myCategoriesAdapter = MyCategoriesAdapter(this)
         binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
 
         latestTasksAdapter = LatestTasksAdapter()
@@ -185,14 +188,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
                 theme.setDarkModeState(true)
             }
 
-        }
-    }
-
-    private fun loadTheme() {
-        if (theme.loadDarkModeState()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 

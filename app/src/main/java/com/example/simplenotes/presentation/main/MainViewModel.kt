@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.domain.entities.Task
 import com.example.simplenotes.domain.usecases.*

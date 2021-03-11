@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -62,9 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="30dp"
-                android:text="@string/button_set_deadline_text"
+                android:text="Дедлайн"
                 app:cornerRadius="15dp"
-        android:backgroundTint="@color/teal_200"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc" />
@@ -77,11 +77,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:text="TextView"
-                android:textColor="@color/text_color"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddReminder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc"
-        tools:ignore="MissingConstraints" />
+                app:layout_constraintBottom_toTopOf="@+id/btnAddReminder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextTaskDesc"
+                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddReminder"
@@ -90,11 +89,10 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:text="Напоминание"
-                android:backgroundTint="@color/teal_200"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddDeadline" />
+                app:cornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddDeadline" />
 
             <TextView
                 android:id="@+id/textOfReminder"
@@ -116,14 +114,10 @@
                 android:value="3"
                 android:valueFrom="1"
                 android:valueTo="5"
-                app:trackColor="@color/teal_700"
-        app:trackColorActive="@color/teal_700"
-        app:trackColorInactive="@color/teal_200"
-        app:thumbColor="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddReminder" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddReminder" />
 
             <Spinner
                 android:id="@+id/spinnerCategories"
@@ -142,17 +136,14 @@
                 android:layout_marginBottom="30dp"
                 android:text="Сохранить задачу"
                 app:cornerRadius="15dp"
-                android:backgroundTint="@color/teal_200"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

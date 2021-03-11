@@ -30,7 +30,8 @@
         </activity>
         <activity
             android:name=".presentation.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SimpleNotes.NoActionBar" />
 
         <receiver android:name=".presentation.main.AlarmReceiver" />
     </application>
