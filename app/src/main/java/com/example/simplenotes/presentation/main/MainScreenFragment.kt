@@ -1,22 +1,23 @@
 package com.example.simplenotes.presentation.main
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
 import com.example.simplenotes.databinding.FragmentMainScreenBinding
 import com.example.simplenotes.databinding.SwitchThemeBinding
-import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.example.simplenotes.domain.entities.Category
+import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -63,7 +64,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        myCategoriesAdapter = MyCategoriesAdapter()
+        myCategoriesAdapter = MyCategoriesAdapter(this)
         binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
 
         latestTasksAdapter = LatestTasksAdapter()
@@ -72,6 +73,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
         updateCategories()
         updateLatestTasks()
+
 
         binding.btnAddMyCategory.setOnClickListener {
             callAlertDialog()
@@ -83,14 +85,36 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
 
         binding.btnSwitchTheme.setOnClickListener {
-            chooseThemeDialog()
+            chooseTheme()
         }
 
         binding.llFolderAll.setOnClickListener {
-            findNavController().navigate(R.id.action_mainScreenFragment_to_allTasksFragment,
-                AllTasksFragmentArgs(categoryId = "Все").toBundle())
+            findNavController().navigate(
+                R.id.action_mainScreenFragment_to_allTasksFragment,
+                AllTasksFragmentArgs(categoryId = "Все").toBundle()
+            )
         }
 
+        binding.llFolderToday.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_mainScreenFragment_to_allTasksFragment,
+                AllTasksFragmentArgs(categoryId = "Сегодня").toBundle()
+            )
+        }
+
+        binding.llFolderImportant.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_mainScreenFragment_to_allTasksFragment,
+                AllTasksFragmentArgs(categoryId = "Важные").toBundle()
+            )
+        }
+
+        binding.llFolderCompleted.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_mainScreenFragment_to_allTasksFragment,
+                AllTasksFragmentArgs(categoryId = "Выполнено").toBundle()
+            )
+        }
     }
 
 
@@ -118,7 +142,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         dialog.show()
     }
 
-    private fun chooseThemeDialog() {
+    private fun chooseTheme() {
 
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {

@@ -30,6 +30,8 @@
         <item>Все</item>
         <item>Сегодня</item>
         <item>Выполнено</item>
+        <!-- Чисто для теста -->
+        <item>Интернет</item>
     </string-array>
 
     <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
@@ -74,4 +76,5 @@
     <string name="done">Done</string>
     <string name="planned">Planned</string>
     <string name="confirm">Confirm</string>
+    <string name="button_set_deadline_text">Дедлайн</string>
 </resources>

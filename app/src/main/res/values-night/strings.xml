@@ -30,6 +30,7 @@
         <item>Все</item>
         <item>Сегодня</item>
         <item>Выполнено</item>
+        <item>Интернет</item>
     </string-array>
 
     <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
@@ -54,5 +55,6 @@
     <string name="button_deadline_text">Дедлайн</string>
     <string name="button_save_task_text">Сохранить задачу</string>
     <string name="button_add_personal_categories_button">+</string>
+    <string name="button_set_deadline_text">Дедлайн</string>
 
 </resources>
