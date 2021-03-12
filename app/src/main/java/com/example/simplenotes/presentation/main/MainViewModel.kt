@@ -15,7 +15,8 @@ class MainViewModel(
     private val getAllCategoriesByUser: GetAllCategoriesByUser,
     private val getAllTasksUseCase: GetTasksByCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
-    private val clearCategoryUseCase: ClearCategoryUseCase
+    private val clearCategoryUseCase: ClearCategoryUseCase,
+    private val getTasksByUserUseCase: GetAllTasksByUserUseCase
 ) : ViewModel(), Contract.IMainViewModel {
 
     private val _categoryState = MutableLiveData<List<Category>>()
@@ -51,14 +52,18 @@ class MainViewModel(
 
     override fun getLatestTasks() {
         viewModelScope.launch {
-            getAllTasksUseCase.execute("Все")
-                .let { latestTaskSnapshot ->
-                    val list: MutableList<Task> = mutableListOf()
-                    latestTaskSnapshot?.forEach {
-                        list.add(it.toObject(Task::class.java))
-                    }
-                    _latestTaskState.value = list
+            getTasksByUserUseCase.execute().let { snapshot ->
+                val list: MutableList<Task> = mutableListOf()
+                snapshot?.forEach {
+                    list.add(it.toObject(Task::class.java))
                 }
+                if(list.size <= 5){
+                    _latestTaskState.value = list
+                } else {
+                    _latestTaskState.value = list.subList(0, 5)
+                }
+
+            }
         }
     }
 

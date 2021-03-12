@@ -23,6 +23,8 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_loginActivity3"
             app:destination="@id/loginActivity3" />
+        <action android:id="@+id/action_mainScreenFragment_to_taskShowFragment"
+            app:destination="@+id/taskShowFragment"/>
     </fragment>
 
     <fragment

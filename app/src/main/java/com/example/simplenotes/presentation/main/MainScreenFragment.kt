@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
@@ -98,10 +99,15 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
 
         myCategoriesAdapter = MyCategoriesAdapter(this)
-        binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
+        binding.recyclerViewMyCategories.apply {
+            adapter = myCategoriesAdapter
+        }
 
-        latestTasksAdapter = LatestTasksAdapter()
-        binding.recyclerViewLatestTasks.adapter = latestTasksAdapter
+        latestTasksAdapter = LatestTasksAdapter(requireContext(), this)
+        binding.recyclerViewLatestTasks.apply {
+            adapter = latestTasksAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 
 
         updateCategories()
@@ -176,7 +182,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
     }
 
     private fun chooseTheme() {
-
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

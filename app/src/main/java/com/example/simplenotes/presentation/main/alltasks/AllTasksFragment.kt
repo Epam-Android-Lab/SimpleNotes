@@ -28,7 +28,7 @@ class AllTasksFragment : Fragment() {
     }
 
     @ExperimentalStdlibApi
-    private val viewModel:AllTasksViewModel by viewModel()
+    private val viewModel: AllTasksViewModel by viewModel()
 
     private val categoryId: String by lazy {
         AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
@@ -41,8 +41,13 @@ class AllTasksFragment : Fragment() {
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
-        viewModel.getData(categoryId, filterOptions)
+        filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+        if (categoryId == "Все") {
+            viewModel.getTasksByUserUseCase()
+        } else {
+            viewModel.getData(categoryId, filterOptions)
+        }
+
     }
 
 
@@ -61,11 +66,11 @@ class AllTasksFragment : Fragment() {
         val toolbar = binding.topAppBar
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         val navHostFragment = NavHostFragment.findNavController(this)
-        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
         setHasOptionsMenu(true)
         toolbar.inflateMenu(R.menu.all_tasks_fragment_menu)
         toolbar.setOnMenuItemClickListener {
-            if(it.itemId == R.id.see_filters){
+            if (it.itemId == R.id.see_filters) {
                 val args = FilterFragmentArgs(
                     filterOptions = filterOptions,
                     categoryId = categoryId
@@ -78,7 +83,11 @@ class AllTasksFragment : Fragment() {
         val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
         }, {
-            val args = TaskShowFragmentArgs(id = it, deadlineNotifId = it.hashCode(), reminderNotifId = (it.hashCode() +1)).toBundle()
+            val args = TaskShowFragmentArgs(
+                id = it,
+                deadlineNotifId = it.hashCode(),
+                reminderNotifId = (it.hashCode() + 1)
+            ).toBundle()
             findNavController().navigate(R.id.action_allTasksFragment_to_taskShowFragment, args)
         })
 

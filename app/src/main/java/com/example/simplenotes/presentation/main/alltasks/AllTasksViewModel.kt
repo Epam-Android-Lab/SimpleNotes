@@ -8,14 +8,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.launch
 
 class AllTasksViewModel(
     private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
+    private val getTasksByUserUseCase: GetAllTasksByUserUseCase
 ) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
@@ -54,6 +57,19 @@ class AllTasksViewModel(
 //                    }
 //                }
 //            }
+        }
+    }
+
+    fun getTasksByUserUseCase() {
+        viewModelScope.launch {
+
+            getTasksByUserUseCase.execute().let { snapshot ->
+                val list: MutableList<Task> = mutableListOf()
+                snapshot?.forEach {
+                    list.add(it.toObject(Task::class.java))
+                }
+                _listOfTasks.value = list
+            }
         }
     }
 

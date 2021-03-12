@@ -150,6 +150,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="loginActivity3">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="mainScreenFragment">
                     <value>
                       <LayoutPositions>
@@ -167,6 +179,11 @@
                               </value>
                             </entry>
                             <entry key="action_mainScreenFragment_to_categoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mainScreenFragment_to_loginActivity3">
                               <value>
                                 <LayoutPositions />
                               </value>
