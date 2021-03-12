@@ -31,9 +31,11 @@ class FilterFragment : Fragment() {
 
     private val viewModel by viewModels<FilterViewModel>()
 
+    private var fromLibrary = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        fromLibrary = FilterFragmentArgs.fromBundle(requireArguments()).fromLibrary
         filterOptions =  FilterFragmentArgs.fromBundle(requireArguments()).filterOptions
     }
 
@@ -53,6 +55,12 @@ class FilterFragment : Fragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
         setHasOptionsMenu(true)
+
+        if(!fromLibrary) {
+            binding.categoriesContainer.visibility = View.GONE
+        } else {
+            binding.categoriesContainer.visibility = View.VISIBLE
+        }
 
         filterOptions?.let {
             initViewWithReceivedFilter(it)

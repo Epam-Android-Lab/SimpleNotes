@@ -4,7 +4,7 @@
     <item
         android:id="@+id/switch_mode"
         android:title="@string/dark_theme"
-        app:actionLayout="@layout/switch_button_for_menu"
+        android:icon="@drawable/ic_mode_night_24px"
         app:showAsAction="ifRoom" />
 
     <item

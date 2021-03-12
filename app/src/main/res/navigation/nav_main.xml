@@ -66,6 +66,10 @@
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="fromLibrary"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/taskEditFragment"
@@ -123,6 +127,10 @@
         <argument
             android:name="category_id"
             app:argType="string" />
+        <argument
+            android:name="fromLibrary"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <activity
         android:id="@+id/loginActivity3"

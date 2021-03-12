@@ -3,9 +3,7 @@ package com.example.simplenotes.presentation.main
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -32,6 +30,8 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
 
     private lateinit var myCategoriesAdapter: MyCategoriesAdapter
     private lateinit var latestTasksAdapter: LatestTasksAdapter
+
+    private lateinit var menuItem: MenuItem
 
     private val theme: SaveTheme by lazy {
         SaveTheme(requireContext())
@@ -79,14 +79,17 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
 
         val navHostFragment = NavHostFragment.findNavController(this)
-        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
 
         setHasOptionsMenu(true)
-        toolbar.inflateMenu(R.menu.main_fragment_menu)
+
+        //toolbar.inflateMenu(R.menu.main_fragment_menu)
+        (activity as MainActivity).setSupportActionBar(toolbar)
+
         toolbar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.switch_mode -> {
-                    //todo: change app theme here
+                    chooseTheme()
                 }
                 R.id.logout -> {
                     FirebaseAuth.getInstance().signOut()
@@ -124,28 +127,28 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         binding.llFolderAll.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainScreenFragment_to_allTasksFragment,
-                AllTasksFragmentArgs(categoryId = "Все").toBundle()
+                AllTasksFragmentArgs(categoryId = "Все", fromLibrary = true).toBundle()
             )
         }
 
         binding.llFolderToday.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainScreenFragment_to_allTasksFragment,
-                AllTasksFragmentArgs(categoryId = "Сегодня").toBundle()
+                AllTasksFragmentArgs(categoryId = "Сегодня", fromLibrary = true).toBundle()
             )
         }
 
         binding.llFolderImportant.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainScreenFragment_to_allTasksFragment,
-                AllTasksFragmentArgs(categoryId = "Важные").toBundle()
+                AllTasksFragmentArgs(categoryId = "Важные", fromLibrary = true).toBundle()
             )
         }
 
         binding.llFolderCompleted.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainScreenFragment_to_allTasksFragment,
-                AllTasksFragmentArgs(categoryId = "Выполнено").toBundle()
+                AllTasksFragmentArgs(categoryId = "Выполнено", fromLibrary = true).toBundle()
             )
         }
     }
@@ -203,5 +206,13 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         viewModel.latestTaskState.observe(viewLifecycleOwner, {
             latestTasksAdapter.submitList(it)
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_fragment_menu, menu)
+        menuItem = menu.findItem(R.id.switch_mode)
+        if (theme.loadDarkModeState()) menuItem.setIcon(R.drawable.ic_light_mode_white_24dp) else menuItem.setIcon(
+            R.drawable.ic_mode_night_24px
+        )
     }
 }

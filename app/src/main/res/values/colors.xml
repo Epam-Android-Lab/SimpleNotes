@@ -38,4 +38,6 @@
     <color name="priority_4">#FF9800</color>
     <color name="priority_5">#F44336</color>
 
+    <color name="trans">#00F44336</color>
+
 </resources>
