@@ -28,4 +28,21 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_input_layout_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@color/red</item>
+        <item name="errorTextAppearance">@color/text_input_layout_color</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/teal_200</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/text_input_layout_color</item>
+        <item name="colorControlHighlight">@color/green</item>
+    </style>
+
 </resources>

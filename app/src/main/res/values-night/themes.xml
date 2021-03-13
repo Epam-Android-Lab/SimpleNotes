@@ -14,4 +14,10 @@
         <!-- Customize your theme here. -->
         <item name="android:background">@color/color_background</item>
     </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_layout_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
 </resources>

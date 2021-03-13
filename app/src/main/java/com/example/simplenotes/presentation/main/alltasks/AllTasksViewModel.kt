@@ -165,17 +165,17 @@ class AllTasksViewModel(
                 it.priority == filterOptions.priority
             })
         }
-
     }
 
     private fun filterTasksByCategory(categoryName: String, tasks: MutableList<Task>): List<Task> {
-        return when(categoryName) {
+        return when (categoryName) {
             "Сегодня" -> tasks.filter {
                 (LocalDate.now().compareTo(LocalDate(it.deadline)) == 0) and (!it.status)
             }
-            "Важные" -> tasks.filter { (it.priority == 5) and (!it.status)}
+            "Важные" -> tasks.filter { (it.priority == 5) and (!it.status) }
             "Выполнено" -> tasks.filter { it.status }
-            else -> tasks
+            "Все" -> tasks.filter { !it.status }
+            else -> tasks.filter { (it.category == categoryName) and (!it.status) }
         }
     }
 }
