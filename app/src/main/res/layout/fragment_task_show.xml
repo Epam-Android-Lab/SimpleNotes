@@ -44,6 +44,28 @@
                     android:layout_height="match_parent"
                     tools:context=".presentation.main.TaskShowFragment">
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_priority"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:animateLayoutChanges="true"
+                        app:cardCornerRadius="50dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textOfPriority"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            tools:text="5" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
                     <TextView
                         android:id="@+id/textTaskTitle"
                         android:layout_width="0dp"
@@ -54,7 +76,7 @@
                         android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/card_priority"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
@@ -159,28 +181,6 @@
                         app:layout_constraintEnd_toEndOf="@+id/textOfDeadline"
                         app:layout_constraintTop_toBottomOf="@+id/textOfDeadline" />
 
-                    <TextView
-                        android:id="@+id/priorityTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Приоритет:"
-                        android:textColor="@color/text_color"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="@+id/reminderTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
-
-                    <TextView
-                        android:id="@+id/textOfPriority"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="TextView"
-                        android:textColor="@color/text_color"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textOfReminder"
-                        app:layout_constraintTop_toBottomOf="@+id/textOfReminder" />
-
                     <CheckedTextView
                         android:id="@+id/checkStatus"
                         android:layout_width="0dp"
@@ -192,9 +192,9 @@
                         android:gravity="center"
                         android:text="Статус:"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textOfPriority"
-                        app:layout_constraintStart_toStartOf="@+id/priorityTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/priorityTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/textOfReminder"
+                        app:layout_constraintStart_toStartOf="@+id/reminderTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/reminderTitle"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <View
