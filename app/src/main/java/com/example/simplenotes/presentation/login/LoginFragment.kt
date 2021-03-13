@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -39,19 +40,22 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.email.editText?.doOnTextChanged { text, start, before, count ->
-            binding.email.error = if (count == 0) getString(R.string.cannot_be_empty) else null
+        binding.email.editText?.doAfterTextChanged { text ->
+            binding.email.error = if(text?.length == 0) getString(R.string.cannot_be_empty) else null
             email = text.toString()
         }
 
-        binding.password.editText?.doOnTextChanged { text, start, before, count ->
-            binding.password.error = if (count == 0) getString(R.string.cannot_be_empty) else null
+        binding.password.editText?.doAfterTextChanged { text ->
+            binding.password.error = if(text?.length == 0) getString(R.string.cannot_be_empty) else null
             password = text.toString()
         }
 
         binding.signin.setOnClickListener {
             if (email.isNotBlank() && password.isNotBlank()) {
                 authViewModel.signIn(email, password)
+            } else {
+                binding.email.error = getString(R.string.cannot_be_empty)
+                binding.password.error = getString(R.string.cannot_be_empty)
             }
         }
 
@@ -68,6 +72,11 @@ class LoginFragment : Fragment() {
                 AuthViewModel.AuthState.Failed -> {
                     Toast.makeText(requireContext(), R.string.toast_no_such_user, Toast.LENGTH_LONG)
                         .show()
+
+                    " ".apply {
+                        binding.email.error = this
+                        binding.password.error = this
+                    }
                 }
             }
         }
