@@ -215,11 +215,13 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 theme.setDarkModeState(false)
+                requireActivity().finish()
             }
 
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 theme.setDarkModeState(true)
+                requireActivity().finish()
             }
 
         }
