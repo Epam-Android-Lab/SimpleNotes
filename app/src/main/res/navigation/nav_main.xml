@@ -81,8 +81,7 @@
         <action
             android:id="@+id/action_taskEditFragment_to_taskShowFragment"
             app:destination="@id/taskShowFragment"
-            app:popUpTo="@id/mainScreenFragment"
-            app:popUpToInclusive="false"/>
+            app:popUpTo="@id/allTasksFragment"/>
         <argument
             android:name="deadline_notif_id"
             app:argType="integer" />
@@ -97,7 +96,8 @@
         tools:layout="@layout/fragment_task_show" >
         <action
             android:id="@+id/action_taskShowFragment_to_taskEditFragment"
-            app:destination="@id/taskEditFragment" />
+            app:destination="@id/taskEditFragment"
+            app:popUpTo="@id/allTasksFragment"/>
         <argument
             android:name="id"
             app:argType="string"

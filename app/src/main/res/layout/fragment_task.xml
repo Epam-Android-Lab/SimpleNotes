@@ -22,16 +22,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:animateLayoutChanges="true"
             app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,7 +71,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:hint="Описание задачи"
                     app:boxBackgroundColor="@color/text_input_layout_color_bg"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +88,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
                     app:boxBackgroundColor="#4AEAEAEA"
                     app:layout_constraintTop_toBottomOf="@+id/outlinedTaskDesc">
 
@@ -101,7 +105,7 @@
                     android:id="@+id/btnAddDeadline"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:backgroundTint="@color/teal_200"
                     android:text="Дедлайн"
                     app:cornerRadius="10dp"
@@ -113,9 +117,10 @@
                     android:id="@+id/textOfDeadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:paddingEnd="20dp"
                     android:text="TextView"
+                    android:textColor="@color/text_color"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/btnAddDeadline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +131,7 @@
                     android:id="@+id/btnAddReminder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:backgroundTint="@color/teal_200"
                     android:text="Напоминание"
                     app:cornerRadius="10dp"
@@ -138,7 +143,7 @@
                     android:id="@+id/textOfReminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:paddingEnd="20dp"
                     android:text="TextView"
                     android:textColor="@color/text_color"
@@ -174,23 +179,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textOfPriority" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonSaveTask"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:backgroundTint="@color/teal_200"
-                    android:text="Сохранить задачу"
-                    app:cornerRadius="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sliderPriority" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSaveTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/teal_200"
+                android:text="Сохранить задачу"
+                app:cornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_task" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

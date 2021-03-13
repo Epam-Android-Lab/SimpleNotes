@@ -97,7 +97,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_blue" />
+                        android:src="@drawable/ic_folder_yellow" />
 
                     <TextView
                         android:id="@+id/tvAll"
@@ -125,7 +125,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_blue" />
+                        android:src="@drawable/ic_folder_orange" />
 
                     <TextView
                         android:id="@+id/tvImportant"
@@ -153,7 +153,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_blue" />
+                        android:src="@drawable/ic_folder_red" />
 
                     <TextView
                         android:id="@+id/tvCompleted"
