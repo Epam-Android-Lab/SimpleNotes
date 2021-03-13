@@ -1,27 +1,26 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.ArrayAdapter
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
+import com.example.simplenotes.presentation.main.MainActivity
 import com.example.simplenotes.presentation.main.TaskShowFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterFragmentArgs
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AllTasksFragment : Fragment() {
+
+class AllTasksFragment : Fragment(){
 
     private val binding: FragmentAllTasksBinding by lazy {
         FragmentAllTasksBinding.inflate(layoutInflater)
@@ -38,6 +37,8 @@ class AllTasksFragment : Fragment() {
 
     private var filterOptions: FilterOptions? = null
 
+    private var fromLibrary: Boolean = false
+
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,10 @@ class AllTasksFragment : Fragment() {
 //            viewModel.getData(categoryId, filterOptions)
 //        }
         viewModel.getTasksByCategory(categoryId)
+        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+        fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
+        viewModel.getData(categoryId, filterOptions)
+
     }
 
 
@@ -65,20 +70,26 @@ class AllTasksFragment : Fragment() {
 
         val toolbar = binding.topAppBar
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
         setHasOptionsMenu(true)
-        toolbar.inflateMenu(R.menu.all_tasks_fragment_menu)
+
+        (activity as MainActivity).setSupportActionBar(toolbar)
+
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.see_filters) {
                 val args = FilterFragmentArgs(
                     filterOptions = filterOptions,
-                    categoryId = categoryId
+                    categoryId = categoryId,
+                    fromLibrary = fromLibrary
                 ).toBundle()
                 findNavController().navigate(R.id.action_allTasksFragment_to_filterFragment, args)
             }
             return@setOnMenuItemClickListener false
         }
+
+        toolbar.title = categoryId
 
         val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
@@ -136,5 +147,14 @@ class AllTasksFragment : Fragment() {
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.all_tasks_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }

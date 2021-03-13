@@ -68,6 +68,10 @@
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="fromLibrary"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/taskEditFragment"
@@ -117,7 +121,9 @@
         tools:layout="@layout/fragment_filter" >
         <action
             android:id="@+id/action_filterFragment_to_allTasksFragment"
-            app:destination="@id/allTasksFragment" />
+            app:destination="@id/allTasksFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/allTasksFragment"/>
         <argument
             android:name="filterOptions"
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"
@@ -125,6 +131,10 @@
         <argument
             android:name="category_id"
             app:argType="string" />
+        <argument
+            android:name="fromLibrary"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <activity
         android:id="@+id/loginActivity3"

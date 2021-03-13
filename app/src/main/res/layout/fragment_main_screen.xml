@@ -67,9 +67,12 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_blue" />
+                        android:layout_width="70dp"
+                        android:elevation="8dp"
+                        android:layout_height="70dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_folder_orange" />
 
                     <TextView
                         android:id="@+id/tvToday"
@@ -79,7 +82,7 @@
                         android:gravity="center"
                         android:text="@string/folder_today_text"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -95,9 +98,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/llFolderToday">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_yellow" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_folder_red" />
 
                     <TextView
                         android:id="@+id/tvAll"
@@ -107,7 +112,7 @@
                         android:gravity="center"
                         android:text="@string/folder_important_text"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,8 +128,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_folder_orange" />
 
                     <TextView
@@ -135,7 +142,7 @@
                         android:gravity="center"
                         android:text="@string/folder_all_text"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,9 +158,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/llFolderAll">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_folder_red" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_folder_light_blue" />
 
                     <TextView
                         android:id="@+id/tvCompleted"
@@ -163,7 +172,7 @@
                         android:gravity="center"
                         android:text="@string/folder_completed_text"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -236,9 +245,10 @@
                 android:paddingBottom="72dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLatest"
+                app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="5"
                 tools:listitem="@layout/recycler_all_tasks_item" />
 
@@ -253,20 +263,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:tint="@color/white"
         android:contentDescription="@string/text_add_category"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Чисто для теста -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnSwitchTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_baseline_swap_horiz_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
