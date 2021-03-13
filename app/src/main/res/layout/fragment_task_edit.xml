@@ -9,7 +9,6 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,13 +47,14 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/outlinedTaskTitle"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:errorEnabled="true"
-                        android:hint="Заголовок"
-                        android:textColor="@color/text_color"
-                        app:boxBackgroundColor="@color/white"
+                        android:theme="@style/TextInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Заголовок"
+                    android:textColor="@color/text_color"
+                    app:boxBackgroundColor="@color/text_input_layout_color_bg"
+                    app:errorEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -67,11 +67,13 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/outlinedTaskDesc"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                         android:hint="Описание задачи"
-                        app:boxBackgroundColor="@color/white"
+                        android:textColor="@color/text_color"
+                    app:boxBackgroundColor="@color/text_input_layout_color_bg"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/outlinedTaskTitle">
