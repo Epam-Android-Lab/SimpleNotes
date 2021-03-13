@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">SimpleNotes</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Don’t have an account? <b>SIGN UP</b> Now!</string>
+    <string name="or">OR</string>
+    <string name="socials">Sing in with Socials</string>
+    <string name="enter_name">Enter name</string>
+    <string name="sign_up_b">Sign up</string>
+
+    <string name="cannot_be_empty">Cannot be empty</string>
+    <string name="hello_world">Hello Square World!</string>
+
+    <string-array name="categories">
+        <item>Важные</item>
+        <item>Все</item>
+        <item>Сегодня</item>
+        <item>Выполнено</item>
+        <item>Интернет</item>
+    </string-array>
+
+    <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
+
+    <string name="text_add_category">Add category</string>
+    <string name="dialog_add_category_button_text">Добавить категорию</string>
+    <string name="add_category_dialog_title_text">Введите название категории</string>
+
+    <string name="sample_note_title">Sample note title</string>
+
+    <string name="lorem">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</string>
+    <string name="switch_theme_menu_item">Switch Theme</string>
+    <string name="folder_today_text">Сегодня</string>
+    <string name="folder_important_text">Важное</string>
+    <string name="folder_all_text">Все</string>
+    <string name="folder_completed_text">Выполнено</string>
+    <string name="my_categories_header_text">Мои Списки</string>
+    <string name="list_latest_tasks_text">Последние</string>
+    <string name="add_task_desc_text">Add task</string>
+    <string name="task_title_text">Title</string>
+    <string name="button_notification_text">Напоминание</string>
+    <string name="button_deadline_text">Дедлайн</string>
+    <string name="button_save_task_text">Сохранить задачу</string>
+    <string name="button_add_personal_categories_button">+</string>
+    <string name="button_set_deadline_text">Дедлайн</string>
+
+</resources>
