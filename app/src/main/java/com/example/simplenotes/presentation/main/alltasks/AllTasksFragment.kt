@@ -1,6 +1,7 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
@@ -19,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class AllTasksFragment : Fragment() {
+class AllTasksFragment : Fragment(){
 
     private val binding: FragmentAllTasksBinding by lazy {
         FragmentAllTasksBinding.inflate(layoutInflater)
@@ -45,7 +46,6 @@ class AllTasksFragment : Fragment() {
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
         viewModel.getData(categoryId, filterOptions)
 
-
     }
 
 
@@ -70,8 +70,6 @@ class AllTasksFragment : Fragment() {
 
         (activity as MainActivity).setSupportActionBar(toolbar)
 
-        //toolbar.inflateMenu(R.menu.all_tasks_fragment_menu)
-//android.R.id.home
         toolbar.setOnMenuItemClickListener {
             if(it.itemId == R.id.see_filters){
                 val args = FilterFragmentArgs(
@@ -83,6 +81,8 @@ class AllTasksFragment : Fragment() {
             }
             return@setOnMenuItemClickListener false
         }
+
+        toolbar.title = categoryId
 
         val adapter = TaskAdapter(requireContext(), { status: Boolean, id: String ->
             viewModel.updateStatus(status, id)
@@ -144,5 +144,10 @@ class AllTasksFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.all_tasks_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }

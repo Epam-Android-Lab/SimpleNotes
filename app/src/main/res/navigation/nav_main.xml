@@ -119,7 +119,9 @@
         tools:layout="@layout/fragment_filter" >
         <action
             android:id="@+id/action_filterFragment_to_allTasksFragment"
-            app:destination="@id/allTasksFragment" />
+            app:destination="@id/allTasksFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/allTasksFragment"/>
         <argument
             android:name="filterOptions"
             app:argType="com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions"

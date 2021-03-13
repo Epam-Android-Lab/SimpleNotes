@@ -2,6 +2,7 @@ package com.example.simplenotes.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,5 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d("KEK","back")
     }
 }
