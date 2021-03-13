@@ -20,8 +20,7 @@ import java.util.*
 class LatestTasksAdapter @ExperimentalStdlibApi constructor(
     private val context: Context,
     private val fragment: MainScreenFragment
-) :
-    ListAdapter<Task, LatestTasksAdapter.LatestTasksViewHolder>(DiffCallback) {
+) : ListAdapter<Task, LatestTasksAdapter.LatestTasksViewHolder>(DiffCallback) {
 
     inner class LatestTasksViewHolder(private val binding: RecyclerAllTasksItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -58,7 +57,7 @@ class LatestTasksAdapter @ExperimentalStdlibApi constructor(
 
                 title.isChecked = task.status
 
-                if(title.isChecked){
+                if (title.isChecked) {
                     setThatTaskCompleted(context)
                 } else {
                     mayBeNeedToShowOverdue(task, context)
@@ -115,6 +114,7 @@ class LatestTasksAdapter @ExperimentalStdlibApi constructor(
     override fun onBindViewHolder(holder: LatestTasksViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
 
     object DiffCallback : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {

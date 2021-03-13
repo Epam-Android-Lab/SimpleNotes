@@ -88,4 +88,14 @@ class MainViewModel(
                 }
         }
     }
+
+    override fun onDeleteCategory(position: Int) {
+        val list = _categoryState.value as MutableList<Category>
+        val deletedCategoryName = list[position].name
+        deleteCategory(deletedCategoryName)
+        list.removeAt(position)
+        _categoryState.value = list
+    }
+
+
 }

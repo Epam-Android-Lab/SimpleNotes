@@ -103,6 +103,25 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             adapter = myCategoriesAdapter
         }
 
+        val itemTouchHelperCallback =
+            object :
+                ItemTouchHelper.SimpleCallback(
+                    0, ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    viewModel.onDeleteCategory(viewHolder.adapterPosition)
+                }
+            }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewMyCategories)
+
         latestTasksAdapter = LatestTasksAdapter(requireContext(), this)
         binding.recyclerViewLatestTasks.apply {
             adapter = latestTasksAdapter
@@ -209,4 +228,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             latestTasksAdapter.submitList(it)
         })
     }
+
+
 }
