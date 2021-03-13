@@ -43,13 +43,7 @@ class AllTasksFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
-//        if (categoryId == "Все") {
-//            viewModel.getTasksByUserUseCase()
-//        } else {
-//            viewModel.getData(categoryId, filterOptions)
-//        }
         viewModel.getTasksByCategory(categoryId)
-        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
         viewModel.getData(categoryId, filterOptions)
 
