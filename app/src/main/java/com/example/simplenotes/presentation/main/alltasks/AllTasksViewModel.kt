@@ -135,12 +135,12 @@ class AllTasksViewModel(
 
     private fun applyFilters(filterOptions: FilterOptions) {
 
-        _listOfTasks.value?.let { list ->
-            val filterResult = list.filter {
-                it.status == filterOptions.status
-            }
-            _listOfTasks.postValue(filterResult)
-        }
+//        _listOfTasks.value?.let { list ->
+//            val filterResult = list.filter {
+//                it.status == filterOptions.status
+//            }
+//            _listOfTasks.postValue(filterResult)
+//        }
 
 //        if (filterOptions.categories != null) {
 //            _listOfTasks.value?.let { list ->
@@ -160,10 +160,17 @@ class AllTasksViewModel(
 //            }
 //        }
 
+//        _listOfTasks.value?.let { list ->
+//            _listOfTasks.postValue(list.filter {
+//                it.priority == filterOptions.priority
+//            })
+//        }
+
         _listOfTasks.value?.let { list ->
             _listOfTasks.postValue(list.filter {
-                it.priority == filterOptions.priority
+                it.status == filterOptions.status
             })
+
         }
     }
 

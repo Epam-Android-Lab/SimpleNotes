@@ -36,7 +36,7 @@ class LatestTasksAdapter @ExperimentalStdlibApi constructor(
             task: Task,
         ) {
             binding.apply {
-                title.text = task.title
+                textTitle.text = task.title
 
                 priority.text = task.priority.toString()
 
