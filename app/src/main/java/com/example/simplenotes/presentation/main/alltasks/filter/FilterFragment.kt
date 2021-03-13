@@ -2,10 +2,8 @@ package com.example.simplenotes.presentation.main.alltasks.filter
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -13,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentFilterBinding
+import com.example.simplenotes.presentation.main.MainActivity
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 import com.google.android.material.chip.Chip
 
@@ -55,6 +54,17 @@ class FilterFragment : Fragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
         setHasOptionsMenu(true)
+
+        (activity as MainActivity).setSupportActionBar(toolbar)
+
+        toolbar.setOnMenuItemClickListener {
+            if(it.itemId == R.id.clear){
+                val args = AllTasksFragmentArgs(filterOptions = null, categoryId = categoryId).toBundle()
+                findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
+            }
+
+            return@setOnMenuItemClickListener false
+        }
 
         if(!fromLibrary) {
             binding.categoriesContainer.visibility = View.GONE
@@ -121,12 +131,6 @@ class FilterFragment : Fragment() {
                 else -> {}
             }
         }
-
-        binding.remove.setOnClickListener {
-            val args = AllTasksFragmentArgs(filterOptions = null, categoryId = categoryId).toBundle()
-            findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
-        }
-
     }
 
     private fun initViewWithDefaultFilter() {
@@ -135,5 +139,14 @@ class FilterFragment : Fragment() {
 
     private fun initViewWithReceivedFilter(filterOptions: FilterOptions) {
         viewModel.receives(filterOptions)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.filter_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }

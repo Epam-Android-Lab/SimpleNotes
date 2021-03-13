@@ -120,10 +120,6 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             findNavController().navigate(R.id.action_mainScreenFragment_to_taskFragment)
         }
 
-        binding.btnSwitchTheme.setOnClickListener {
-            chooseTheme()
-        }
-
         binding.llFolderAll.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainScreenFragment_to_allTasksFragment,
