@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -80,12 +81,12 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         val appBarConfiguration = AppBarConfiguration(findNavController().graph)
 
         val navHostFragment = NavHostFragment.findNavController(this)
-        NavigationUI.setupWithNavController(toolbar, navHostFragment,appBarConfiguration)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
 
         setHasOptionsMenu(true)
         toolbar.inflateMenu(R.menu.main_fragment_menu)
         toolbar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.switch_mode -> {
                     //todo: change app theme here
                 }
@@ -187,11 +188,20 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
                     id = "", // нужно будет добавить автоинкремент
                     name = categoryName
                 )
-                Firebase.auth.uid?.let {
-                    viewModel.addCategory(category)
+                if (categoryName.isBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Введите название категории!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Firebase.auth.uid?.let {
+                        viewModel.addCategory(category)
+                    }
+                    updateCategories()
+                    dialog.dismiss()
                 }
-                updateCategories()
-                dialog.dismiss()
+
             }
             setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()

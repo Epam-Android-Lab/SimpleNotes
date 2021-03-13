@@ -14,6 +14,7 @@ import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.launch
+import org.joda.time.LocalDate
 
 class AllTasksViewModel(
     private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
@@ -60,14 +61,14 @@ class AllTasksViewModel(
         }
     }
 
-    fun getTasksByUserUseCase() {
+    fun getTasksByCategory(categoryName: String) {
         viewModelScope.launch {
-
             getTasksByUserUseCase.execute().let { snapshot ->
-                val list: MutableList<Task> = mutableListOf()
+                var list: MutableList<Task> = mutableListOf()
                 snapshot?.forEach {
                     list.add(it.toObject(Task::class.java))
                 }
+                list = filterTasksByCategory(categoryName, list) as MutableList<Task>
                 _listOfTasks.value = list
             }
         }
@@ -165,5 +166,16 @@ class AllTasksViewModel(
             })
         }
 
+    }
+
+    private fun filterTasksByCategory(categoryName: String, tasks: MutableList<Task>): List<Task> {
+        return when(categoryName) {
+            "Сегодня" -> tasks.filter {
+                (LocalDate.now().compareTo(LocalDate(it.deadline)) == 0) and (!it.status)
+            }
+            "Важные" -> tasks.filter { (it.priority == 5) and (!it.status)}
+            "Выполнено" -> tasks.filter { it.status }
+            else -> tasks
+        }
     }
 }
