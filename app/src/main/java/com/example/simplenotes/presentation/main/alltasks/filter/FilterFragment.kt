@@ -147,6 +147,7 @@ class FilterFragment : Fragment() {
         inflater.inflate(R.menu.filter_fragment_menu, menu)
     }
 
+    @ExperimentalStdlibApi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
         return super.onOptionsItemSelected(item)

@@ -63,6 +63,7 @@ class LoginFragment : Fragment() {
             when (it) {
                 AuthViewModel.AuthState.Authorized -> {
                     findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                    activity?.finish()
                 }
                 AuthViewModel.AuthState.Failed -> {
                     Toast.makeText(requireContext(), R.string.toast_no_such_user, Toast.LENGTH_LONG)

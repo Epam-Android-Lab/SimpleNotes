@@ -96,6 +96,7 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
                 R.id.logout -> {
                     FirebaseAuth.getInstance().signOut()
                     findNavController().navigate(R.id.action_mainScreenFragment_to_loginActivity3)
+                    activity?.finish()
                 }
             }
 
