@@ -16,9 +16,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         if(Firebase.auth.currentUser != null){
             findNavController().navigate(R.id.action_splashFragment_to_mainActivity2)
+            activity?.finish()
         } else {
             //переход с фрагмента Splash на LoginActivity
             findNavController().navigate(R.id.action_splashFragment_to_loginActivity)
+            activity?.finish()
         }
     }
 }

@@ -58,11 +58,7 @@ class FilterFragment : Fragment() {
         (activity as MainActivity).setSupportActionBar(toolbar)
 
         toolbar.setOnMenuItemClickListener {
-            if(it.itemId == R.id.clear){
-                val args = AllTasksFragmentArgs(filterOptions = null, categoryId = categoryId).toBundle()
-                findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
-            }
-
+            if(it.itemId == R.id.clear) navigateBackToAllTasksWith()
             return@setOnMenuItemClickListener false
         }
 
@@ -123,14 +119,20 @@ class FilterFragment : Fragment() {
             when(it){
                 is FilterViewModel.ConfirmState.Prepared -> {
                     filterOptions = it.filterOptions
-
-                    val args = AllTasksFragmentArgs(filterOptions = filterOptions, categoryId = categoryId).toBundle()
-                    findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
-
+                    navigateBackToAllTasksWith(filterOptions = filterOptions)
                 }
                 else -> {}
             }
         }
+    }
+
+    private fun navigateBackToAllTasksWith(filterOptions: FilterOptions? = null) {
+        val args = AllTasksFragmentArgs(
+            filterOptions = filterOptions,
+            categoryId = categoryId,
+            fromLibrary = fromLibrary
+        ).toBundle()
+        findNavController().navigate(R.id.action_filterFragment_to_allTasksFragment, args)
     }
 
     private fun initViewWithDefaultFilter() {
@@ -145,6 +147,7 @@ class FilterFragment : Fragment() {
         inflater.inflate(R.menu.filter_fragment_menu, menu)
     }
 
+    @ExperimentalStdlibApi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
         return super.onOptionsItemSelected(item)

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.domain.usecases.SignInUserUseCase
 import com.example.simplenotes.domain.usecases.SignUpUserUseCase
 import com.example.simplenotes.presentation.main.Contract
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,7 @@ class AuthViewModel(
                 } ?: run {
                     _state.postValue(AuthState.Failed)
                 }
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseException) {
                 _state.postValue(AuthState.Failed)
             }
         }
@@ -41,7 +42,7 @@ class AuthViewModel(
                 } ?: run {
                     _state.postValue(AuthState.Failed)
                 }
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseException) {
                 _state.postValue(AuthState.Failed)
             }
         }

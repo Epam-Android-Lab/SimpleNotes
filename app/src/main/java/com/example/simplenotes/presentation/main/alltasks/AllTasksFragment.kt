@@ -43,16 +43,9 @@ class AllTasksFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
-//        if (categoryId == "Все") {
-//            viewModel.getTasksByUserUseCase()
-//        } else {
-//            viewModel.getData(categoryId, filterOptions)
-//        }
-        viewModel.getTasksByCategory(categoryId)
-        filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
-        viewModel.getData(categoryId, filterOptions)
 
+        if(fromLibrary) viewModel.getTasksByCategory(categoryId, filterOptions) else viewModel.getData(categoryId, filterOptions)
     }
 
 
@@ -153,6 +146,7 @@ class AllTasksFragment : Fragment(){
         inflater.inflate(R.menu.all_tasks_fragment_menu, menu)
     }
 
+    @ExperimentalStdlibApi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) (activity as MainActivity).onBackPressed()
         return super.onOptionsItemSelected(item)
