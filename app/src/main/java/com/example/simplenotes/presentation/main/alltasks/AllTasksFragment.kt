@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentAllTasksBinding
 import com.example.simplenotes.presentation.main.MainActivity
@@ -88,9 +90,11 @@ class AllTasksFragment : Fragment(){
             viewModel.updateStatus(status, id)
         }, {
             val args = TaskShowFragmentArgs(
-                id = it,
-                deadlineNotifId = it.hashCode(),
-                reminderNotifId = (it.hashCode() + 1)
+                    id = it,
+                    deadlineNotifId = it.hashCode(),
+                    reminderNotifId = (it.hashCode() + 1),
+                    idCategory = categoryId,
+                    fromLibrary = fromLibrary
             ).toBundle()
             findNavController().navigate(R.id.action_allTasksFragment_to_taskShowFragment, args)
         })
@@ -140,6 +144,25 @@ class AllTasksFragment : Fragment(){
             binding.sort.text = it
             binding.bottomSort.listOptions.deferNotifyDataSetChanged()
         }
+
+        val itemTouchHelperCallback =
+            object :
+                ItemTouchHelper.SimpleCallback(
+                    0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    viewModel.deleteTask(adapter.getId(viewHolder.adapterPosition))
+                }
+            }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.allRecycler)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

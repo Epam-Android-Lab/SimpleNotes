@@ -2,6 +2,7 @@ package com.example.simplenotes.presentation.main
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.FragmentTaskShowBinding
+import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_task_show.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +44,8 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
         val taskId = TaskShowFragmentArgs.fromBundle(requireArguments()).id
         val deadline_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).deadlineNotifId
         val reminder_notif_id = TaskShowFragmentArgs.fromBundle(requireArguments()).reminderNotifId
+        val id_category = TaskShowFragmentArgs.fromBundle(requireArguments()).idCategory
+        val from_library = TaskShowFragmentArgs.fromBundle(requireArguments()).fromLibrary
 
         taskViewModel.getTask(taskId)
 
@@ -71,7 +76,6 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
 
             binding.textOfCategory.text = task.category
             binding.checkStatus.isChecked = task.status
-            //if(task.category == "Выполнено") binding.checkStatus.isChecked = true
         }
 
         binding.checkStatus.setOnClickListener {
@@ -88,9 +92,20 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
             val args = TaskEditFragmentArgs(
                 id = taskId,
                 deadlineNotifId = deadline_notif_id,
-                reminderNotifId = reminder_notif_id
+                reminderNotifId = reminder_notif_id,
+
             ).toBundle()
             findNavController().navigate(R.id.action_taskShowFragment_to_taskEditFragment, args)
+        }
+
+        button_delete_task.setOnClickListener {
+            taskViewModel.deleteTask(taskId)
+
+            val args = AllTasksFragmentArgs(
+                    categoryId = id_category,
+                    fromLibrary = from_library
+                    ).toBundle()
+            findNavController().navigate(R.id.action_taskShowFragment_to_allTasksFragment2,args)
         }
     }
 

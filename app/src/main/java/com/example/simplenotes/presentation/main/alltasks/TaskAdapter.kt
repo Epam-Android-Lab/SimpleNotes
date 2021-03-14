@@ -145,4 +145,9 @@ class TaskAdapter(
         })
     }
 
+    fun getId (position: Int) : String {
+        val task = getItem(position)
+        return task.id
+    }
+
 }

@@ -129,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="TextView"
+                        tools:text="TextView"
                         android:textColor="@color/text_color"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/divider2"
@@ -152,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="TextView"
+                        tools:text="TextView"
                         android:textColor="@color/text_color"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/textOfCategory"
@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="TextView"
+                        tools:text="TextView"
                         android:textColor="@color/text_color"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/textOfDeadline"
@@ -209,12 +209,20 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_task">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonEditTask"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
                 android:backgroundTint="@color/teal_200"
                 android:text="Редактировать задачу"
                 app:cornerRadius="15dp"
@@ -223,6 +231,19 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_task" />
+
+            <Button
+                android:id="@+id/button_delete_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Удалить задачу"
+                app:cornerRadius="15dp"
+                android:backgroundTint="@color/light_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonEditTask" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

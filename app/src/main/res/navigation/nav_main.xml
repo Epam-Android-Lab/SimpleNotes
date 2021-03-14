@@ -106,7 +106,7 @@
         <action
             android:id="@+id/action_taskShowFragment_to_taskEditFragment"
             app:destination="@id/taskEditFragment"
-            app:popUpTo="@id/allTasksFragment"/>
+            app:popUpTo="@id/allTasksFragment" />
         <argument
             android:name="id"
             app:argType="string"
@@ -117,6 +117,17 @@
         <argument
             android:name="reminder_notif_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_taskShowFragment_to_allTasksFragment2"
+            app:destination="@id/allTasksFragment" />
+        <argument
+            android:name="id_category"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="fromLibrary"
+            app:argType="boolean"
+            android:defaultValue="false"/>
 
     </fragment>
     <fragment
