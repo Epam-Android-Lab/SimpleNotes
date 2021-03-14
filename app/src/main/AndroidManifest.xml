@@ -19,7 +19,7 @@
             android:theme="@style/Theme.SimpleNotes.NoActionBar" />
         <activity
             android:name=".presentation.splash.SplashActivity"
-            android:label="@string/title_activity_splash"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SimpleNotes.Launcher">
             <intent-filter>

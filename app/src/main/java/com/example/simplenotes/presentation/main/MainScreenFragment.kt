@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplenotes.R
 import com.example.simplenotes.databinding.AddCategoryDialogBinding
@@ -101,10 +103,34 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
         }
 
         myCategoriesAdapter = MyCategoriesAdapter(this)
-        binding.recyclerViewMyCategories.adapter = myCategoriesAdapter
+        binding.recyclerViewMyCategories.apply {
+            adapter = myCategoriesAdapter
+        }
 
-        latestTasksAdapter = LatestTasksAdapter()
-        binding.recyclerViewLatestTasks.adapter = latestTasksAdapter
+//        val itemTouchHelperCallback =
+//            object :
+//                ItemTouchHelper.SimpleCallback(
+//                    0, ItemTouchHelper.UP or ItemTouchHelper.DOWN
+//                ) {
+//                override fun onMove(
+//                    recyclerView: RecyclerView,
+//                    viewHolder: RecyclerView.ViewHolder,
+//                    target: RecyclerView.ViewHolder
+//                ): Boolean = false
+//
+//                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                    viewModel.onDeleteCategory(viewHolder.adapterPosition)
+//                }
+//            }
+//
+//        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+//        itemTouchHelper.attachToRecyclerView(binding.recyclerViewMyCategories)
+
+        latestTasksAdapter = LatestTasksAdapter(requireContext(), this)
+        binding.recyclerViewLatestTasks.apply {
+            adapter = latestTasksAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 
 
         updateCategories()
@@ -161,11 +187,20 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
                     id = "", // нужно будет добавить автоинкремент
                     name = categoryName
                 )
-                Firebase.auth.uid?.let {
-                    viewModel.addCategory(category)
+                if (categoryName.isBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Введите название категории!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Firebase.auth.uid?.let {
+                        viewModel.addCategory(category)
+                    }
+                    updateCategories()
+                    dialog.dismiss()
                 }
-                updateCategories()
-                dialog.dismiss()
+
             }
             setNegativeButton("Отмена") { dialog, _ ->
                 dialog.cancel()
@@ -175,16 +210,17 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
     }
 
     private fun chooseTheme() {
-
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 theme.setDarkModeState(false)
+                requireActivity().finish()
             }
 
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 theme.setDarkModeState(true)
+                requireActivity().finish()
             }
 
         }

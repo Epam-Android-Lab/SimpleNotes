@@ -8,14 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
 import com.example.simplenotes.presentation.main.alltasks.filter.FilterOptions
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.launch
+import org.joda.time.LocalDate
 
 class AllTasksViewModel(
     private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
+    private val getTasksByUserUseCase: GetAllTasksByUserUseCase
 ) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
@@ -54,6 +58,19 @@ class AllTasksViewModel(
 //                    }
 //                }
 //            }
+        }
+    }
+
+    fun getTasksByCategory(categoryName: String) {
+        viewModelScope.launch {
+            getTasksByUserUseCase.execute().let { snapshot ->
+                var list: MutableList<Task> = mutableListOf()
+                snapshot?.forEach {
+                    list.add(it.toObject(Task::class.java))
+                }
+                list = filterTasksByCategory(categoryName, list) as MutableList<Task>
+                _listOfTasks.value = list
+            }
         }
     }
 
@@ -148,6 +165,17 @@ class AllTasksViewModel(
                 it.priority == filterOptions.priority
             })
         }
+    }
 
+    private fun filterTasksByCategory(categoryName: String, tasks: MutableList<Task>): List<Task> {
+        return when (categoryName) {
+            "Сегодня" -> tasks.filter {
+                (LocalDate.now().compareTo(LocalDate(it.deadline)) == 0) and (!it.status)
+            }
+            "Важные" -> tasks.filter { (it.priority == 5) and (!it.status) }
+            "Выполнено" -> tasks.filter { it.status }
+            "Все" -> tasks.filter { !it.status }
+            else -> tasks.filter { (it.category == categoryName) and (!it.status) }
+        }
     }
 }

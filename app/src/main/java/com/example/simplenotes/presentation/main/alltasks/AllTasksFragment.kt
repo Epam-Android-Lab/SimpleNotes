@@ -27,7 +27,7 @@ class AllTasksFragment : Fragment(){
     }
 
     @ExperimentalStdlibApi
-    private val viewModel:AllTasksViewModel by viewModel()
+    private val viewModel: AllTasksViewModel by viewModel()
 
     private val categoryId: String by lazy {
         AllTasksFragmentArgs.fromBundle(requireArguments()).categoryId
@@ -42,6 +42,13 @@ class AllTasksFragment : Fragment(){
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
+//        if (categoryId == "Все") {
+//            viewModel.getTasksByUserUseCase()
+//        } else {
+//            viewModel.getData(categoryId, filterOptions)
+//        }
+        viewModel.getTasksByCategory(categoryId)
         filterOptions =  AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
         viewModel.getData(categoryId, filterOptions)
@@ -71,7 +78,7 @@ class AllTasksFragment : Fragment(){
         (activity as MainActivity).setSupportActionBar(toolbar)
 
         toolbar.setOnMenuItemClickListener {
-            if(it.itemId == R.id.see_filters){
+            if (it.itemId == R.id.see_filters) {
                 val args = FilterFragmentArgs(
                     filterOptions = filterOptions,
                     categoryId = categoryId,

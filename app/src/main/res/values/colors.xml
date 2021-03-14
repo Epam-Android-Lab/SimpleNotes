@@ -38,6 +38,9 @@
     <color name="priority_4">#FF9800</color>
     <color name="priority_5">#F44336</color>
 
+    <color name="text_input_layout_color">#4B60D8</color>
+    <color name="text_input_layout_color_bg">#FFFFFF</color>
+
     <color name="trans">#00F44336</color>
 
 </resources>

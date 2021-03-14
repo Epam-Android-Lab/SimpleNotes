@@ -83,4 +83,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     implementation "org.koin:koin-androidx-ext:$koin_version"
 
+    // joda-time
+    implementation 'net.danlew:android.joda:2.10.9.1'
 }

@@ -42,10 +42,11 @@ val viewModelModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     } bind Contract.IMainViewModel::class
-    viewModel { AllTasksViewModel(get(), get()) } bind Contract.IAllTasksViewModel::class
+    viewModel { AllTasksViewModel(get(), get(), get()) } bind Contract.IAllTasksViewModel::class
 }
 
 val modules = listOf(

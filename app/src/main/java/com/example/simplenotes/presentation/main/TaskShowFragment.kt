@@ -1,5 +1,6 @@
 package com.example.simplenotes.presentation.main
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,8 +55,20 @@ class TaskShowFragment : Fragment(R.layout.fragment_task_show) {
                 }
             }
 
-            binding.textOfReminder.text = task.notification?.let { convertLongToTime(it) }
-            binding.textOfPriority.text = task.priority.toString()
+            textOfReminder.text = task.notification?.let { convertLongToTime(it) }
+            textOfPriority.text = task.priority.toString()
+
+            card_priority.backgroundTintList = ColorStateList.valueOf(
+                when (task.priority) {
+                    1 -> requireContext().resources.getColor(R.color.priority_1)
+                    2 -> requireContext().resources.getColor(R.color.priority_2)
+                    3 -> requireContext().resources.getColor(R.color.priority_3)
+                    4 -> requireContext().resources.getColor(R.color.priority_4)
+                    5 -> requireContext().resources.getColor(R.color.priority_5)
+                    else -> requireContext().resources.getColor(R.color.priority_3)
+                }
+            )
+
             binding.textOfCategory.text = task.category
             binding.checkStatus.isChecked = task.status
             //if(task.category == "Выполнено") binding.checkStatus.isChecked = true

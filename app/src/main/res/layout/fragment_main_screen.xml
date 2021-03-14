@@ -12,19 +12,17 @@
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ScrollView
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-17dp">
 
@@ -39,18 +37,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Библиотека"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gridViewCategories"
-                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@color/color_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,17 +132,17 @@
                         android:layout_height="70dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_folder_blue" />
+                        android:src="@drawable/ic_folder_orange" />
 
                     <TextView
                         android:id="@+id/tvImportant"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/color_background"
                         android:gravity="center"
                         android:text="@string/folder_all_text"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp"
-                        android:background="@color/color_background"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -152,12 +150,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/color_background"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llFolderImportant"
-                    app:layout_constraintTop_toBottomOf="@+id/llFolderAll"
-                    android:background="@color/color_background">
+                    app:layout_constraintTop_toBottomOf="@+id/llFolderAll">
 
                     <ImageView
                         android:layout_width="70dp"
@@ -170,11 +168,11 @@
                         android:id="@+id/tvCompleted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/color_background"
                         android:gravity="center"
                         android:text="@string/folder_completed_text"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp"
-                        android:background="@color/color_background"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -183,6 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:background="@color/color_background"
                 android:text="@string/my_categories_header_text"
                 android:textColor="@color/text_color"
                 android:textSize="24sp"
@@ -190,17 +189,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gridViewCategories"
-                android:background="@color/color_background"/>
+                app:layout_constraintTop_toBottomOf="@+id/gridViewCategories" />
 
             <TextView
                 android:id="@+id/btnAddMyCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/button_add_personal_categories_button"
                 android:textColor="@color/text_color"
                 android:textSize="32sp"
-                android:gravity="center_horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerViewMyCategories"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.178"
@@ -213,8 +211,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal"
                 android:background="@color/color_background"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -227,11 +225,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/color_background"
                 android:text="@string/list_latest_tasks_text"
                 android:textColor="@color/text_color"
-                android:textStyle="bold"
                 android:textSize="24sp"
-                android:background="@color/color_background"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -241,6 +240,9 @@
                 android:id="@+id/recyclerViewLatestTasks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:paddingBottom="72dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -248,7 +250,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewLatest"
                 app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="5"
-                tools:listitem="@layout/task_latest_item" />
+                tools:listitem="@layout/recycler_all_tasks_item" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

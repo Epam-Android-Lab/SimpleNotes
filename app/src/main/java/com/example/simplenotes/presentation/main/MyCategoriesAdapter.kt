@@ -13,7 +13,7 @@ import com.example.simplenotes.domain.entities.Category
 import com.example.simplenotes.presentation.main.alltasks.AllTasksFragmentArgs
 
 class MyCategoriesAdapter @ExperimentalStdlibApi constructor(
-    val fragment: MainScreenFragment
+    private val fragment: MainScreenFragment
 ) : ListAdapter<Category, MyCategoriesAdapter.MyCategoriesViewHolder>(DiffCallback) {
 
 
@@ -47,6 +47,9 @@ class MyCategoriesAdapter @ExperimentalStdlibApi constructor(
     override fun onBindViewHolder(holder: MyCategoriesViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun getPosition():Int = getPosition()
+
 
     object DiffCallback : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {

@@ -3,7 +3,7 @@
     <color name="purple_200">#BB86FC</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#BB86FC</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF242425</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="dark_background">#02111B</color>
@@ -12,5 +12,8 @@
     <color name="color_background">#FF242425</color>
     <color name="text_color">#FFFFFF</color>
     <color name="icon_color">#000000</color>
+
+    <color name="text_input_layout_color">#BB86FC</color>
+    <color name="text_input_layout_color_bg">#4AEAEAEA</color>
 
 </resources>

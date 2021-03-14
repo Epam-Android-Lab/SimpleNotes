@@ -17,6 +17,7 @@ interface Contract {
         fun getLatestTasks()
         fun deleteCategory(categoryName: String)
         fun getTasksByCategory(categoryName: String)
+        fun onDeleteCategory(position: Int)
     }
 
     interface IAllTasksViewModel {
