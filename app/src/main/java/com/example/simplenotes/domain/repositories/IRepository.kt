@@ -19,6 +19,7 @@ interface IRepository {
 
         suspend fun getTasksById(taskId: String): Task?
         suspend fun updateTask(id: String, updatedTask: Task)
+        suspend fun deleteTask(id: String)
 
         suspend fun deleteCategory(categoryName: String)
         suspend fun clearCategory(categoryName: String)

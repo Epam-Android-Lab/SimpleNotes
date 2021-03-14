@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.simplenotes.R
 import com.example.simplenotes.data.repositories.FirestoreRepository
 import com.example.simplenotes.domain.entities.Task
+import com.example.simplenotes.domain.usecases.DeleteTaskUseCase
 import com.example.simplenotes.domain.usecases.GetAllTasksByUserUseCase
 import com.example.simplenotes.domain.usecases.GetTasksByCategoryUseCase
 import com.example.simplenotes.domain.usecases.UpdateTaskStatusUseCase
@@ -19,7 +20,8 @@ import org.joda.time.LocalDate
 class AllTasksViewModel(
     private val getTasksByCategoryUseCase: GetTasksByCategoryUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
-    private val getTasksByUserUseCase: GetAllTasksByUserUseCase
+    private val getTasksByUserUseCase: GetAllTasksByUserUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase
 ) : ViewModel() {
     private val _listOfTasks = MutableLiveData<List<Task>>()
     val listOfTasks: LiveData<List<Task>>
@@ -176,6 +178,15 @@ class AllTasksViewModel(
             "Выполнено" -> tasks.filter { it.status }
             "Все" -> tasks.filter { !it.status }
             else -> tasks.filter { (it.category == categoryName) and (!it.status) }
+        }
+    }
+
+    fun deleteTask(id: String) {
+        viewModelScope.launch {
+            deleteTaskUseCase.execute(id)
+            _listOfTasks.value = _listOfTasks.value?.filter {
+                it.id != id
+            }
         }
     }
 }

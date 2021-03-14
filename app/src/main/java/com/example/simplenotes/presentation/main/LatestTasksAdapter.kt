@@ -73,7 +73,6 @@ class LatestTasksAdapter @ExperimentalStdlibApi constructor(
                         args
                     )
                 }
-
             }
         }
 

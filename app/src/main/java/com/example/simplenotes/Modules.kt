@@ -31,10 +31,11 @@ val domainModule = module {
     factory { UpdateTaskUseCase(get()) }
     factory { DeleteCategoryUseCase(get()) }
     factory { ClearCategoryUseCase(get()) }
+    factory { DeleteTaskUseCase(get()) }
 }
 
 val viewModelModule = module {
-    viewModel { TaskViewModel(get(), get(), get(), get(), get()) } bind Contract.ITaskViewModel::class
+    viewModel { TaskViewModel(get(), get(), get(), get(), get(), get()) } bind Contract.ITaskViewModel::class
     viewModel { AuthViewModel(get(), get()) } bind Contract.IAuthViewModel::class
     viewModel {
         MainViewModel(
@@ -46,7 +47,7 @@ val viewModelModule = module {
             get()
         )
     } bind Contract.IMainViewModel::class
-    viewModel { AllTasksViewModel(get(), get(), get()) } bind Contract.IAllTasksViewModel::class
+    viewModel { AllTasksViewModel(get(), get(), get(), get()) } bind Contract.IAllTasksViewModel::class
 }
 
 val modules = listOf(

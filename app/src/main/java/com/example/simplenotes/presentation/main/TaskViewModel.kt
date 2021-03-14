@@ -13,6 +13,7 @@ class TaskViewModel(
     private val addNewTaskUseCase: AddNewTaskUseCase,
     private val getTaskByIdUseCase: GetTaskByIdUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
+    private val deleteTask: DeleteTaskUseCase,
     private val updateTaskStatusUseCase: UpdateTaskStatusUseCase,
     private val getAllCategoriesByUser: GetAllCategoriesByUser,
 ) : ViewModel(), Contract.ITaskViewModel {
@@ -44,6 +45,12 @@ class TaskViewModel(
     override fun updateTask(id: String, updatedTask: Task) {
         viewModelScope.launch {
             updateTaskUseCase.execute(id, updatedTask)
+        }
+    }
+
+    override fun deleteTask(id: String) {
+        viewModelScope.launch {
+            deleteTask.execute(id)
         }
     }
 

@@ -111,4 +111,9 @@ class FirestoreRepository : IRepository.FirestoreRepository {
         }
     }
 
+    override suspend fun deleteTask(id: String) {
+        userId?.let { Firebase.firestore.collection(COLLECTION_USERS).document(it).collection(
+            COLLECTION_NOTES).document(id).delete() }
+    }
+
 }
