@@ -57,6 +57,10 @@ class MainViewModel(
                 snapshot?.forEach {
                     list.add(it.toObject(Task::class.java))
                 }
+                list.sortBy {
+                    it.timeLastEdit
+                }
+                list.reverse()
                 if(list.size <= 5){
                     _latestTaskState.value = list
                 } else {
