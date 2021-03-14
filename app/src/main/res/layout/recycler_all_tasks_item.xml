@@ -39,12 +39,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
+        <FrameLayout
             android:id="@+id/card_priority"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:animateLayoutChanges="true"
-            app:cardCornerRadius="100dp"
+            android:background="@drawable/shape_new"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -59,7 +59,7 @@
                 android:textSize="16sp"
                 tools:text="5" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/deadline"

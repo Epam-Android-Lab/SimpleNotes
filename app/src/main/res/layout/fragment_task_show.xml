@@ -43,13 +43,13 @@
                     android:layout_height="match_parent"
                     tools:context=".presentation.main.TaskShowFragment">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <FrameLayout
                         android:id="@+id/card_priority"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:background="@drawable/shape_new"
                         android:layout_margin="16dp"
                         android:animateLayoutChanges="true"
-                        app:cardCornerRadius="50dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -64,7 +64,7 @@
                             android:textSize="16sp"
                             tools:text="5" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/textTaskTitle"
