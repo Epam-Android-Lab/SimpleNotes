@@ -1,6 +1,7 @@
 package com.example.simplenotes.presentation.main.alltasks
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -61,7 +62,7 @@ class AllTasksViewModel(
         }
     }
 
-    fun getTasksByCategory(categoryName: String) {
+    fun getTasksByCategory(categoryName: String, filterOptions: FilterOptions? = null) {
         viewModelScope.launch {
             getTasksByUserUseCase.execute().let { snapshot ->
                 var list: MutableList<Task> = mutableListOf()
@@ -70,6 +71,10 @@ class AllTasksViewModel(
                 }
                 list = filterTasksByCategory(categoryName, list) as MutableList<Task>
                 _listOfTasks.value = list
+
+                if (filterOptions != null) {
+                    applyFilters(filterOptions)
+                }
             }
         }
     }
@@ -135,42 +140,24 @@ class AllTasksViewModel(
 
     private fun applyFilters(filterOptions: FilterOptions) {
 
-//        _listOfTasks.value?.let { list ->
-//            val filterResult = list.filter {
-//                it.status == filterOptions.status
-//            }
-//            _listOfTasks.postValue(filterResult)
-//        }
+        if (filterOptions.categories != null) {
+            val kek = mutableListOf<Task>()
+            _listOfTasks.value?.forEach { tc ->
+                filterOptions.categories.forEach { cat ->
+                    if(tc.category == cat.name){
+                        kek.add(tc)
+                    }
+                }
+            }
+            _listOfTasks.value = kek
+        }
 
-//        if (filterOptions.categories != null) {
-//            _listOfTasks.value?.let { list ->
-//
-//                _listOfTasks.postValue( list.filter {
-//                    filterOptions.categories.run {
-//                        var result = false
-//
-//                        forEach { category ->
-//                            result = category.name == it.category
-//                        }
-//
-//                        result
-//                    }
-//                })
-//
-//            }
-//        }
+        _listOfTasks.value = _listOfTasks.value?.filter {
+            it.priority == filterOptions.priority
+        }
 
-//        _listOfTasks.value?.let { list ->
-//            _listOfTasks.postValue(list.filter {
-//                it.priority == filterOptions.priority
-//            })
-//        }
-
-        _listOfTasks.value?.let { list ->
-            _listOfTasks.postValue(list.filter {
-                it.status == filterOptions.status
-            })
-
+        _listOfTasks.value = _listOfTasks.value?.filter {
+            it.status == filterOptions.status
         }
     }
 

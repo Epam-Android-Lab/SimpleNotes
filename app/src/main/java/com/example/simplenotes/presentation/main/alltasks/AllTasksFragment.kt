@@ -43,10 +43,9 @@ class AllTasksFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
-        viewModel.getTasksByCategory(categoryId)
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
-        viewModel.getData(categoryId, filterOptions)
 
+        if(fromLibrary) viewModel.getTasksByCategory(categoryId, filterOptions) else viewModel.getData(categoryId, filterOptions)
     }
 
 
