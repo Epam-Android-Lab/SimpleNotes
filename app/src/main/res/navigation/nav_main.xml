@@ -25,6 +25,11 @@
             app:destination="@id/loginActivity3" />
         <action android:id="@+id/action_mainScreenFragment_to_taskShowFragment"
             app:destination="@+id/taskShowFragment"/>
+        <action
+            android:id="@+id/action_mainScreenFragment_self"
+            app:destination="@id/mainScreenFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/mainScreenFragment"/>
     </fragment>
 
     <fragment

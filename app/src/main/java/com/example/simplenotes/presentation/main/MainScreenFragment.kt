@@ -1,6 +1,7 @@
 package com.example.simplenotes.presentation.main
 
 import android.app.AlertDialog
+import android.content.Intent.getIntent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
@@ -215,13 +216,13 @@ class MainScreenFragment : Fragment(R.layout.fragment_main_screen) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 theme.setDarkModeState(false)
-                requireActivity().finish()
+                findNavController().navigate(R.id.action_mainScreenFragment_self)
             }
 
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 theme.setDarkModeState(true)
-                requireActivity().finish()
+                findNavController().navigate(R.id.action_mainScreenFragment_self)
             }
 
         }
