@@ -13,16 +13,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
 
-    <string name="enter_email">Enter email</string>
-    <string name="enter_password">Enter password</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_up">Don’t have an account? <b>SIGN UP</b> Now!</string>
-    <string name="or">OR</string>
+    <string name="enter_email">Введите email</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Нет аккаунта? <b>СОЗДАТЬ</b> Сейчас!</string>
+    <string name="or">Или</string>
     <string name="socials">Sing in with Socials</string>
-    <string name="enter_name">Enter name</string>
-    <string name="sign_up_b">Sign up</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="sign_up_b">Зарегистрироваться</string>
 
-    <string name="cannot_be_empty">Cannot be empty</string>
+    <string name="cannot_be_empty">Поле не может быть пустым</string>
     <string name="hello_world">Hello Square World!</string>
 
     <string-array name="categories">
@@ -34,30 +34,30 @@
         <item>Интернет</item>
     </string-array>
 
-    <string name="toast_no_such_user">Some error. Probably, there is no such user</string>
+    <string name="toast_no_such_user">Ошибка. Неверный логин или пароль</string>
 
-    <string name="text_add_category">Add category</string>
+    <string name="text_add_category">Добавить категорию</string>
     <string name="dialog_add_category_button_text">Добавить категорию</string>
     <string name="add_category_dialog_title_text">Введите название категории</string>
 
     <string name="sample_note_title">Sample note title</string>
 
     <string name="lorem">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</string>
-    <string name="switch_theme_menu_item">Switch Theme</string>
+    <string name="switch_theme_menu_item">Переключить тему</string>
     <string name="folder_today_text">Сегодня</string>
     <string name="folder_important_text">Важное</string>
     <string name="folder_all_text">Все</string>
     <string name="folder_completed_text">Выполнено</string>
     <string name="my_categories_header_text">Мои Списки</string>
     <string name="list_latest_tasks_text">Последние</string>
-    <string name="add_task_desc_text">Add task</string>
-    <string name="task_title_text">Title</string>
+    <string name="add_task_desc_text">Добавить задачу</string>
+    <string name="task_title_text">Заголовок</string>
     <string name="button_notification_text">Напоминание</string>
     <string name="button_deadline_text">Дедлайн</string>
     <string name="button_save_task_text">Сохранить задачу</string>
     <string name="button_add_personal_categories_button">+</string>
 
-    <string name="add_new_task">Add new task</string>
+    <string name="add_new_task">Добавить задачу</string>
 
     <string-array name="sorting_options">
         <item>По дате редактирования ▲</item>
@@ -70,16 +70,16 @@
     <string name="sample_option">По дате редактирования ▲</string>
     <string name="filter">Фильтры</string>
     <string name="sroting_method">Метод сортировки</string>
-    <string name="filter_by_categories">Filter by categories</string>
-    <string name="priority">Priority</string>
-    <string name="status">Status</string>
-    <string name="done">Done</string>
-    <string name="planned">Planned</string>
-    <string name="confirm">Confirm</string>
-    <string name="remove">Remove</string>
-    <string name="filters">Filters</string>
-    <string name="dark_theme">Dark theme</string>
-    <string name="logout">Logout</string>
+    <string name="filter_by_categories">Фильтр по категориям</string>
+    <string name="priority">Приоритет</string>
+    <string name="status">Статус</string>
+    <string name="done">Выполнено</string>
+    <string name="planned">Запланировано</string>
+    <string name="confirm">Применить</string>
+    <string name="remove">Очистить</string>
+    <string name="filters">Фильтры</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="logout">Выход</string>
 
     <string name="home">Главная</string>
     <string name="crate_new_task">Создать задачу</string>
@@ -88,5 +88,5 @@
     <string name="details">Подробнее</string>
     <string name="filters_setup">Настройка фильтров</string>
     <string name="button_set_deadline_text">Дедлайн</string>
-    <string name="clear">Clear</string>
+    <string name="clear">Очистить</string>
 </resources>

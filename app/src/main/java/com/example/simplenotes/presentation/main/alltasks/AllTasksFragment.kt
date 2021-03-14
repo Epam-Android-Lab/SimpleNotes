@@ -47,7 +47,7 @@ class AllTasksFragment : Fragment(){
         filterOptions = AllTasksFragmentArgs.fromBundle(requireArguments()).filterOptions
         fromLibrary = AllTasksFragmentArgs.fromBundle(requireArguments()).fromLibrary
 
-        if(fromLibrary) viewModel.getTasksByCategory(categoryId, filterOptions) else viewModel.getData(categoryId, filterOptions)
+
     }
 
 
@@ -162,6 +162,8 @@ class AllTasksFragment : Fragment(){
             }
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.allRecycler)
+
+        if(fromLibrary) viewModel.getTasksByCategory(categoryId, filterOptions) else viewModel.getData(categoryId, filterOptions)
 
     }
 
